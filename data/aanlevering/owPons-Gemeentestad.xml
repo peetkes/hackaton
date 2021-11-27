@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ow-dc:owBestand 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:ga-ref="http://www.geostandaarden.nl/imow/gebiedsaanwijzing-ref/v20190709" 
+	xmlns:sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek/v20190301" 
+	xmlns:ow="http://www.geostandaarden.nl/imow/owobject/v20190709" 
+	xmlns:l-ref="http://www.geostandaarden.nl/imow/locatie-ref/v20190901" 
+	xmlns:rol-ref="http://www.geostandaarden.nl/imow/regelsoplocatie-ref/v20190709" 
+	xmlns:rkow="http://www.geostandaarden.nl/imow/regeltekstkoppelingow/v20190709" 
+	xmlns:r="http://www.geostandaarden.nl/imow/regels/v20190901" 
+	xmlns:r-ref="http://www.geostandaarden.nl/imow/regels-ref/v20190901" 
+	xmlns:p="http://www.geostandaarden.nl/imow/pons/v20190901"
+	xmlns:ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand/v20190901" 
+	xsi:schemaLocation="http://www.geostandaarden.nl/imow ../../../xsd/imow/bestanden-ow/deelbestand-ow/v20190901/IMOW_Deelbestand_v0_9_8_2.xsd">
+	<sl:standBestand>
+		<sl:dataset>Gemeentestad</sl:dataset>
+		<sl:inhoud>
+			<sl:gebied>Gemeentestad</sl:gebied>
+			<sl:leveringsId>abc-20190221-0801</sl:leveringsId>
+			<sl:objectTypen>
+				<sl:objectType>Pons</sl:objectType>
+			</sl:objectTypen>
+		</sl:inhoud>
+		<sl:stand>
+			<ow-dc:owObject>
+			<!--variant 1: geldende pons!-->
+				<p:Pons ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000002">
+					<p:identificatie>nl.imow-gm0037.pons.2019000001</p:identificatie>
+					<p:leidendVanaf>2019-07-19</p:leidendVanaf>
+					<p:locatieaanduiding>
+						<l-ref:LocatieRef xlink:href="nl.imow-gm0037.gebied.2019000001"/>
+					</p:locatieaanduiding>
+				</p:Pons>
+			</ow-dc:owObject>
+		</sl:stand>
+		<sl:stand>
+			<ow-dc:owObject>
+			<!--variant 2: aangeleverd, later vervallen!-->
+				<p:Pons ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000002">
+					<p:identificatie>nl.imow-gm0037.pons.2019000002</p:identificatie>
+					<p:leidendVanaf>2019-07-19</p:leidendVanaf>
+					<p:locatieaanduiding>
+						<l-ref:LocatieRef xlink:href="nl.imow-gm0037.gebied.2019000002"/>
+					</p:locatieaanduiding>
+				</p:Pons>
+			</ow-dc:owObject>
+		</sl:stand>
+		<sl:stand>
+			<ow-dc:owObject>
+				<p:Pons ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000004">
+					<p:identificatie>nl.imow-gm0037.pons.2019000003</p:identificatie>
+					<p:leidendTot>2019-09-03</p:leidendTot>
+					<p:locatieaanduiding>
+						<l-ref:LocatieRef xlink:href="nl.imow-gm0037.gebied.2019000002"/>
+					</p:locatieaanduiding>
+				</p:Pons>
+			</ow-dc:owObject>
+		</sl:stand>
+		<sl:stand>
+			<ow-dc:owObject>
+			<!--variant 3: toekomstige ponsgeometrie!-->
+				<p:Pons ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000002">
+					<p:identificatie>nl.imow-gm0037.pons.2019000004</p:identificatie>
+					<p:leidendVanaf>2021-01-01</p:leidendVanaf>
+					<p:locatieaanduiding>
+						<l-ref:LocatieRef xlink:href="nl.imow-gm0037.gebied.2019000003"/>
+					</p:locatieaanduiding>
+				</p:Pons>
+			</ow-dc:owObject>
+		</sl:stand>
+	</sl:standBestand>
+</ow-dc:owBestand>

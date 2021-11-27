@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AanleveringInformatieObject xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+                             schemaversie="1.1.0">
+  <InformatieObjectVersie>
+      <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <FRBRWork>/join/id/regdata/gm0037/2019/Speelhal</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0037/2019/Speelhal/nld@2019-06-18;3520</FRBRExpression>
+         <soortWork>/join/id/stop/work_010</soortWork>
+      </ExpressionIdentificatie>
+      <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <heeftGeboorteregeling>/akn/nl/act/gm0037/2019/reg456</heeftGeboorteregeling>
+         <heeftBestanden>
+            <heeftBestand>
+               <Bestand>
+                  <bestandsnaam>Speelhal.gml</bestandsnaam>
+                  <hash>e03cf2269c97161035a4c36e459124043abdd83b4f78e4eebf4a2576ab674c11f22909367ffbf1af5f091f9f0dc5cf803ce8331d0c0f8eb5fe28443b656c9351</hash>
+               </Bestand>
+            </heeftBestand>
+         </heeftBestanden>
+      </InformatieObjectVersieMetadata>
+      <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <eindverantwoordelijke>/tooi/id/gemeente/gm0037</eindverantwoordelijke>
+         <maker>/tooi/id/gemeente/gm0037</maker>
+         <alternatieveTitels>
+            <alternatieveTitel>Speelhal</alternatieveTitel>
+         </alternatieveTitels>
+         <naamInformatieObject>Speelhal</naamInformatieObject>
+         <officieleTitel>/join/id/regdata/gm0037/2019/Speelhal</officieleTitel>
+         <publicatieinstructie>TeConsolideren</publicatieinstructie>
+         <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+      </InformatieObjectMetadata>
+  </InformatieObjectVersie>
+</AanleveringInformatieObject>

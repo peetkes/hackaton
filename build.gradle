@@ -1,0 +1,50 @@
+plugins {
+  id "net.saliman.properties" version "1.5.1"
+  id "com.marklogic.ml-gradle" version "${mlGradleVersion}"
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  // Needed for some mlcp dependencies, such as commons-csv:1.5.1-marklogic
+  maven { url "https://developer.marklogic.com/maven2/" }
+}
+
+configurations { 
+  mlcp
+}
+
+dependencies {
+  mlcp "com.marklogic:mlcp:${mlcpVersion}"
+  mlcp files("mlcp")
+}
+
+configurations.all {
+  // avoid SLF4J: classpath contains multiple SLF4J bindings
+  exclude group: 'ch.qos.logback'
+  exclude group: 'org.slf4j'
+}
+
+//this runs really slow!! DO NOT USE!!
+task importData(type: com.marklogic.gradle.task.MlcpTask) {
+  classpath = configurations.mlcp
+  command = "IMPORT"
+  host = mlHost
+  port = Integer.parseInt(mlRestPort)
+  username = mlUsername
+  password = mlPassword
+  database = mlAppConfig.contentDatabaseName
+  output_collections = "hackaton"
+  output_permissions = "hackaton-reader,read,hackaton-writer,update"
+  output_uri_replace = ".*data/aanlevering,''"
+  transform_function= "adjust-collections"
+  transform_module = "/mlcp/adjust-collections.xqy"
+  transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/adjust-collections"
+//  logOutputUri = "mlcp-import-log.txt"
+  /**
+   * The args array can be used for any MLCP parameters that are not supported by the MlcpBean class that MlcpTask
+   * delegates to. input_file_path is supported by MlcpTask; this is just included as an example of using the args
+   * array.
+   */
+  args = ["-input_file_path", "data/aanlevering", "-max_threads", "4"]
+}

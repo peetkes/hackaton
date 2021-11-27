@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AanleveringInformatieObject xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+							 xmlns:geo="https://standaarden.overheid.nl/stop/imop/geo/"
+                             xmlns:se="http://www.opengis.net/se" schemaversie="1.1.0">
+   <InformatieObjectVersie>
+      <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <FRBRWork>/join/id/regdata/gm0037/2019/Centrumgebied</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0037/2019/Centrumgebied/nld@2019-06-18;3520</FRBRExpression>
+         <soortWork>/join/id/stop/work_010</soortWork>
+      </ExpressionIdentificatie>
+      <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <heeftGeboorteregeling>/akn/nl/act/gm0037/2019/reg456</heeftGeboorteregeling>
+         <heeftBestanden>
+            <heeftBestand>
+               <Bestand>
+                  <bestandsnaam>Centrumgebied.gml</bestandsnaam>
+                 <hash>8a7b39c380b4f099c9db4855294d3ff9b2b5982136e392afeda61b1a6e7edcf8cc2c3a1f7152179e5af7ec947f7a720b505ba8d671c996d6037063390f167189</hash>
+               </Bestand>
+            </heeftBestand>
+         </heeftBestanden>
+      </InformatieObjectVersieMetadata>
+      <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <eindverantwoordelijke>/tooi/id/gemeente/gm0037</eindverantwoordelijke>
+         <maker>/tooi/id/gemeente/gm0037</maker>
+         <alternatieveTitels>
+            <alternatieveTitel>Centrumgebied</alternatieveTitel>
+         </alternatieveTitels>
+         <naamInformatieObject>Centrumgebied</naamInformatieObject>
+         <officieleTitel>/join/id/regdata/gm0037/2019/Centrumgebied</officieleTitel>
+         <publicatieinstructie>TeConsolideren</publicatieinstructie>
+         <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+      </InformatieObjectMetadata>
+        <se:FeatureTypeStyle version="1.1.0">
+            <se:FeatureTypeName>geo:Locatie</se:FeatureTypeName>
+            <se:SemanticTypeIdentifier>geo:geometrie</se:SemanticTypeIdentifier>
+            <se:Rule>
+                <se:Name>Functie bedrijf</se:Name>
+                <se:Description>
+                    <se:Title>Bedrijfcategorie 2</se:Title>
+                    <!-- Tekst voor legenda -->
+                    <se:Abstract>Functie bedrijf Gemeentestad</se:Abstract>
+                    <!-- toelichting op legenda tekst -->
+                </se:Description>
+                <!-- geen Filter, alle locaties in de GIO identiek gekleurd -->
+                <se:PolygonSymbolizer>
+                    <se:Name>vsg003</se:Name>
+                    <se:Fill>
+                        <se:SvgParameter name="fill">#b45fd2</se:SvgParameter>
+                        <se:SvgParameter name="fill-opacity">1</se:SvgParameter>
+                    </se:Fill>
+                    <se:Stroke>
+                        <se:SvgParameter name="stroke">#000001</se:SvgParameter>
+                        <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                        <se:SvgParameter name="stroke-width">1</se:SvgParameter>
+                        <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+                    </se:Stroke>
+                </se:PolygonSymbolizer>
+            </se:Rule>
+        </se:FeatureTypeStyle>
+   </InformatieObjectVersie>
+</AanleveringInformatieObject>

@@ -1,0 +1,5 @@
+{
+  "role-name" : "hackaton-reader",
+  "description" : "Can view documents, but not edit",
+  "role" : [ "rest-reader", "hackaton-nobody" ]
+}

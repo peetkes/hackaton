@@ -1,0 +1,65 @@
+{
+  "template": {
+    "description": "Extraction Template for gml-bestand",
+    "context": "/prop:properties/opera:gml-properties",
+    "collections": [
+      "/opera/document/gml"
+    ],
+    "pathNamespace": [{
+      "prefix": "opera",
+      "namespaceUri": "http://koop.overheid.nl/apps/opera/"
+    }],
+    "vars": [{
+      "name": "lvbb",
+      "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+    },{
+      "name": "ioId",
+      "val": "opera:join-id-werk/fn:string()"
+    },{
+      "name": "ioVersieId",
+      "val": "opera:join-id-expressie/fn:string()"
+    },{
+      "name": "bestandsnaam",
+      "val": "opera:gml-filenaam/fn:string()"
+    }],
+    "triples":[{
+      "subject": {
+        "val": "sem:iri($ioId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($lvbb || 'heeftIoBestand')"
+      },
+      "object": {
+        "val": "$bestandsnaam"
+      }
+    },{
+      "subject": {
+        "val": "sem:iri($ioId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($lvbb || 'heeftIoBestand')"
+      },
+      "object": {
+        "val": "$bestandsnaam"
+      }
+    }],
+    "templates": [{
+      "description": "Extraction Template for gml-ids",
+      "context": "opera:geo-locaties/opera:gml-id",
+      "triples": [{
+        "subject": {
+          "val": "sem:iri($ioVersieId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($lvbb || 'geolocatie')"
+        },
+        "object": {
+          "val": "sem:iri(fn:string(.))"
+        }
+      }]
+    }]
+  }
+}

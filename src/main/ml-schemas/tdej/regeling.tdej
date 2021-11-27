@@ -1,0 +1,151 @@
+{
+  "template": {
+    "description": "Template voor Regeling/RegelingVersie",
+    "context": "/lvbba:AanleveringBesluit[@schemaversie eq '1.1.0']",
+    "collections": [
+      "/opera/document/besluit"
+    ],
+    "pathNamespace": [{
+      "prefix": "lvbba",
+      "namespaceUri": "https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+    },{
+      "prefix": "data",
+      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/data/"
+    },{
+      "prefix": "tekst",
+      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
+    }],
+    "vars": [{
+      "name": "lvbb",
+      "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+    },{
+      "name": "regelingId",
+      "val": "lvbba:RegelingVersieInformatie/data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
+    },{
+      "name": "regelingVersieId",
+      "val": "lvbba:RegelingVersieInformatie/data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
+    }],
+    "triples":[{
+      "subject": {
+        "val": "sem:iri($regelingId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($lvbb || 'workId')"
+      },
+      "object": {
+        "val": "$regelingId"
+      }
+    },{
+      "subject": {
+        "val": "sem:iri($regelingId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($lvbb || 'heeftVersie')"
+      },
+      "object": {
+        "val": "sem:iri($regelingVersieId)"
+      }
+    },{
+      "subject": {
+        "val": "sem:iri($regelingVersieId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($lvbb || 'expressionId')"
+      },
+      "object": {
+        "val": "$regelingVersieId"
+      }
+    }],
+    "templates":[{
+      "description": "Template voor RegelingVersieInformatie",
+      "context": ".//(tekst:RegelingCompact|tekst:RegelingMutatie|tekst:RegelingKlassiek|tekst:RegelijkTijdelijkdeel|tekst:RegelingVrijetekst)[@wordt]",
+      "vars": [{
+        "name": "versieId",
+        "val": "@wordt/fn:string()"
+      },{
+        "name": "regId",
+        "val": "fn:substring-before(@wordt/fn:string(), '@')"
+      }],
+      "templates": [{
+        "description": "Template voor @was",
+        "context": "@was",
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($versieId)"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'heeftVoorganger')"
+          },
+          "object": {
+            "val": "sem:iri(.)"
+          }
+        }]
+      },{
+        "description": "Template voor bepalen Artikel verwijzingen",
+        "context": ".//tekst:Artikel[@wId]",
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($versieId)"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'bevatArtikel')"
+          },
+          "object": {
+            "val": "sem:iri(fn:concat($regId, '#', @wId))"
+          }
+        }]
+      },{
+        "description": "Template voor bepalen InformatieObject verwijzingen",
+        "context": ".//tekst:ExtIoRef[@ref]",
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($versieId)"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'bevatExtIoRef')"
+          },
+          "object": {
+            "val": "sem:iri(fn:concat($versieId, '#', @wId))"
+          }
+        },{
+          "subject": {
+            "val": "sem:iri(fn:concat($versieId, '#', @wId))"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'verwijstNaarIO')"
+          },
+          "object": {
+            "val": "sem:iri(@ref)"
+          }
+        }]
+      },{
+        "description": "Template voor bepalen InformatieObject verwijzingen",
+        "context": ".//tekst:IntIoRef[@ref]",
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($versieId)"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'bevatIntIoRef')"
+          },
+          "object": {
+            "val": "sem:iri(fn:concat($versieId, '#', @wId))"
+          }
+        },{
+          "subject": {
+            "val": "sem:iri(fn:concat($versieId, '#', @wId))"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'verwijstNaarExtIoRef')"
+          },
+          "object": {
+            "val": "sem:iri(fn:concat($versieId, '#', @ref))"
+          }
+        }]
+      }]
+    }]
+  }
+}

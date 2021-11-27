@@ -1,0 +1,98 @@
+{
+  "template": {
+    "description": "Extraction Template for besluit",
+    "context": "/lvbba:AanleveringBesluit[@schemaversie eq '1.1.0']",
+    "collections": [
+      "/opera/document/besluit"
+    ],
+    "pathNamespace": [{
+      "prefix": "lvbba",
+      "namespaceUri": "https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+    },{
+      "prefix": "data",
+      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/data/"
+    },{
+      "prefix": "tekst",
+      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
+    }],
+    "vars": [{
+      "name": "lvbb",
+      "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+    },{
+      "name": "besluitId",
+      "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
+    },{
+      "name": "besluitVersieId",
+      "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
+    }],
+    "templates":[{
+      "description": "Template voor BesluitVersie",
+      "context": "lvbba:BesluitVersie",
+      "triples": [{
+        "subject": {
+          "val": "sem:iri($besluitId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($lvbb || 'workId')"
+        },
+        "object": {
+          "val": "$besluitId"
+        }
+      },{
+        "subject": {
+          "val": "sem:iri($besluitId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($lvbb || 'heeftVersie')"
+        },
+        "object": {
+          "val": "sem:iri($besluitVersieId)"
+        }
+      },{
+        "subject": {
+          "val": "sem:iri($besluitVersieId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($lvbb || 'expressionId')"
+        },
+        "object": {
+          "val": "$besluitVersieId"
+        }
+      }],
+      "templates": [{
+        "description": "Template voor ConsolidatieInformatie BeoogdeRegeling",
+        "context": "data:ConsolidatieInformatie/data:BeoogdeRegelgeving/data:BeoogdeRegeling",
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($besluitVersieId)",
+            "invalidValues": "ignore"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
+          },
+          "object": {
+            "val": "sem:iri(data:instrumentVersie/fn:string())"
+          }
+        }]
+      },{
+        "description": "Template voor ConsolidatieInformatie BeoogdInformatieobject",
+        "context": "data:ConsolidatieInformatie/data:BeoogdeRegelgeving/data:BeoogdInformatieobject",
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($besluitVersieId)",
+            "invalidValues": "ignore"
+          },
+          "predicate": {
+            "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
+          },
+          "object": {
+            "val": "sem:iri(data:instrumentVersie/fn:string())"
+          }
+        }]
+      }]
+    }]
+  }
+}

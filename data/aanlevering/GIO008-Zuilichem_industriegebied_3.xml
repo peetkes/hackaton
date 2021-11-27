@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AanleveringInformatieObject xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+                             schemaversie="1.1.0">
+  <InformatieObjectVersie>
+      <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <FRBRWork>/join/id/regdata/gm0037/2019/Zuilichem_3</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0037/2019/Zuilichem_3/nld@2019-06-18;3520</FRBRExpression>
+         <soortWork>/join/id/stop/work_010</soortWork>
+      </ExpressionIdentificatie>
+      <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <heeftGeboorteregeling>/akn/nl/act/gm0037/2019/reg456</heeftGeboorteregeling>
+         <heeftBestanden>
+            <heeftBestand>
+               <Bestand>
+                  <bestandsnaam>Zuilichem_industriegebied_3.gml</bestandsnaam>
+                  <hash>1c38c10f819150056a5dc7a5dfe4f8fe93d4e23e440beef99e7e7f29ba5f7f77083252d805fba8a6fdbb8f37d27978f63f18d7f1bd7a7ba2df11c61b02bb02bb</hash>
+               </Bestand>
+            </heeftBestand>
+         </heeftBestanden>
+      </InformatieObjectVersieMetadata>
+      <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <eindverantwoordelijke>/tooi/id/gemeente/gm0037</eindverantwoordelijke>
+         <maker>/tooi/id/gemeente/gm0037</maker>
+         <naamInformatieObject>Zuilichem industriegebied 3</naamInformatieObject>
+         <officieleTitel>/join/id/regdata/gm0037/2019/Zuilichem_3</officieleTitel>
+         <publicatieinstructie>TeConsolideren</publicatieinstructie>
+         <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+      </InformatieObjectMetadata>
+  </InformatieObjectVersie>
+</AanleveringInformatieObject>

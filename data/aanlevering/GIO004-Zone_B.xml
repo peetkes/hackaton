@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AanleveringInformatieObject xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+                             schemaversie="1.1.0">
+  <InformatieObjectVersie>
+      <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <FRBRWork>/join/id/regdata/gm0037/2019/Zone_B</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0037/2019/Zone_B/nld@2019-06-18;3520</FRBRExpression>
+         <soortWork>/join/id/stop/work_010</soortWork>
+      </ExpressionIdentificatie>
+      <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <heeftGeboorteregeling>/akn/nl/act/gm0037/2019/reg456</heeftGeboorteregeling>
+         <heeftBestanden>
+            <heeftBestand>
+               <Bestand>
+                  <bestandsnaam>Zone_B.gml</bestandsnaam>
+                  <hash>5b7556079afa8ee3504325eb248206b916c9f79215017d8c6d7ca072db14e6869f56a0507426dc2b408563dd520968a5569d49ce69512fffdcbf286ed55cd481</hash>
+               </Bestand>
+            </heeftBestand>
+         </heeftBestanden>
+      </InformatieObjectVersieMetadata>
+      <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+         <eindverantwoordelijke>/tooi/id/gemeente/gm0037</eindverantwoordelijke>
+         <maker>/tooi/id/gemeente/gm0037</maker>
+         <alternatieveTitels>
+            <alternatieveTitel>Zone_B</alternatieveTitel>
+         </alternatieveTitels>
+         <naamInformatieObject>Zone_B</naamInformatieObject>
+         <officieleTitel>/join/id/regdata/gm0037/2019/Zone_B</officieleTitel>
+         <publicatieinstructie>TeConsolideren</publicatieinstructie>
+         <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+      </InformatieObjectMetadata>
+  </InformatieObjectVersie>
+</AanleveringInformatieObject>

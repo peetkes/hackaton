@@ -1,0 +1,5 @@
+{
+  "role-name" : "hackaton-internal",
+  "description" : "Internal role used for amping",
+  "role" : [ "hackaton-writer" ]
+}
