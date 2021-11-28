@@ -22,7 +22,7 @@ services:
       - TZ=Europe/Amsterdam
     volumes:
       - ./volumes/${mlHost}/:/var/opt/MarkLogic/:delegated
-      - ${baseVolume}/data:/data
+      - ${baseVolume}:/data
     networks:
       - hackaton_network
     deploy:

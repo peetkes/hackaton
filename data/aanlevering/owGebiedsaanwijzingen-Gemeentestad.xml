@@ -18,7 +18,7 @@
 		</sl:inhoud>
 		<sl:stand>
 			<ow-dc:owObject>
-				<ga:Gebiedsaanwijzing ow:regeltekstId="nl.imow-gm0037.Regeltekst.2019000002">
+				<ga:Gebiedsaanwijzing ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000002">
 					<ga:identificatie>nl.imow-gm0037.gebiedsaanwijzing.2019000001</ga:identificatie>
 					<ga:type>Functie</ga:type>
 					<ga:naam>Bedrijf categorie 2</ga:naam>
@@ -31,7 +31,7 @@
 		</sl:stand>
 		<sl:stand>
 			<ow-dc:owObject>
-				<ga:Gebiedsaanwijzing ow:regeltekstId="nl.imow-gm0037.Regeltekst.2019000010">
+				<ga:Gebiedsaanwijzing ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000010">
 					<ga:identificatie>nl.imow-gm0037.gebiedsaanwijzing.2019000002</ga:identificatie>
 					<ga:type>Functie</ga:type>
 					<ga:naam>Centrumgebied</ga:naam>

@@ -16,6 +16,9 @@
       "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
     }],
     "vars": [{
+      "name": "rdf",
+      "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+    },{
       "name": "lvbb",
       "val": "'http://koop.overheid.nl/ontology/lvbb/'"
     },{
@@ -27,7 +30,7 @@
     }],
     "triples":[{
       "subject": {
-        "val": "sem:iri($lvbb || 'id' || $ioId)",
+        "val": "sem:iri($ioId)",
         "invalidValues": "ignore"
       },
       "predicate": {
@@ -38,18 +41,29 @@
       }
     },{
       "subject": {
-        "val": "sem:iri($lvbb || 'id' || $ioId)",
+        "val": "sem:iri($ioId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($rdf || 'type')"
+      },
+      "object": {
+        "val": "sem:iri($lvbb || 'InformatieObject')"
+      }
+    },{
+      "subject": {
+        "val": "sem:iri($ioId)",
         "invalidValues": "ignore"
       },
       "predicate": {
         "val": "sem:iri($lvbb || 'heeftVersie')"
       },
       "object": {
-        "val": "sem:iri($lvbb || 'id' || $ioVersieId)"
+        "val": "sem:iri($ioVersieId)"
       }
     },{
       "subject": {
-        "val": "sem:iri($lvbb || 'id' || $ioVersieId)",
+        "val": "sem:iri($ioVersieId)",
         "invalidValues": "ignore"
       },
       "predicate": {
@@ -58,20 +72,31 @@
       "object": {
         "val": "$ioVersieId"
       }
+    },{
+      "subject": {
+        "val": "sem:iri($ioVersieId)",
+        "invalidValues": "ignore"
+      },
+      "predicate": {
+        "val": "sem:iri($rdf || 'type')"
+      },
+      "object": {
+        "val": "sem:iri($lvbb || 'InformatieObjectVersie')"
+      }
     }],
     "templates": [{
       "description": "Extraction Template IO VersieMetadata",
       "context": "data:InformatieObjectVersieMetadata",
       "triples": [{
         "subject": {
-          "val": "sem:iri($lvbb || 'id' || $ioVersieId)",
+          "val": "sem:iri($ioVersieId)",
           "invalidValues": "ignore"
         },
         "predicate": {
           "val": "sem:iri($lvbb || 'heeftGeboorteregeling')"
         },
         "object": {
-          "val": "sem:iri($lvbb || 'id' || data:heeftGeboorteregeling/fn:string())"
+          "val": "sem:iri(data:heeftGeboorteregeling/fn:string())"
         }
       }],
       "templates": [{
@@ -79,19 +104,19 @@
         "context": "data:heeftBestanden/data:heeftBestand",
         "triples":[{
           "subject": {
-            "val": "sem:iri($lvbb || 'id' || $ioVersieId)",
+            "val": "sem:iri($ioVersieId)",
             "invalidValues": "ignore"
           },
           "predicate": {
             "val": "sem:iri($lvbb || 'heeftBestand')"
           },
           "object": {
-            "val": "sem:iri($lvbb || 'id/bestand-' || data:Bestand/data:hash/fn:string())",
+            "val": "sem:iri(data:Bestand/data:hash/fn:string())",
             "invalidValues": "ignore"
           }
         },{
           "subject": {
-            "val": "sem:iri($lvbb || 'id/bestand-' || data:Bestand/data:hash/fn:string())",
+            "val": "sem:iri(data:Bestand/data:hash/fn:string())",
             "invalidValues": "ignore"
           },
           "predicate": {

@@ -13,44 +13,49 @@
       "name": "lvbb",
       "val": "'http://koop.overheid.nl/ontology/lvbb/'"
     },{
-      "name": "ioId",
-      "val": "opera:join-id-werk/fn:string()"
-    },{
-      "name": "ioVersieId",
-      "val": "opera:join-id-expressie/fn:string()"
-    },{
-      "name": "bestandsnaam",
-      "val": "opera:gml-filenaam/fn:string()"
+      "name": "bestandsId",
+      "val": "opera:hash/fn:string()"
     }],
     "triples":[{
       "subject": {
-        "val": "sem:iri($ioId)",
+        "val": "sem:iri(opera:join-id-werk/fn:string())",
         "invalidValues": "ignore"
       },
       "predicate": {
         "val": "sem:iri($lvbb || 'heeftIoBestand')"
       },
       "object": {
-        "val": "$bestandsnaam"
+        "val": "sem:iri($bestandsId)"
       }
     },{
       "subject": {
-        "val": "sem:iri($ioId)",
+        "val": "sem:iri(opera:join-id-expressie/fn:string())",
         "invalidValues": "ignore"
       },
       "predicate": {
         "val": "sem:iri($lvbb || 'heeftIoBestand')"
       },
       "object": {
-        "val": "$bestandsnaam"
+        "val": "sem:iri($bestandsId)"
       }
-    }],
+    },{
+      "subject": {
+       "val": "sem:iri($bestandsId)",
+       "invalidValues": "ignore"
+      },
+      "predicate": {
+       "val": "sem:iri($lvbb || 'bestandsnaam')"
+      },
+      "object": {
+       "val": "opera:gml-filenaam/fn:string()"
+      }
+     }],
     "templates": [{
       "description": "Extraction Template for gml-ids",
       "context": "opera:geo-locaties/opera:gml-id",
       "triples": [{
         "subject": {
-          "val": "sem:iri($ioVersieId)",
+          "val": "sem:iri($bestandsId)",
           "invalidValues": "ignore"
         },
         "predicate": {

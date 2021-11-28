@@ -16,6 +16,9 @@
       "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
     }],
     "vars": [{
+      "name": "rdf",
+      "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+    },{
       "name": "lvbb",
       "val": "'http://koop.overheid.nl/ontology/lvbb/'"
     },{
@@ -45,6 +48,17 @@
           "invalidValues": "ignore"
         },
         "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($lvbb || 'Besluit')"
+        }
+      },{
+        "subject": {
+          "val": "sem:iri($besluitId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
           "val": "sem:iri($lvbb || 'heeftVersie')"
         },
         "object": {
@@ -60,6 +74,17 @@
         },
         "object": {
           "val": "$besluitVersieId"
+        }
+      },{
+        "subject": {
+          "val": "sem:iri($besluitVersieId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($lvbb || 'BesluitVersie')"
         }
       }],
       "templates": [{
