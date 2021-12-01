@@ -1,0 +1,93 @@
+{
+  "template": {
+    "description": "Extraction Template for gml-bestand",
+    "context": "/mow:Aanleveringen/mow:Aanlevering",
+    "collections": [
+      "/opera/document/manifest-ow"
+    ],
+    "pathNamespace": [
+      {
+        "prefix": "mow",
+        "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/manifest-ow"
+      }
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+      },
+      {
+        "name": "regelingId",
+        "val": "mow:WorkIDRegeling/fn:string()"
+      },
+      {
+        "name": "imow",
+        "val": "'http://www.geostandaarden.nl/imow/'"
+      }
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template for ow Bestand",
+        "context": "mow:Bestand",
+        "vars": [
+          {
+            "name": "naam",
+            "val": "mow:naam/fn:string()"
+          },
+          {
+            "name": "bestandId",
+            "val": "sem:uuid()"
+          }
+        ],
+        "triples":  [
+          {
+            "subject": {
+              "val": "$bestandId"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'bestandsnaam')"
+            },
+            "object": {
+              "val": "$naam"
+            }
+
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for ow Bestand",
+            "context": "mow:objecttype",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelingId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'linkToOwObject')"
+                },
+                "object": {
+                  "val": "sem:iri($bestandId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($bestandId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || .)"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

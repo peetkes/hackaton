@@ -1,0 +1,148 @@
+{
+  "template": {
+    "description": "Extraction Template for Regelinggebied bestand",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/rg:Regelingsgebied]",
+    "collections": [
+      "/opera/document/ow-bestand"
+    ],
+    "pathNamespace": [
+      {
+        "prefix": "rg",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/regelingsgebied"
+      },
+      {
+        "prefix": "l",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/locatie"
+      },
+      {
+        "prefix": "ow",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/owobject"
+      },
+      {
+        "prefix": "ow-dc",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+      },
+      {
+        "prefix": "r",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/regels"
+      },
+      {
+        "prefix": "rol",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/regelsoplocatie"
+      },
+      {
+        "prefix": "sl",
+        "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+      },
+      {
+        "prefix": "xlink",
+        "namespaceUri": "http://www.w3.org/1999/xlink"
+      }
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+      },
+      {
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+      },
+      {
+        "name": "imow",
+        "val": "'http://www.geostandaarden.nl/imow/'"
+      },
+      {
+        "name": "owId",
+        "val": "sl:inhoud/sl:leveringsId/fn:string()"
+      },
+      {
+        "name": "gebied",
+        "val": "sl:inhoud/sl:gebied/fn:string()"
+      },
+      {
+        "name": "bestand",
+        "val": "fn:base-uri(.)"
+      }
+    ],
+    "triples": [
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'workId')"
+        },
+        "object": {
+          "val": "$owId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'bestand')"
+        },
+        "object": {
+          "val": "$bestand"
+        }
+      }
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template for Regelinggebied ow-bestand",
+        "context": "sl:stand/ow-dc:owObject/rg:Regelinggebied",
+        "vars": [{
+          "name": "regelinggebiedId",
+          "val": "rg:identificatie/fn:string()"
+        }],
+        "triples": [{
+          "subject": {
+            "val": "sem:iri($imow || 'id/' || $owId)",
+            "invalidValues": "ignore"
+          },
+          "predicate": {
+            "val": "sem:iri($imow || 'heeftRegelinggebied')"
+          },
+          "object": {
+            "val": "sem:iri($regelinggebiedId)"
+          }
+        },{
+          "subject": {
+            "val": "sem:iri($regelinggebiedId)",
+            "invalidValues": "ignore"
+          },
+          "predicate": {
+            "val": "sem:iri($rdf || 'type')"
+          },
+          "object": {
+            "val": "sem:iri($imow || fn:local-name(.))"
+          }
+        }],
+        "templates": [{
+          "description": "Extraction Template for Regelinggebied locatieaanduiding",
+          "context": "rg:locatieaanduiding/l:LocatieRef",
+          "triples": [{
+            "subject": {
+              "val": "sem:iri($regelinggebiedId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'locatieaanduiding')"
+            },
+            "object": {
+              "val": "sem:iri(@xlink:href/fn:string())"
+            }
+          }]
+        }]
+      }
+    ]
+  }
+}
