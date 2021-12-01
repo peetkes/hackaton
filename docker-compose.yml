@@ -1,0 +1,32 @@
+version: '3.8'
+
+networks:
+  hackaton_network:
+        driver: bridge
+        name: hackaton_network
+
+services:
+  marklogic:
+    image: store/marklogicdb/marklogic-server:${mlVersion}-dev-centos
+    extra_hosts:
+      host.docker.internal: host-gateway
+    ports:
+        - "${mlSystemPortMapping}"
+        - "${mlApplicationPortMapping}"
+    hostname: "${mlHost}"
+    container_name: "${mlHost}"
+    environment:
+      - MARKLOGIC_INIT=true
+      - MARKLOGIC_ADMIN_USERNAME=${mlAdmin}
+      - MARKLOGIC_ADMIN_PASSWORD=${mlPassword}
+      - TZ=Europe/Amsterdam
+    volumes:
+      - ./volumes/${mlHost}/:/var/opt/MarkLogic/:delegated
+      - ${baseVolume}:/data
+    networks:
+      - hackaton_network
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G

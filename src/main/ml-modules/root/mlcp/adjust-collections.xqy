@@ -84,6 +84,7 @@ declare function local:get-geo-properties(
   return <opera:gml-properties>
     <opera:schemaversie>{$gml/@schemaversie/fn:string()}</opera:schemaversie>
     <opera:gml-filenaam>{fn:tokenize($uri,'/')[last()]}</opera:gml-filenaam>
+    <opera:hash>{ xdmp:sha512($content) }</opera:hash>
     <opera:join-id-werk>{$gml//geo:FRBRWork/fn:string()}</opera:join-id-werk>
     <opera:join-id-expressie>{$gml//geo:FRBRExpression/fn:string()}</opera:join-id-expressie>
     {
