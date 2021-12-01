@@ -13,9 +13,8 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-imow:locatieaanduidingIdentifier a dc:Identifier .
 imow:workIdentifier a dc:Identifier .
-imow:akn imow:workId imow:workId .
+imow:akn imow:workId dc:identifier . #!
 imow:wId a dc:identifier .
 
 imow:regeltekstId lvbb:linkToWId imow:workIdentifier ;
@@ -23,7 +22,7 @@ imow:regeltekstId lvbb:linkToWId imow:workIdentifier ;
     lvbb:linkToWid imow:wId ;
     imow:locatieaanduiding dc:locatieaanduidingIdentifier ;
     imow:artikelOfLid  xsd:string;
-    imow:gebiedsaanwijzingId r:gebiedsaanwijzing ;
+    imow:gebiedsaanwijzing r:gebiedsaanwijzing ;
     imow:activiteitaanduiding r:activiteitaanduiding .
 
 imow:ponsId a dc:Identifier ;
@@ -35,7 +34,8 @@ rol:omgevingswaardeId imow:regeltekst imow:regelTekstIdentifier .
 l:gebiedId imow:regeltekst imow:regelTekstId ;
     l:geometrieId dc:Identifier .
 
-ow:owBestand imow:workId imow:workIdentifier ;
+ow-dc:owBestand imow:heeftGebiedsaanwijzing r:gebiedsaanwijzing ;
+   imow:workId imow:workIdentifier ;
    imow:heeftActiviteit rol:Activiteit ;
    imow:heeftGebied l:gebiedId ;
    imow:heeftOmgevingswaarde rol:omgevingswaardeId ;
@@ -48,12 +48,11 @@ ow:owBestand imow:workId imow:workIdentifier ;
 rol:omgevingswaardeId imow:locatieaanduiding dc:locatieaanduidingIdentifier .
 
 rol:Activiteit imow:regeltekst imow:regelTekstId;
-    imow:locatieaanduidingId dc:locatieaanduidingIdentifier ;
-    imow:bovenliggendeActiviteitId rol:Activiteit .
+    imow:locatieaanduiding dc:locatieaanduidingIdentifier ;
+    imow:bovenliggendeActiviteit rol:Activiteit .
 
-imow:gebiedsaanwijzingId imow:heeftGebiedsaanwijzing r:gebiedsaanwijzing ;
-    imow:regeltekst imow:regelTekstId ;
-    imow:locatieaanduidingId dc:locatieaanduidingIdentifier .
+r:gebiedsaanwijzing imow:regeltekst imow:regelTekstId ;
+    imow:locatieaanduiding dc:locatieaanduidingIdentifier .
 
 
 
