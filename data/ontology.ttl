@@ -12,24 +12,26 @@
 @prefix lvbb: <http://koop.overheid.nl/ontology/lvbb/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 imow:workIdentifier a dc:Identifier .
-imow:akn imow:workId dc:identifier . #!
+imow:akn imow:workId dc:identifier .
 imow:wId a dc:identifier .
 
 imow:regeltekstId lvbb:linkToWId imow:workIdentifier ;
     lvbb:linkToRegeling imow:akn ;
     lvbb:linkToWid imow:wId ;
-    imow:locatieaanduiding dc:locatieaanduidingIdentifier ;
+    imow:locatieaanduiding imow:locatie;
     imow:artikelOfLid  xsd:string;
     imow:gebiedsaanwijzing r:gebiedsaanwijzing ;
     imow:activiteitaanduiding r:activiteitaanduiding .
 
 imow:ponsId a dc:Identifier ;
-    imow:regelTekstId imow:regelTekstIdentifier ;
-    imow:locatieaanduiding dc:locatieaanduidingIdentifier .
+    imow:regeltekst imow:regelTekstIdentifier ;
+    imow:locatieaanduiding imow:locatie.
 
-rol:omgevingswaardeId imow:regeltekst imow:regelTekstIdentifier .
+rol:omgevingswaardeId imow:regeltekst imow:regelTekstIdentifier ;
+    <heeftNormWaarde> rol:normWaarde .
 
 l:gebiedId imow:regeltekst imow:regelTekstId ;
     l:geometrieId dc:Identifier .
@@ -43,19 +45,45 @@ ow-dc:owBestand imow:heeftGebiedsaanwijzing r:gebiedsaanwijzing ;
    imow:heeftRegelTekst imow:regelTekstId ;
    lvbb:linkToRegeling imow:akn ; 
    imow:bestand xsd:String ;
-   imow:heeftRegelVoorIedereen imow:regelTekstId .
+   <heeftOmgevingsNorm> <omgevingsNorm> ;
+   imow:heeftRegel imow:regelVoorIedereen .
+   
+imow:regelVoorIedereen imow:regeltekst imow:regelTekstId ;
+   <heeftOmgevingsNorm> <omgevingsNorm> .
 
-rol:omgevingswaardeId imow:locatieaanduiding dc:locatieaanduidingIdentifier .
+imow:regelTekstId imow:heeftJuridischeRegel imow:juridischeRegel .
 
-rol:Activiteit imow:regeltekst imow:regelTekstId;
-    imow:locatieaanduiding dc:locatieaanduidingIdentifier ;
+imow:juridischeRegel a owl:class ;
+    imow:locatieaanduiding imow:locatie .
+r:omgevingswaardeRegel a imow:juridischeRegel .
+imow:regelVoorIedereen a imow:juridischeRegel .
+imow:instructieRegel a imow:juridischeRegel .
+
+
+imow:locatie a owl:class .
+<punt> a imow:locatie ;
+    <heeftCio> <cio> .
+<puntengroep> a imow:locatie ;
+    <heeftPunt> <punt> .
+<gebied> a imow:locatie ;
+    <heeftCio> <cio> .
+<gebiedengroep> a imow:locatie ;
+    <heeftGebied> <gebied> . 
+<lijn> a imow:locatie ;
+    <heeftCio> <cio> .
+<lijnengroep> a imow:locatie ;
+    <heeftLijnen> <lijn> .
+
+<gio> a owl:class .
+<cio> a <gio> .
+
+<heeftOmgevingsNorm> <heeftNormWaarde> rol:normWaarde ;
+    imow:locatieaanduiding imow:locatie .
+
+rol:Activiteit imow:regeltekst imow:regelTekstId ;
+    imow:locatieaanduiding imow:locatie ;
+    imow:gerelateerdeActiviteir rol:Activiteit ;
     imow:bovenliggendeActiviteit rol:Activiteit .
 
 r:gebiedsaanwijzing imow:regeltekst imow:regelTekstId ;
-    imow:locatieaanduiding dc:locatieaanduidingIdentifier .
-
-
-
-
-
-    
+    imow:locatieaanduiding imow:locatie .
