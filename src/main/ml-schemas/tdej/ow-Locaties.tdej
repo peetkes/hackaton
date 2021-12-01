@@ -1,19 +1,11 @@
 {
   "template": {
-    "description": "Extraction Template for gml-bestand",
-    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/(rol:Gebied|rol:Gebiedengroep|rol:Ambtsgebied)]",
+    "description": "Extraction Template for Locaties bestand",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/(l:Gebied|l:Gebiedengroep|l:Ambtsgebied)]",
     "collections": [
       "/opera/document/ow-bestand"
     ],
     "pathNamespace": [
-      {
-        "prefix": "ga",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/gebiedsaanwijzing"
-      },
-      {
-        "prefix": "g",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/geometrie"
-      },
       {
         "prefix": "l",
         "namespaceUri": "http://www.geostandaarden.nl/imow/locatie"
@@ -25,14 +17,6 @@
       {
         "prefix": "ow-dc",
         "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
-      },
-      {
-        "prefix": "p",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/pons"
-      },
-      {
-        "prefix": "r",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/regels1"
       },
       {
         "prefix": "rol",
@@ -140,7 +124,7 @@
         ],
         "templates": [{
           "description": "Extraction Template for geometrie",
-          "context": "l:geometrie/g:GeometrieRef",
+          "context": "l:geometrie/l:GeometrieRef",
           "triples": [{
             "subject": {
               "val": "sem:iri($gebiedId)",
@@ -204,7 +188,7 @@
         ],
         "templates": [{
           "description": "Extraction Template for groepselement",
-          "context": "l:groepselement/g:GebiedRef",
+          "context": "l:groepselement/l:GebiedRef",
           "triples": [{
             "subject": {
               "val": "sem:iri($gebiedId)",
