@@ -25,8 +25,10 @@ imow:bestandIdentier imow:bestandsnaam xsd:string .
 imow:regelTekstId lvbb:linkToRegeling imow:akn ;
     lvbb:linkToWid imow:wId ;
     imow:locatieaanduiding imow:locatie ;
-    imow:artikelOfLid  xsd:string;
+    imow:artikelOfLid  xsd:string ;
+    imow:heeftJuridischeRegel imow:juridischeRegel ;
     imow:gebiedsaanwijzing r:gebiedsaanwijzing ;
+    imow:gerelateerdeRegelingTekst imow:regelTekstId ;
     imow:activiteitaanduiding r:activiteitaanduiding .
 
 <regelingId> imow:linkToOwObject imow:bestandIdentier ;
@@ -51,13 +53,12 @@ ow-dc:owBestand imow:heeftGebiedsaanwijzing r:gebiedsaanwijzing ;
    imow:heeftRegelTekst imow:regelTekstId ;
    lvbb:linkToRegeling imow:akn ; 
    imow:bestand xsd:String ;
+   imow:bestand imow:bestandIdentier ;
    <heeftOmgevingsNorm> <omgevingsNorm> ;
    imow:heeftRegel imow:regelVoorIedereen .
    
 imow:regelVoorIedereen imow:regeltekst imow:regelTekstId ;
    <heeftOmgevingsNorm> <omgevingsNorm> .
-
-imow:regelTekstId imow:heeftJuridischeRegel imow:juridischeRegel .
 
 imow:juridischeRegel a owl:class ;
     imow:locatieaanduiding imow:locatie .
@@ -88,7 +89,7 @@ imow:locatie a owl:class .
 
 rol:Activiteit imow:regeltekst imow:regelTekstId ;
     imow:locatieaanduiding imow:locatie ;
-    imow:gerelateerdeActiviteir rol:Activiteit ;
+    imow:gerelateerdeActiviteit rol:Activiteit ;
     imow:bovenliggendeActiviteit rol:Activiteit .
 
 r:gebiedsaanwijzing imow:regeltekst imow:regelTekstId ;
