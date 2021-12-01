@@ -59,7 +59,7 @@
       "val": "sl:inhoud/sl:gebied/fn:string()"
     },{
       "name": "bestand",
-      "val": "fn:base-uri(.)"
+      "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
     }],
     "triples": [{
       "subject": {
