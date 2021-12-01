@@ -7,16 +7,16 @@
                              xsi:schemaLocation="https://standaarden.overheid.nl/lvbb/stop/aanlevering https://standaarden.overheid.nl/lvbb/1.1.0/lvbb-stop-aanlevering.xsd">
    <InformatieObjectVersie>
       <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <FRBRWork>/join/id/regdata/gm0297/2019/Centrumgebied</FRBRWork>
-         <FRBRExpression>/join/id/regdata/gm0297/2019/Centrumgebied/nld@2019-06-18;3520</FRBRExpression>
+         <FRBRWork>/join/id/regdata/gm0297/2019/Zuilichem</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0297/2019/Zuilichem/nld@2019-06-18;3520</FRBRExpression>
          <soortWork>/join/id/stop/work_010</soortWork>
       </ExpressionIdentificatie>
       <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
          <heeftBestanden>
             <heeftBestand>
                <Bestand>
-                  <bestandsnaam>Centrumgebied.gml</bestandsnaam>
-                  <hash>c69233177e484c2af3e0044bcf6735cf282609a00e16dd0fbe04105122f7d037fd57401ef3056d36e540868a7337003f60cfed0ad28bb49915f240176d559041</hash>
+                  <bestandsnaam>Zuilichem.gml</bestandsnaam>
+                  <hash>7a11557be18d011e53dafd1d572223616dd3e285787a4e00117d38e51450c6120db1919b79743ba2fffb26cbdef6ccde2d874a99ef076392be481e8962a8d4de</hash>
                </Bestand>
             </heeftBestand>
          </heeftBestanden>
@@ -26,12 +26,12 @@
          <eindverantwoordelijke>/tooi/id/gemeente/gm0297</eindverantwoordelijke>
          <maker>/tooi/id/gemeente/gm0297</maker>
          <alternatieveTitels>
-            <alternatieveTitel>Centrumgebied</alternatieveTitel>
+            <alternatieveTitel>Zuilichem</alternatieveTitel>
          </alternatieveTitels>
-         <officieleTitel>/join/id/regdata/gm0297/2019/Centrumgebied</officieleTitel>
+         <officieleTitel>/join/id/regdata/gm0297/2019/Zuilichem</officieleTitel>
          <publicatieinstructie>TeConsolideren</publicatieinstructie>
          <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
-         <naamInformatieObject>Centrumgebied</naamInformatieObject>
+         <naamInformatieObject>Zuilichem</naamInformatieObject>
       </InformatieObjectMetadata>
    </InformatieObjectVersie>
 </AanleveringInformatieObject>

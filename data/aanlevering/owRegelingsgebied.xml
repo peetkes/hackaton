@@ -4,7 +4,7 @@
                  xmlns:sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
                  xmlns:ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand"
                  xmlns:ow="http://www.geostandaarden.nl/imow/owobject"
-                 xmlns:p="http://www.geostandaarden.nl/imow/pons"
+                 xmlns:rg="http://www.geostandaarden.nl/imow/regelingsgebied"
                  xmlns:l="http://www.geostandaarden.nl/imow/locatie"
                  xsi:schemaLocation="http://www.geostandaarden.nl/imow/bestanden/deelbestand https://register.geostandaarden.nl/xmlschema/tpod/v2.0.0/bestanden-ow/deelbestand-ow/IMOW_Deelbestand.xsd">
    <sl:standBestand>
@@ -13,18 +13,17 @@
          <sl:gebied>Gemeentestad</sl:gebied>
          <sl:leveringsId>abc-20190221-0801</sl:leveringsId>
          <sl:objectTypen>
-            <sl:objectType>Pons</sl:objectType>
+            <sl:objectType>Regelingsgebied</sl:objectType>
          </sl:objectTypen>
       </sl:inhoud>
       <sl:stand>
-         <ow-dc:owObject><!--Met de Pons duid je aan dat de oude plannen niet meer getoond hoeven te worden op het gebied dat je meelevert.-->
-            <p:Pons>
-               <p:identificatie>nl.imow-gm0297.pons.2019000001</p:identificatie>
-               <p:locatieaanduiding>
-                  <l:LocatieRef xlink:href="nl.imow-gm0297.pons.pons"/>
-                  <!--<l:LocatieRef xlink:href="nl.imow-gm0297.ambtsgebied.ZaltbommelAmbtsgebied"/>-->
-               </p:locatieaanduiding>
-            </p:Pons>
+         <ow-dc:owObject><!--Met het Regelingsgebied geef je het gebied aan waar de regeling van toepassing is (in dit geval Omgevingsplan Zaltbommel)-->
+            <rg:Regelingsgebied>
+               <rg:identificatie>nl.imow-gm0297.regelingsgebied.2019000001</rg:identificatie>
+               <rg:locatieaanduiding>
+                  <l:LocatieRef xlink:href="nl.imow-gm0297.ambtsgebied.ZaltbommelAmbtsgebied"/>
+               </rg:locatieaanduiding>
+            </rg:Regelingsgebied>
          </ow-dc:owObject>
       </sl:stand>
    </sl:standBestand>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ow-dc:owBestand xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+                 xmlns:ow="http://www.geostandaarden.nl/imow/owobject"
+                 xmlns:sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+                 xmlns:k="http://www.geostandaarden.nl/imow/kaart"
+                 xmlns:rol="http://www.geostandaarden.nl/imow/regelsoplocatie"
+                 xmlns:r="http://www.geostandaarden.nl/imow/regels"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.geostandaarden.nl/imow/bestanden/deelbestand https://register.geostandaarden.nl/xmlschema/tpod/v2.0.0/bestanden-ow/deelbestand-ow/IMOW_Deelbestand.xsd">
+   <sl:standBestand>
+      <sl:dataset>Gemeentestad</sl:dataset>
+      <sl:inhoud>
+         <sl:gebied>Gemeentestad</sl:gebied>
+         <sl:leveringsId>abc-20190221-0801</sl:leveringsId>
+         <sl:objectTypen>
+            <sl:objectType>Kaart</sl:objectType>
+         </sl:objectTypen>
+      </sl:inhoud>
+      <sl:stand>
+         <ow-dc:owObject>
+            <k:Kaart>
+               <k:identificatie>nl.imow-gm0297.kaart.2019000001</k:identificatie>
+               <k:naam>Welstandskaart</k:naam>
+               <k:nummer>001</k:nummer>
+               <k:uitsnede>
+                  <k:Kaartextent><!-- schema beperkt het extent tot integers, terwijl voor RD New 3 decimalen is afgesproken? -->
+                     <k:minX>134216</k:minX>
+                     <k:minY>421753</k:minY>
+                     <k:maxX>140251</k:maxX>
+                     <k:maxY>426020</k:maxY>
+                  </k:Kaartextent>
+               </k:uitsnede>
+               <k:kaartlagen>
+                  <k:Kaartlaag>
+                     <k:identificatie>nl.imow-gm0297.kaartlaag.2019000001</k:identificatie>
+                     <k:naam>welstandslaag</k:naam>
+                     <k:niveau>1</k:niveau>
+                     <k:normweergave>
+                        <rol:OmgevingsnormRef xlink:href="nl.imow-gm0297.omgevingsnorm.2019000003"/>
+                     </k:normweergave>
+                  </k:Kaartlaag>
+               </k:kaartlagen>
+            </k:Kaart>
+         </ow-dc:owObject>
+      </sl:stand>
+   </sl:standBestand>
+</ow-dc:owBestand>

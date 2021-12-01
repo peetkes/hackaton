@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<manifest 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns="http://www.overheid.nl/2017/lvbb" 
-    xsi:schemaLocation="http://www.overheid.nl/2017/lvbb ../lvbb/lvbb-transport.xsd">
+<manifest xmlns="http://www.overheid.nl/2017/lvbb">
     <bestand>
-        <bestandsnaam>akn_nl_bill_gm0037-3520-01.xml</bestandsnaam>
+        <bestandsnaam>akn_nl_bill_gm0297-3520-01.xml</bestandsnaam>
         <contentType>application/xml</contentType>
     </bestand>
     <bestand>
@@ -36,19 +33,23 @@
         <contentType>application/xml</contentType>
     </bestand>
     <bestand>
-        <bestandsnaam>GIO006-Zuilichem_industriegebied_1.xml</bestandsnaam>
+        <bestandsnaam>GIO006-Bouwhoogte.xml</bestandsnaam>
         <contentType>application/xml</contentType>
     </bestand>
     <bestand>
-        <bestandsnaam>GIO007-Zuilichem_industriegebied_2.xml</bestandsnaam>
+        <bestandsnaam>GIO007-Welstand.xml</bestandsnaam>
         <contentType>application/xml</contentType>
     </bestand>
     <bestand>
-        <bestandsnaam>GIO008-Zuilichem_industriegebied_3.xml</bestandsnaam>
+        <bestandsnaam>GIO008-Zuilichem.xml</bestandsnaam>
         <contentType>application/xml</contentType>
     </bestand>
     <bestand>
         <bestandsnaam>Bedrijf_categorie_2.gml</bestandsnaam>
+        <contentType>application/gml+xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>Bouwhoogte.gml</bestandsnaam>
         <contentType>application/gml+xml</contentType>
     </bestand>
     <bestand>
@@ -60,6 +61,10 @@
         <contentType>application/gml+xml</contentType>
     </bestand>
     <bestand>
+        <bestandsnaam>Welstand.gml</bestandsnaam>
+        <contentType>application/gml+xml</contentType>
+    </bestand>
+    <bestand>
         <bestandsnaam>Zone_A.gml</bestandsnaam>
         <contentType>application/gml+xml</contentType>
     </bestand>
@@ -68,15 +73,7 @@
         <contentType>application/gml+xml</contentType>
     </bestand>
     <bestand>
-        <bestandsnaam>Zuilichem_industriegebied_1.gml</bestandsnaam>
-        <contentType>application/gml+xml</contentType>
-    </bestand>
-    <bestand>
-        <bestandsnaam>Zuilichem_industriegebied_2.gml</bestandsnaam>
-        <contentType>application/gml+xml</contentType>
-    </bestand>
-    <bestand>
-        <bestandsnaam>Zuilichem_industriegebied_3.gml</bestandsnaam>
+        <bestandsnaam>Zuilichem.gml</bestandsnaam>
         <contentType>application/gml+xml</contentType>
     </bestand>
     <bestand>
@@ -89,6 +86,10 @@
     </bestand>
     <bestand>
         <bestandsnaam>owGebiedsaanwijzingen-Gemeentestad.xml</bestandsnaam>
+        <contentType>application/xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>owKaart.xml</bestandsnaam>
         <contentType>application/xml</contentType>
     </bestand>
     <bestand>
@@ -106,5 +107,29 @@
     <bestand>
         <bestandsnaam>owRegeltekst-Gemeentestad.xml</bestandsnaam>
         <contentType>application/xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>owRegelingsgebied.xml</bestandsnaam>
+        <contentType>application/xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>owSymbolisatieItem.xml</bestandsnaam>
+        <contentType>application/xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>PonsGebied.xml</bestandsnaam>
+        <contentType>application/xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>PonsGebied.gml</bestandsnaam>
+        <contentType>application/gml+xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>IO009.xml</bestandsnaam>
+        <contentType>application/xml</contentType>
+    </bestand>
+    <bestand>
+        <bestandsnaam>Regdata.pdf</bestandsnaam>
+        <contentType>application/pdf</contentType>
     </bestand>
 </manifest>

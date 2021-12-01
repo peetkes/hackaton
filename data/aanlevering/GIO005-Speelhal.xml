@@ -1,33 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--Voor validatie is het noodzakelijk om ook de catalogi van de gepubliceerde versie 1.0.4 te laden.-->
 <AanleveringInformatieObject xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
-                             schemaversie="1.1.0">
-  <InformatieObjectVersie>
+                             xmlns:geo="https://standaarden.overheid.nl/stop/imop/geo/"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             schemaversie="1.1.0"
+                             xsi:schemaLocation="https://standaarden.overheid.nl/lvbb/stop/aanlevering https://standaarden.overheid.nl/lvbb/1.1.0/lvbb-stop-aanlevering.xsd">
+   <InformatieObjectVersie>
       <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <FRBRWork>/join/id/regdata/gm0037/2019/Speelhal</FRBRWork>
-         <FRBRExpression>/join/id/regdata/gm0037/2019/Speelhal/nld@2019-06-18;3520</FRBRExpression>
+         <FRBRWork>/join/id/regdata/gm0297/2019/Speelhal</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0297/2019/Speelhal/nld@2019-06-18;3520</FRBRExpression>
          <soortWork>/join/id/stop/work_010</soortWork>
       </ExpressionIdentificatie>
       <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <heeftGeboorteregeling>/akn/nl/act/gm0037/2019/reg456</heeftGeboorteregeling>
          <heeftBestanden>
             <heeftBestand>
                <Bestand>
                   <bestandsnaam>Speelhal.gml</bestandsnaam>
-                  <hash>e03cf2269c97161035a4c36e459124043abdd83b4f78e4eebf4a2576ab674c11f22909367ffbf1af5f091f9f0dc5cf803ce8331d0c0f8eb5fe28443b656c9351</hash>
+                  <hash>885115289371c1c96d2182ffac0d7dcaf56b0b6a1ad7aee493156dab7645edafb9e2379749e9723689a7700225310a09e35010dbbc77e397106af6a29ffca62e</hash>
                </Bestand>
             </heeftBestand>
          </heeftBestanden>
+         <heeftGeboorteregeling>/akn/nl/act/gm0297/2019/reg456</heeftGeboorteregeling>
       </InformatieObjectVersieMetadata>
       <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <eindverantwoordelijke>/tooi/id/gemeente/gm0037</eindverantwoordelijke>
-         <maker>/tooi/id/gemeente/gm0037</maker>
+         <eindverantwoordelijke>/tooi/id/gemeente/gm0297</eindverantwoordelijke>
+         <maker>/tooi/id/gemeente/gm0297</maker>
          <alternatieveTitels>
             <alternatieveTitel>Speelhal</alternatieveTitel>
          </alternatieveTitels>
-         <naamInformatieObject>Speelhal</naamInformatieObject>
-         <officieleTitel>/join/id/regdata/gm0037/2019/Speelhal</officieleTitel>
+         <officieleTitel>/join/id/regdata/gm0297/2019/Speelhal</officieleTitel>
          <publicatieinstructie>TeConsolideren</publicatieinstructie>
          <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+         <naamInformatieObject>Speelhal</naamInformatieObject>
       </InformatieObjectMetadata>
-  </InformatieObjectVersie>
+   </InformatieObjectVersie>
 </AanleveringInformatieObject>

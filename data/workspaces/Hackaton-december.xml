@@ -1,4 +1,73 @@
-{
+<export><workspace name="Hackaton-december"><query name="Query 1" focus="false" listorder="1" taborder="1" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+
+xdmp:document-get-metadata("/Bedrijf_categorie_2.gml")</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+declare namespace ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand/v20190901";
+declare namespace r="http://www.geostandaarden.nl/imow/regels/v20190901";
+declare namespace ow="http://www.geostandaarden.nl/imow/owobject/v20190709" ;
+declare namespace sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek/v20190301";
+declare namespace rol="http://www.geostandaarden.nl/imow/regelsoplocatie/v20190901" ;
+
+let $besluit-tde := xdmp:unquote(xdmp:filesystem-file("/data/standaard-stop/tdej/besluit.tdej"))
+let $regeling-tde := xdmp:unquote(xdmp:filesystem-file("/data/standaard-stop/tdej/regeling.tdej"))
+let $io-tde := xdmp:unquote(xdmp:filesystem-file("/data/standaard-stop/tdej/informatie-object.tdej"))
+let $gml-tde := xdmp:unquote(xdmp:filesystem-file("/data/standaard-stop/tdej/gml-bestand.tdej"))
+let $ow-tde := xdmp:unquote(xdmp:filesystem-file("/data/standaard-stop/tdej/ow-bestand.tdej"))
+let $besluit := fn:doc("/akn_nl_bill_gm0037-3520-01.xml")/node()
+let $io := fn:doc("/GIO001-Bedrijf_categorie_2.xml")/node()
+let $gml := xdmp:document-properties("/Bedrijf_categorie_2.gml")
+let $ow := fn:doc("/owRegeltekst-Gemeentestad.xml")
+return (
+  tde:validate($ow-tde),
+  tde:node-data-extract($ow, $ow-tde)
+)
+</query><query name="Query 3" focus="true" listorder="3" taborder="3" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+
+describe &lt;http://www.geostandaarden.nl/imow/id/abc-20190221-0801&gt;</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+let $akn := "/akn"
+
+return (
+  fn:replace($akn, "(/[^/]+/[^/]+/[^/]+/[^/]+/[^/]+/[^/]+)/.*", "$1"),
+  fn:tokenize($akn,"/")[last()]
+)</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="4251467559767176687" server="11795951846129597549" database-name="Documents" server-name="App-Services" mode="xquery">xquery version "1.0-ml"; 
+let $doc :=binary{xs:hexBinary("AA")} 
+let $_ := xdmp:document-insert("/test.bin",$doc,map:map()=&gt;map:with("collections","test"))
+let $_ := xdmp:document-add-properties("/test.bin",&lt;updateDate&gt;{fn:current-date()}&lt;/updateDate&gt;)
+return ()</query><query name="Query 6" focus="false" listorder="6" taborder="6" active="true" database="4251467559767176687" server="11795951846129597549" database-name="Documents" server-name="App-Services" mode="xquery">xquery version "1.0-ml"; 
+import module namespace tde = "http://marklogic.com/xdmp/tde" 
+        at "/MarkLogic/tde.xqy";
+let $tde :=&lt;template xmlns="http://marklogic.com/xdmp/tde"&gt; 
+  &lt;collections&gt;&lt;collection&gt;test&lt;/collection&gt;&lt;/collections&gt;
+  &lt;context&gt;/prop:properties&lt;/context&gt;
+  &lt;vars&gt;
+      &lt;var&gt;
+        &lt;name&gt;EX&lt;/name&gt;
+        &lt;val&gt;"http://example.org/ex#"&lt;/val&gt;
+      &lt;/var&gt;
+    &lt;/vars&gt;
+  &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+&lt;triples&gt;
+     &lt;triple&gt;
+      &lt;subject&gt;
+        &lt;val&gt;sem:iri( $EX || "updatedAt" )&lt;/val&gt;
+      &lt;/subject&gt;
+      &lt;predicate&gt;
+        &lt;val&gt;sem:iri( $EX || "is" )&lt;/val&gt;
+      &lt;/predicate&gt;
+      &lt;object&gt;
+        &lt;val&gt;./updateDate/fn:string()&lt;/val&gt;
+      &lt;/object&gt;
+    &lt;/triple&gt;
+   &lt;/triples&gt;
+&lt;/template&gt;
+let $binary := xdmp:document-properties("/test.bin")
+return (
+  tde:validate($tde),
+  tde:node-data-extract($binary, $tde)
+)
+</query><query name="Query 7" focus="false" listorder="7" taborder="7" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="javascript">'use strict';
+const tde = require("/MarkLogic/tde.xqy");
+let doc = xdmp.toJSON({
   "template": {
     "description": "Extraction Template for gml-bestand",
     "context": "/ow-dc:owBestand/sl:standBestand",
@@ -107,7 +176,7 @@
       }],
       "templates": [{
         "description": "Extraction Template for Activiteit locatieaanduiding",
-        "context": "rol:locatieaanduiding/l:LocatieRef",
+        "context": "rol:locatieaanduiding/l-ref:LocatieRef",
         "triples": [{
           "subject": {
             "val": "sem:iri($activiteitId)",
@@ -449,4 +518,5 @@
       }]
     }]
   }
-}
+});
+tde.validate([doc])</query></workspace></export>

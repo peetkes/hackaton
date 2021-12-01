@@ -1,139 +1,252 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ow-dc:owBestand xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:xlink="http://www.w3.org/1999/xlink" 
-	xmlns:l="http://www.geostandaarden.nl/imow/locatie/v20190901" 
-	xmlns:g-ref="http://www.geostandaarden.nl/imow/geometrie-ref/v20190901"
-	xmlns:ga-ref="http://www.geostandaarden.nl/imow/gebiedsaanwijzing-ref/v20190709" 
-	xmlns:sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek/v20190301" 
-	xmlns:l-ref="http://www.geostandaarden.nl/imow/locatie-ref/v20190901" 
-	xmlns:rol-ref="http://www.geostandaarden.nl/imow/regelsoplocatie-ref/v20190709" 
-	xmlns:r-ref="http://www.geostandaarden.nl/imow/regels-ref/v20190709"
-	xmlns:ow="http://www.geostandaarden.nl/imow/owobject/v20190709"
-	xmlns:ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand/v20190901" 
-	xsi:schemaLocation="http://www.geostandaarden.nl/imow ../../../xsd/imow/bestanden-ow/deelbestand-ow/v20190901/IMOW_Deelbestand_v0_9_8_2.xsd">
-	<sl:standBestand>
-		<sl:dataset>Gemeentestad</sl:dataset>
-		<sl:inhoud>
-			<sl:gebied>Gemeentestad</sl:gebied>
-			<sl:leveringsId>abc-20190221-0801</sl:leveringsId>
-			<sl:objectTypen>
-				<sl:objectType>Gebied</sl:objectType>
-				<sl:objectType>Gebiedengroep</sl:objectType>
-			</sl:objectTypen>
-		</sl:inhoud>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000001">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.3 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000001</l:identificatie>
-					<l:noemer>Bedrijf categorie 2</l:noemer>
-					<!-- zelfde als een functie -->
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="50EA019E-3C96-4631-A76C-35BCF4D7AB6D"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000002">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.4 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000002</l:identificatie>
-					<l:noemer>zone A</l:noemer>
-					<!-- zelfde als een functie -->
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="B3AF6AF7-5EFA-4A87-9C66-BFB046DD89AC"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000005">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - art 2.6 lid 1 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000003</l:identificatie>
-					<l:noemer>zone B</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="0868A0B1-DA79-4C33-8305-1BDE0126FA9A"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000012">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.9 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000004</l:identificatie>
-					<l:noemer>Centrumgebied</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="D28AF779-7EDD-4A88-8B11-809798F53636"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000008">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.10 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000007</l:identificatie>
-					<l:noemer>exploiteren speelautomatenhal</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="33B7D2D0-BF32-4CA1-B7F6-EB0FEF30175A"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000008">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.10 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000008</l:identificatie>
-					<!-- uurgemiddelde -->
-					<l:noemer>Zuilichem industriegebied 1</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="772B4B37-69F8-4671-B92E-3BCED242409D"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000008">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.10 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000009</l:identificatie>
-					<!-- kalenderjaargemiddelde -->
-					<l:noemer>Zuilichem industriegebied 2</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="D24C3416-4790-461C-A4D0-A82BA60CA7D6"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000008">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.10 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000010</l:identificatie>
-					<!-- maximum bouwhoogte bedrijfsgebouw 13 meter -->
-					<l:noemer>Zuilichem industriegebied 3</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="954BA8CC-6E90-4698-BEEC-005A65C63E98"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-		<sl:stand>
-			<ow-dc:owObject>
-				<l:Gebied ow:regeltekstId="nl.imow-gm0037.regeltekst.2019000008">
-					<!-- artikel waar de locatie bijhoort en gedefinieerd wordt voor 1e keer - artikel 2.10 -->
-					<l:identificatie>nl.imow-gm0037.gebied.2019000011</l:identificatie>
-					<!-- maximum bouwhoogte bedrijfsgebouw 7 meter -->
-					<l:noemer>Zuilichem industriegebied 4</l:noemer>
-					<l:geometrie>
-						<g-ref:GeometrieRef xlink:href="EFAAD5E9-B181-4C22-9C3B-B290F4586D82"/>
-					</l:geometrie>
-				</l:Gebied>
-			</ow-dc:owObject>
-		</sl:stand>
-	</sl:standBestand>
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:ga="http://www.geostandaarden.nl/imow/gebiedsaanwijzing"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                 xmlns:l="http://www.geostandaarden.nl/imow/locatie"
+                 xmlns:da="http://www.geostandaarden.nl/imow/datatypenalgemeen"
+                 xmlns:sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+                 xmlns:ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+                 xmlns:rol="http://www.geostandaarden.nl/imow/regelsoplocatie"
+                 xmlns:r="http://www.geostandaarden.nl/imow/regels"
+                 xmlns:ow="http://www.geostandaarden.nl/imow/owobject"
+                 xsi:schemaLocation="http://www.geostandaarden.nl/imow/bestanden/deelbestand https://register.geostandaarden.nl/xmlschema/tpod/v2.0.0/bestanden-ow/deelbestand-ow/IMOW_Deelbestand.xsd">
+   <sl:standBestand>
+      <sl:dataset>Gemeentestad</sl:dataset>
+      <sl:inhoud>
+         <sl:gebied>Gemeentestad</sl:gebied>
+         <sl:leveringsId>abc-20190221-0801</sl:leveringsId>
+         <sl:objectTypen>
+            <sl:objectType>Gebied</sl:objectType>
+            <sl:objectType>Gebiedengroep</sl:objectType>
+			   <sl:objectType>Ambtsgebied</sl:objectType>
+         </sl:objectTypen>
+      </sl:inhoud>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebiedengroep>
+               <l:identificatie>nl.imow-gm0297.gebiedengroep.Bedrijfcategorie2</l:identificatie>
+               <l:noemer>Bedrijf categorie 2</l:noemer>
+               <l:groepselement>
+                  <l:GebiedRef xlink:href="nl.imow-gm0297.gebied.2019000001"/>
+               </l:groepselement>
+            </l:Gebiedengroep>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000001</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="50EA019E-3C96-4631-A76C-35BCF4D7AB6D"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebiedengroep>
+               <l:identificatie>nl.imow-gm0297.gebiedengroep.zoneA</l:identificatie>
+               <l:noemer>zone A</l:noemer>
+               <l:groepselement>
+                  <l:GebiedRef xlink:href="nl.imow-gm0297.gebied.2019000002"/>
+               </l:groepselement>
+            </l:Gebiedengroep>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000002</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="B3AF6AF7-5EFA-4A87-9C66-BFB046DD89AC"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebiedengroep>
+               <l:identificatie>nl.imow-gm0297.gebiedengroep.zoneB</l:identificatie>
+               <l:noemer>zone B</l:noemer>
+               <l:groepselement>
+                  <l:GebiedRef xlink:href="nl.imow-gm0297.gebied.2019000003"/>
+               </l:groepselement>
+            </l:Gebiedengroep>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000003</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="0868A0B1-DA79-4C33-8305-1BDE0126FA9A"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebiedengroep>
+               <l:identificatie>nl.imow-gm0297.gebiedengroep.centrumgebied</l:identificatie>
+               <l:noemer>Centrumgebied</l:noemer>
+               <l:groepselement>
+                  <l:GebiedRef xlink:href="nl.imow-gm0297.gebied.2019000004"/>
+               </l:groepselement>
+            </l:Gebiedengroep>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000004</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="D28AF779-7EDD-4A88-8B11-809798F53636"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebiedengroep>
+               <l:identificatie>nl.imow-gm0297.gebiedengroep.speelhal</l:identificatie>
+               <l:noemer>exploiteren speelautomatenhal</l:noemer>
+               <l:groepselement>
+                  <l:GebiedRef xlink:href="nl.imow-gm0297.gebied.2019000007"/>
+               </l:groepselement>
+            </l:Gebiedengroep>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000007</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="33B7D2D0-BF32-4CA1-B7F6-EB0FEF30175A"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000008</l:identificatie>
+               <l:noemer>Zuilichem industriegebied 1</l:noemer>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="772B4B37-69F8-4671-B92E-3BCED242409D"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000009</l:identificatie>
+               <l:noemer>Zuilichem industriegebied 2</l:noemer>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="D24C3416-4790-461C-A4D0-A82BA60CA7D6"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000010</l:identificatie>
+               <l:noemer>Zuilichem industriegebied 3</l:noemer>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="954BA8CC-6E90-4698-BEEC-005A65C63E98"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000013</l:identificatie>
+               <l:noemer>Zuilichem industriegebied 4</l:noemer>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="EFAAD5E9-B181-4C22-9C3B-B290F4586D82"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebiedengroep>
+               <l:identificatie>nl.imow-gm0297.gebiedengroep.zuilichem</l:identificatie>
+               <l:noemer>Zuilichem</l:noemer>
+               <l:groepselement>
+                  <l:GebiedRef xlink:href="nl.imow-gm0297.gebied.2019000011"/>
+               </l:groepselement>
+            </l:Gebiedengroep>
+         </ow-dc:owObject>      
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000011</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="b69221bd-8121-4368-9058-ad4ff7618dcd"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000014</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="d775e368-6c81-40b9-9a7a-c2acb70831f3"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000015</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="3ce37c9c-1721-4eec-9b4a-5380fd30fbac"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.gebied.2019000016</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="dc57c9d5-a5ca-470c-b9f6-43eb30abdf8a"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+      <!--Ambtsgebied nieuw-->
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Ambtsgebied>
+               <l:identificatie>nl.imow-gm0297.ambtsgebied.ZaltbommelAmbtsgebied</l:identificatie>
+               <l:noemer>Gemeente Zaltbommel</l:noemer>
+               <l:bestuurlijkeGrenzenVerwijzing>
+                  <l:BestuurlijkeGrenzenVerwijzing>
+                     <l:bestuurlijkeGrenzenID>GM0297</l:bestuurlijkeGrenzenID>
+                     <l:domein>NL.BI.BestuurlijkGebied</l:domein>
+                     <l:geldigOp>2021-01-01</l:geldigOp>
+                  </l:BestuurlijkeGrenzenVerwijzing>
+               </l:bestuurlijkeGrenzenVerwijzing>
+            </l:Ambtsgebied>
+         </ow-dc:owObject> 
+      </sl:stand>
+      <sl:stand>
+         <ow-dc:owObject>
+            <l:Gebied>
+               <l:identificatie>nl.imow-gm0297.pons.pons</l:identificatie>
+               <l:geometrie>
+                  <l:GeometrieRef xlink:href="e8028788-a5bd-4d1c-ab6e-ae8258c7097d"/>
+               </l:geometrie>
+            </l:Gebied>
+         </ow-dc:owObject>
+      </sl:stand>
+   </sl:standBestand>
 </ow-dc:owBestand>

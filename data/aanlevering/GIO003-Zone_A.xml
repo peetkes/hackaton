@@ -1,33 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!--Voor validatie is het noodzakelijk om ook de catalogi van de gepubliceerde versie 1.0.4 te laden.-->
 <AanleveringInformatieObject xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
-                             schemaversie="1.1.0">
-  <InformatieObjectVersie>
+                             xmlns:geo="https://standaarden.overheid.nl/stop/imop/geo/"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             schemaversie="1.1.0"
+                             xsi:schemaLocation="https://standaarden.overheid.nl/lvbb/stop/aanlevering https://standaarden.overheid.nl/lvbb/1.1.0/lvbb-stop-aanlevering.xsd">
+   <InformatieObjectVersie>
       <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <FRBRWork>/join/id/regdata/gm0037/2019/Zone_A</FRBRWork>
-         <FRBRExpression>/join/id/regdata/gm0037/2019/Zone_A/nld@2019-06-18;3520</FRBRExpression>
+         <FRBRWork>/join/id/regdata/gm0297/2019/Zone_A</FRBRWork>
+         <FRBRExpression>/join/id/regdata/gm0297/2019/Zone_A/nld@2019-06-18;3520</FRBRExpression>
          <soortWork>/join/id/stop/work_010</soortWork>
       </ExpressionIdentificatie>
       <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <heeftGeboorteregeling>/akn/nl/act/gm0037/2019/reg456</heeftGeboorteregeling>
          <heeftBestanden>
             <heeftBestand>
                <Bestand>
                   <bestandsnaam>Zone_A.gml</bestandsnaam>
-                 <hash>445a47bbc566951c0f46350a27788e684a7e606b73c4d58a0d98e91ec2ca78f12f893cebe97c8e3260089cbbe9a79c4b15fd5eba0eb2545c383d5384772daad5</hash>
+                  <hash>4d14f9ddf0dc1472311419031269c578100246b2e34c7c885655024de87a6e0f18a3e5247f85302471b509998d4b0b6663258edf291eeb1d2d76b6ab7cc7edfc</hash>
                </Bestand>
             </heeftBestand>
          </heeftBestanden>
+         <heeftGeboorteregeling>/akn/nl/act/gm0297/2019/reg456</heeftGeboorteregeling>
       </InformatieObjectVersieMetadata>
       <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
-         <eindverantwoordelijke>/tooi/id/gemeente/gm0037</eindverantwoordelijke>
-         <maker>/tooi/id/gemeente/gm0037</maker>
+         <eindverantwoordelijke>/tooi/id/gemeente/gm0297</eindverantwoordelijke>
+         <maker>/tooi/id/gemeente/gm0297</maker>
          <alternatieveTitels>
-            <alternatieveTitel>Zone_A</alternatieveTitel>
+            <alternatieveTitel>Zone A</alternatieveTitel>
          </alternatieveTitels>
-         <naamInformatieObject>Zone_A</naamInformatieObject>
-         <officieleTitel>/join/id/regdata/gm0037/2019/Zone_A</officieleTitel>
+         <officieleTitel>/join/id/regdata/gm0297/2019/Zone_A</officieleTitel>
          <publicatieinstructie>TeConsolideren</publicatieinstructie>
          <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+         <naamInformatieObject>Zone A</naamInformatieObject>
       </InformatieObjectMetadata>
-  </InformatieObjectVersie>
+   </InformatieObjectVersie>
 </AanleveringInformatieObject>
