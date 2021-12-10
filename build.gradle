@@ -1,4 +1,16 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://developer.marklogic.com/maven2/" }
+    gradlePluginPortal()
+  }
+  dependencies {
+    classpath "gradle.plugin.com.marklogic:ml-gradle:${mlGradleVersion}"
+  }
+}
 plugins {
+  id "java"
   id "net.saliman.properties" version "1.5.1"
   id "com.marklogic.ml-gradle" version "${mlGradleVersion}"
 }
@@ -24,27 +36,126 @@ configurations.all {
   exclude group: 'ch.qos.logback'
   exclude group: 'org.slf4j'
 }
+// Branding the Query Console
+import com.marklogic.client.ext.helper.ClientHelper
 
-//this runs really slow!! DO NOT USE!!
-task importData(type: com.marklogic.gradle.task.MlcpTask) {
+task deployQcBrand(type: com.marklogic.gradle.task.ServerEvalTask) {
+  group 'Deployment Branding'
+  logger.info("QueryConsole branding.")
+  client = getAppConfig().newDatabaseClient()
+  xquery =
+      "xquery version '1.0-ml';\n"+
+          "xdmp:eval('"+
+          "  xquery version \"1.0-ml\"; \n"+
+          "  declare namespace env-ui = \"http://marklogic.com/environment-ui\"; \n"+
+          "  let \$env-ui-node := fn:doc(\"/cluster-ui-settings.xml\")/env-ui:environment-ui \n"+
+          "  return (\n"+
+          "    if (exists(\$env-ui-node)) then \n"+
+          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-active, <env-ui:ui-active>{fn:true()}</env-ui:ui-active>)\n"+
+          "    else (),\n"+
+          "    if (exists(\$env-ui-node)) then \n"+
+          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-header-color, <env-ui:ui-header-color>"+brandingColor+"</env-ui:ui-header-color>)\n"+
+          "    else (),\n"+
+          "    if (exists(\$env-ui-node)) then \n"+
+          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-label, <env-ui:ui-label>"+brandingEnvName+"</env-ui:ui-label>)\n"+
+          "    else (),\n"+
+          "    if (exists(\$env-ui-node)) then \n"+
+          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-message, <env-ui:ui-message>"+brandingMessage+"</env-ui:ui-message>)\n"+
+          "    else ()\n"+
+          "    )',\n"+
+          "  (),\n"+
+          "  <options xmlns='xdmp:eval'>\n"+
+          "    <database>{xdmp:database('App-Services')}</database>\n"+
+          "  </options>)"
+}
+
+task undeployQcBrand(type: com.marklogic.gradle.task.ServerEvalTask) {
+  group 'Deployment Branding'
+  logger.info("Removing QueryConsole branding.")
+  client = getAppConfig().newDatabaseClient()
+  xquery =
+      "xquery version '1.0-ml';\n"+
+          "xdmp:eval('"+
+          "  xquery version \"1.0-ml\"; \n"+
+          "  declare namespace env-ui = \"http://marklogic.com/environment-ui\"; \n"+
+          "  let \$env-ui-node := \n"+
+          "    fn:doc(\"/cluster-ui-settings.xml\")/env-ui:environment-ui \n"+
+          "  return \n"+
+          "    if (exists(\$env-ui-node)) then \n"+
+          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-active, <env-ui:ui-active>{fn:false()}</env-ui:ui-active>)\n"+
+          "    else ()',\n"+
+          "  (),\n"+
+          "  <options xmlns='xdmp:eval'>\n"+
+          "    <database>{xdmp:database('App-Services')}</database>\n"+
+          "  </options>)"
+}
+
+mlDeployApp.finalizedBy(deployQcBrand)
+mlUndeployApp.dependsOn(undeployQcBrand)
+// End Branding the query console
+
+tasks.withType(com.marklogic.gradle.task.MlcpTask) {
   classpath = configurations.mlcp
-  command = "IMPORT"
+  command = 'IMPORT'
   host = mlHost
   port = Integer.parseInt(mlRestPort)
   username = mlUsername
   password = mlPassword
-  database = mlAppConfig.contentDatabaseName
-  output_collections = "hackaton"
   output_permissions = "hackaton-reader,read,hackaton-writer,update"
+  systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+}
+
+class MlcpTransformTask extends com.marklogic.gradle.task.MlcpTask {
+  MlcpTransformTask() {
+    classpath = project.configurations.mlcp
+    command = 'IMPORT'
+    host = project.property("mlHost")
+    port = Integer.parseInt(project.property("mlRestPort"))
+    username = project.property("mlUsername")
+    password = project.property("mlPassword")
+    output_permissions = "hackaton-reader,read,hackaton-writer,update"
+    transform_function= "adjust-collections"
+    transform_module = "/mlcp/adjust-collections.xqy"
+    transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/adjust-collections"
+    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+  }
+}
+task importData(type: MlcpTransformTask) {
+  group "import"
+  input_file_path "data/aanlevering"
+  output_collections = "hackaton/aanlevering"
   output_uri_replace = ".*data/aanlevering,''"
-  transform_function= "adjust-collections"
-  transform_module = "/mlcp/adjust-collections.xqy"
-  transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/adjust-collections"
-//  logOutputUri = "mlcp-import-log.txt"
-  /**
-   * The args array can be used for any MLCP parameters that are not supported by the MlcpBean class that MlcpTask
-   * delegates to. input_file_path is supported by MlcpTask; this is just included as an example of using the args
-   * array.
-   */
-  args = ["-input_file_path", "data/aanlevering", "-max_threads", "4"]
+  args = ["-max_threads", "8"]
+}
+
+task importUtrecht(type: MlcpTransformTask) {
+  group "import"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Utrecht"
+  output_collections = "hackaton/utrecht"
+  output_uri_replace = ".*standaard-stop,''"
+  args = ["-max_threads", "8"]
+}
+
+task importRoxit(type: MlcpTransformTask) {
+  group "import"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/roxit"
+  output_collections = "hackaton/roxit"
+  output_uri_replace = ".*standaard-stop,''"
+  args = ["-max_threads", "8"]
+}
+
+task importZuiderzee(type: MlcpTransformTask) {
+  group "import"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
+  output_collections = "hackaton/zuiderzee"
+  output_uri_replace = ".*standaard-stop,''"
+  args = ["-max_threads", "8"]
+}
+
+task importKruisvalidatie(type: com.marklogic.gradle.task.MlcpTask) {
+  group "import"
+  input_file_path "../standaard-stop/kruisvalidaties/kruisvalidaties-utrecht-2.json"
+  output_collections = "hackaton/utrecht,type/rapport"
+  output_uri_replace = ".*standaard-stop,''"
+  args = ["-max_threads", "8"]
 }

@@ -13,20 +13,36 @@
     ],
     "vars": [
       {
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+      },
+      {
         "name": "rdf",
         "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
       },
       {
         "name": "rdfs",
-        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
         "name": "regelingId",
         "val": "mow:WorkIDRegeling/fn:string()"
       },
       {
+        "name": "doelId",
+        "val": "mow:DoelID/fn:string()"
+      },
+      {
         "name": "imow",
         "val": "'http://www.geostandaarden.nl/imow/'"
+      },
+      {
+        "name": "prefix-id",
+        "val": "''"
+      },
+      {
+        "name": "prefix-id-lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       }
     ],
     "templates": [
@@ -43,7 +59,7 @@
             "val": "sem:uuid()"
           }
         ],
-        "triples":  [
+        "triples": [
           {
             "subject": {
               "val": "$bestandId"
@@ -54,7 +70,28 @@
             "object": {
               "val": "$naam"
             }
-
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $regelingId)"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'linkToOwObject')"
+            },
+            "object": {
+              "val": "sem:iri($bestandId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $doelId)"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'linkToOwObject')"
+            },
+            "object": {
+              "val": "sem:iri($bestandId)"
+            }
           }
         ],
         "templates": [
@@ -64,24 +101,13 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelingId)"
-                },
-                "predicate": {
-                  "val": "sem:iri($imow || 'linkToOwObject')"
-                },
-                "object": {
-                  "val": "sem:iri($bestandId)"
-                }
-              },
-              {
-                "subject": {
                   "val": "sem:iri($bestandId)"
                 },
                 "predicate": {
-                  "val": "sem:iri($rdf || 'type')"
+                  "val": "sem:iri($imow || 'heeftObjectType')"
                 },
                 "object": {
-                  "val": "sem:iri($imow || .)"
+                  "val": "fn:string(.)"
                 }
               }
             ]

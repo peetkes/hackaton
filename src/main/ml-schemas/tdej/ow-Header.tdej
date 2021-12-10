@@ -1,0 +1,87 @@
+{
+  "template": {
+    "description": "Extraction Template for gml-bestand",
+    "context": "/ow-dc:owBestand/sl:standBestand/sl:inhoud",
+    "collections": [
+      "/opera/document/ow-bestand"
+    ],
+    "pathNamespace": [
+      {
+        "prefix": "ow-dc",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+      },
+      {
+        "prefix": "sl",
+        "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+      }
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
+      },
+      {
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+      },
+      {
+        "name": "imow",
+        "val": "'http://www.geostandaarden.nl/imow/'"
+      },
+      {
+        "name": "bestand",
+        "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
+      },
+      {
+        "name": "owId",
+        "val": "sl:leveringsId/fn:string()"
+      },
+      {
+        "name": "bestandId",
+        "val": "xdmp:sha256(fn:base-uri(.))"
+      }
+    ],
+    "triples": [
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri(rdfs || 'label')"
+        },
+        "object": {
+          "val": "$owId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'bestand')"
+        },
+        "object": {
+          "val": "$bestandId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($bestandId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'label')"
+        },
+        "object": {
+          "val": "$bestand"
+        }
+      }
+    ]
+  }
+}

@@ -23,14 +23,6 @@
         "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
       },
       {
-        "prefix": "r",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/regels"
-      },
-      {
-        "prefix": "rol",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/regelsoplocatie"
-      },
-      {
         "prefix": "sl",
         "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
       },
@@ -46,7 +38,7 @@
       },
       {
         "name": "rdfs",
-        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
         "name": "lvbb",
@@ -76,7 +68,7 @@
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($imow || 'workId')"
+          "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
           "val": "$owId"
@@ -96,6 +88,25 @@
       }
     ],
     "templates": [
+      {
+        "description": "Extraction Template for objecttypen ow-bestand",
+        "context": "sl:inhoud/sl:objectTypen/sl:objectType",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($imow || 'id/' || $owId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "fn:string(.)"
+            }
+          }
+
+        ]
+      },
       {
         "description": "Extraction Template for Gebiedsaanwijzing ow-bestand",
         "context": "sl:stand/ow-dc:owObject/ga:Gebiedsaanwijzing",

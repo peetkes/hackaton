@@ -1,0 +1,618 @@
+<export><workspace name="Hackaton-december"><query name="Query 1" focus="false" listorder="1" taborder="1" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+
+let $tde := xdmp:invoke-function(function() {fn:doc("/cga/content/frbr/cga/stop/LVBB-stop/1.1.0/tde/informatieobject.tdex")},map:map()=&gt;map:with("database",xdmp:schema-database()))
+let $doc := fn:doc("/opera/content/opera/join/id/regdata/gm0297/2019/Bedrijf_categorie_2/io-werk-meta.xml")
+let $doc := fn:doc("/opera/content/opera/join/id/regdata/gm0297/2019/Zuilichem/io-werk-meta.xml")
+let $doc := fn:doc("/opera/content/opera/join/id/regdata/gm0297/2019/Bedrijf_categorie_2/io-werk-meta.xml")
+return (
+  tde:validate($tde),
+  tde:node-data-extract($doc, $tde)
+)
+</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
+declare namespace ow-dc="http://www.geostandaarden.nl/imow/bestanden/deelbestand";
+declare namespace r="http://www.geostandaarden.nl/imow/regels";
+declare namespace ow="http://www.geostandaarden.nl/imow/owobject" ;
+declare namespace sl="http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek";
+declare namespace rol="http://www.geostandaarden.nl/imow/regelsoplocatie" ;
+declare namespace mow = "http://www.geostandaarden.nl/bestanden-ow/manifest-ow";
+
+let $ow-tde := xdmp:invoke-function(function() {fn:doc("/tdej/ow-manifest.tdej")},map:map()=&gt;map:with("database",xdmp:schema-database()))
+let $ow := fn:doc("/manifest-ow.xml")
+let $ow := fn:doc("/kruisvalidaties/1.1.0/Utrecht/manifest-ow.xml")
+let $ow := fn:doc("/kruisvalidaties/1.1.0/Utrecht/manifest-bhkv.xml")
+return (
+  tde:validate($ow-tde),
+  tde:node-data-extract($ow, $ow-tde)
+)
+</query><query name="Query 3" focus="false" listorder="3" taborder="3" active="true" database="8855839697965750796" server="11795951846129597549" database-name="hackaton-schemas" server-name="App-Services" mode="sparql">## query
+
+describe &lt;http://koop.overheid.nl/ontology/lvbb/id/akn/nl/act/pv26/2021/3_2RGL-20210519-203227&gt;</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+let $akn := "/akn"
+
+return (
+  fn:replace($akn, "(/[^/]+/[^/]+/[^/]+/[^/]+/[^/]+/[^/]+)/.*", "$1"),
+  fn:tokenize($akn,"/")[last()]
+)</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="4251467559767176687" server="11795951846129597549" database-name="Documents" server-name="App-Services" mode="xquery">xquery version "1.0-ml"; 
+let $doc :=binary{xs:hexBinary("AA")} 
+let $_ := xdmp:document-insert("/test.bin",$doc,map:map()=&gt;map:with("collections","test"))
+let $_ := xdmp:document-add-properties("/test.bin",&lt;updateDate&gt;{fn:current-date()}&lt;/updateDate&gt;)
+return ()</query><query name="Query 6" focus="true" listorder="6" taborder="6" active="true" database="4251467559767176687" server="11795951846129597549" database-name="Documents" server-name="App-Services" mode="xquery">xquery version "1.0-ml"; 
+import module namespace tde = "http://marklogic.com/xdmp/tde" 
+        at "/MarkLogic/tde.xqy";
+let $tde :=&lt;template xmlns="http://marklogic.com/xdmp/tde"&gt; 
+  &lt;collections&gt;&lt;collection&gt;test&lt;/collection&gt;&lt;/collections&gt;
+  &lt;context&gt;/prop:properties&lt;/context&gt;
+  &lt;vars&gt;
+      &lt;var&gt;
+        &lt;name&gt;EX&lt;/name&gt;
+        &lt;val&gt;"http://example.org/ex#"&lt;/val&gt;
+      &lt;/var&gt;
+    &lt;/vars&gt;
+  &lt;invalid-values&gt;ignore&lt;/invalid-values&gt;
+&lt;triples&gt;
+     &lt;triple&gt;
+      &lt;subject&gt;
+        &lt;val&gt;sem:iri( $EX || "updatedAt" )&lt;/val&gt;
+      &lt;/subject&gt;
+      &lt;predicate&gt;
+        &lt;val&gt;sem:iri( $EX || "is" )&lt;/val&gt;
+      &lt;/predicate&gt;
+      &lt;object&gt;
+        &lt;val&gt;./updateDate/fn:string()&lt;/val&gt;
+      &lt;/object&gt;
+    &lt;/triple&gt;
+   &lt;/triples&gt;
+&lt;/template&gt;
+let $binary := xdmp:document-properties("/test.bin")
+return (
+  tde:validate($tde),
+  tde:node-data-extract($binary, $tde)
+)
+</query><query name="Query 7" focus="false" listorder="7" taborder="7" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="javascript">'use strict';
+const tde = require("/MarkLogic/tde.xqy");
+let doc = xdmp.toJSON(
+{
+  "template": {
+    "description": "Extraction Template for gml-bestand",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/(r:Regeltekst|r:RegelVoorIedereen|r:Omgevingswaarderegel)]",
+    "collections": [
+      "/opera/document/ow-bestand"
+    ],
+    "pathNamespace": [
+      {
+        "prefix": "ga",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/gebiedsaanwijzing"
+      },
+      {
+        "prefix": "g",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/geometrie"
+      },
+      {
+        "prefix": "l",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/locatie"
+      },
+      {
+        "prefix": "ow",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/owobject"
+      },
+      {
+        "prefix": "ow-dc",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+      },
+      {
+        "prefix": "p",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/pons"
+      },
+      {
+        "prefix": "r",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/regels"
+      },
+      {
+        "prefix": "rol",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/regelsoplocatie"
+      },
+      {
+        "prefix": "sl",
+        "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+      },
+      {
+        "prefix": "xlink",
+        "namespaceUri": "http://www.w3.org/1999/xlink"
+      }
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+      },
+      {
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+      },
+      {
+        "name": "imow",
+        "val": "'http://www.geostandaarden.nl/imow/'"
+      },
+      {
+        "name": "owId",
+        "val": "sl:inhoud/sl:leveringsId/fn:string()"
+      },
+      {
+        "name": "gebied",
+        "val": "sl:inhoud/sl:gebied/fn:string()"
+      },
+      {
+        "name": "bestand",
+        "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
+      }
+    ],
+    "triples": [
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'workId')"
+        },
+        "object": {
+          "val": "$owId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'bestand')"
+        },
+        "object": {
+          "val": "$bestand"
+        }
+      }
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template for Regeltekst ow-bestand",
+        "context": "sl:stand/ow-dc:owObject/r:Regeltekst",
+        "vars": [
+          {
+            "name": "regeltekstId",
+            "val": "r:identificatie/fn:string()"
+          },{
+            "name": "wId",
+            "val": "@wId/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($imow || 'id/' || $owId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeftRegeltekst')"
+            },
+            "object": {
+              "val": "sem:iri($regeltekstId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regeltekstId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'linkToWId')"
+            },
+            "object": {
+              "val": "sem:iri(fn:concat($wId))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regeltekstId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for Regeltekst gerelateerdeRegeltekst",
+            "context": "r:gerelateerdeRegeltekst",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regeltekstId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'heeftGerelateerdeRegeltekst')"
+                },
+                "object": {
+                  "val": "sem:iri(r:RegeltekstRef/@xlink:href/fn:string())"
+                }
+              }
+            ]
+          }
+        ]
+      },{
+        "description": "Extraction Template for RegelVoorIedereen ow-bestand",
+        "context": "sl:stand/ow-dc:owObject/r:RegelVoorIedereen",
+        "vars": [
+          {
+            "name": "regelId",
+            "val": "r:identificatie/fn:string()"
+          },
+          {
+            "name": "regeltekstId",
+            "val": "r:artikelOfLid/r:RegeltekstRef/@xlink:href/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($imow || 'id/' || $owId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeftJuridischeRegel')"
+            },
+            "object": {
+              "val": "sem:iri($regelId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regelId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'ArtikelOfLid')"
+            },
+            "object": {
+              "val": "sem:iri($regeltekstId)"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for RegelVoorIedereen locatieaanduiding",
+            "context": "r:locatieaanduiding/l:LocatieRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'locatieaanduiding')"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for RegelVoorIedereen gebiedsaanwijzing",
+            "context": "r:gebiedsaanwijzing/ga:GebiedsaanwijzingRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'gebiedsaanwijzing')"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for RegelVoorIedereen activiteitaanduiding",
+            "context": "r:activiteitaanduiding/rol:ActiviteitRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'activiteitaanduiding')"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for RegelVoorIedereen activiteitaanduiding",
+            "context": "r:activiteitaanduiding/r:ActiviteitenLocatieaanduiding",
+            "vars": [
+              {
+                "name": "objectId",
+                "val": "r:identificatie/fn:string()"
+              }
+            ],
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.)')"
+                },
+                "object": {
+                  "val": "sem:iri($objectId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($objectId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || fn:local-name())"
+                }
+              }
+            ],
+            "templates": [
+              {
+                "description": "Extraction Template for RegelVoorIedereen activiteitaanduiding",
+                "context": "r:locatieaanduiding/l:LocatieRef",
+                "triples": [
+                  {
+                    "subject": {
+                      "val": "sem:iri($objectId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($imow || 'locatieaanduiding')"
+                    },
+                    "object": {
+                      "val": "sem:iri(@xlink:href/fn:string())"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+);
+tde.validate([doc])</query><query name="Query 8" focus="false" listorder="8" taborder="8" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+SELECT ?regeling ?artikel
+WHERE {
+  ?regeling lvbb:workId "/akn/nl/act/gm0297/2019/reg456" ;
+            lvbb:heeftVersie ?versieId .
+  ?versieId lvbb:bevatArtikel ?artikel
+            
+            
+}</query><query name="Query 9" focus="false" listorder="9" taborder="9" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+SELECT distinct ?regelingId ?type ?juridischeRegel ?wId ?locatie ?gmlId
+WHERE {
+  ?regelingId lvbb:linkToOwObject ?ow.
+  ?ow rdf:type imow:Omgevingswaarderegel ;
+      imow:bestandsnaam ?bestand.
+  ?owId imow:bestand ?bestand;
+        imow:heeftRegeltekst ?regeltekst.
+  {
+    ?regeltekst lvbb:linkToWId ?wId.
+    ?juridischeRegel imow:ArtikelOfLid ?regeltekst ;
+                   imow:locatieaanduiding ?locatie .
+    ?locatie imow:geometrie  ?gmlId
+  }
+  UNION {
+    ?regeltekst imow:heeftGerelateerdeRegeltekst ?gr .
+    ?juridischeRegel imow:ArtikelOfLid ?gr ;
+                   imow:locatieaanduiding ?locatie .
+    ?locatie imow:geometrie  ?gmlId    
+  }
+                 
+#  OPTIONAL { ?juridischeRegel imow:gebiedsaanwijzing ?gebied . }
+#  OPTIONAL { ?juridischeRegel imow:activiteitaanduiding ?activiteit . }
+           
+}</query><query name="Query 10" focus="false" listorder="10" taborder="10" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+SELECT distinct ?owId ?jr ?regeltekst ?regelingId ?artikel
+WHERE {
+?regelingId imow:linkToOwObject ?ow ;
+            lvbb:heeftVersie ?versieId .
+  ?versieId lvbb:bevatArtikel ?artikel .
+  ?ow rdf:type ?type;
+      imow:bestandsnaam ?bestand.
+  ?owId imow:heeftJuridischeRegel ?jr ;
+        imow:bestand ?bestand ;
+        imow:heeftRegeltekst ?regeltekst.
+  ?jr imow:ArtikelOfLid ?regeltekst ;
+     imow:locatieaanduiding ?groep .
+  ?groep imow:groepselement+ ?gebied .
+  ?gebied imow:geometrie  &lt;B3AF6AF7-5EFA-4A87-9C66-BFB046DD89AC&gt;
+}
+
+#?regelingId imow:linkToOwObject ?ow.
+#  ?ow rdf:type ?type;
+#      imow:bestandsnaam ?bestand.
+#  ?owId imow:bestand ?bestand;
+#        imow:heeftRegeltekst ?regeltekst.</query><query name="Query 11" focus="false" listorder="11" taborder="11" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+
+select ?mow ?naam
+where {
+  ?mow imow:bestandsnaam ?naam
+}</query><query name="Query 12" focus="false" listorder="12" taborder="12" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+SELECT ?regelingId ?type ?bestand ?juridischeRegel ?regeltekstId ?wId ?locatie ?gmlId
+WHERE {
+  ?regelingId lvbb:linkToOwObject ?ow ;
+              lvbb:workId "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227" .
+  ?ow rdf:type ?type ;
+      imow:bestandsnaam ?bestand .
+  ?owId imow:bestand ?bestand;
+        imow:heeftJuridischeRegel ?juridischeRegel .
+  ?juridischeRegel imow:ArtikelOfLid ?regeltekstId ;
+                   imow:locatieaanduiding ?locatie .
+  ?regeltekstId lvbb:linkToWId ?wId .
+  {
+    ?locatie rdf:type imow:Gebiedengroep ;
+             imow:groepselement ?subLoc .
+    ?subLoc imow:geometrie ?gmlId .
+  }
+  UNION
+  {
+    ?locatie rdf:type imow:Gebied ;
+             imow:geometrie ?gmlId .
+  }
+  
+  FILTER (?type = imow:Regeltekst)
+}
+ORDER BY ?juridischeRegel</query><query name="Query 13" focus="false" listorder="13" taborder="13" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="javascript">'use strict';
+const tree = {
+  level: "a",
+  sub: [{
+    level: "b",
+    sub: [{
+      level: "c",
+      sub: [{
+        level: "d"
+      },{
+        level: "e",
+        sub:[{
+          level: "f"
+        }]
+      },{
+        level: "g"
+      }]
+    },{
+      level: "h"
+    },{
+      level: "i"
+    }]
+  },{
+    level: "j"
+  }]
+};
+
+const traverse = g =&gt; {
+  const depthFirstStack = (stack, head) =&gt; (head.sub || []).concat(stack)
+  
+  const recurse = (acc, stack) =&gt; {
+    if (stack.length === 0) {
+    	return acc
+    }
+
+    const [head, ...tail] = stack
+    console.log("process head " + head.level);
+    return recurse(`${acc}/${head.level}`, depthFirstStack(tail, head))
+  }
+  
+  return recurse('', [g])
+}
+traverse(tree)
+
+</query><query name="Query 14" focus="false" listorder="14" taborder="14" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+SELECT ?regelingId ?doelId
+WHERE {
+  ?regelingId lvbb:linkToOwObject ?ow ;
+              lvbb:workId "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227" ;
+              rdf:type lvbb:Regeling ;
+              lvbb:heeftVersie ?versie .
+  ?versie lvbb:doel ?doelId .
+  ?doelId lvbb:linkToOwObject ?ow ;
+          rdf:type lvbb:Doel .
+  ?ow imow:objectType imow:Geometrie .
+          
+  
+}</query><query name="Query 15" focus="false" listorder="15" taborder="15" active="true" database="4275365090648050969" server="11241090501015656619" database-name="lvbb-content" server-name="hackaton" mode="sparql">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+SELECT distinct ?regelingId ?ow ?type
+WHERE {
+  ?regelingId lvbb:linkToOwObject ?ow ;
+              lvbb:workId "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227" .
+  ?ow rdf:type ?type .
+#      imow:bestandsnaam ?bestand .
+#  ?owId imow:bestand ?bestand;
+}</query><query name="Query 16" focus="false" listorder="16" taborder="16" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+declare namespace mow="http://www.geostandaarden.nl/bestanden-ow/manifest-ow";
+
+fn:count(fn:doc('/kruisvalidaties/1.1.0/Utrecht/owLocaties.xml')/*:owBestand//*:GeometrieRef)</query><query name="Query 17" focus="false" listorder="17" taborder="17" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+
+SELECT ?ioVersie
+WHERE {
+  ?regeling lvbb:workId "/akn/nl/act/gm0297/2019/reg456" .
+  ?ioVersie lvbb:heeftGeboorteregeling ?regeling.
+  ?ioWerk lvbb:heeftVersie ?ioVersie .
+          lvbb:expressieId ?ioWerkId .
+}</query><query name="Query 18" focus="false" listorder="18" taborder="18" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+let $skip-ingetrokken := fn:false()
+
+let $skip := 
+  if ($skip-ingetrokken) 
+  then ";
+          lvbb:isIngetrokken false .
+  " 
+  else ".
+  "
+
+let $sparql := "
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+
+SELECT ?ioWerkId
+WHERE {
+  ?ioVersie lvbb:heeftGeboorteRegeling ?regeling .
+  ?ioWerk lvbb:heeftVersie ?ioVersie ;
+          lvbb:workId ?ioWerkId " || $skip ||
+"?regeling lvbb:workId @akn
+}"
+
+return $sparql</query><query name="Query 19" focus="false" listorder="19" taborder="19" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+DESCRIBE &lt;http://koop.overheid.nl/ontology/lvbb/id/join/id/regdata/gm0297/2019/Bedrijf_categorie_2&gt;</query></workspace></export>

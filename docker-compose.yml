@@ -7,7 +7,7 @@ networks:
 
 services:
   marklogic:
-    image: store/marklogicdb/marklogic-server:${mlVersion}-dev-centos
+    image: store/marklogicdb/marklogic-server:${mlVersionTag}
     extra_hosts:
       host.docker.internal: host-gateway
     ports:

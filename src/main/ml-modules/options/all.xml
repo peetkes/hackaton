@@ -1,0 +1,22 @@
+<options xmlns='http://marklogic.com/appservices/search'>
+    <search-option>unfiltered</search-option>
+    <quality-weight>0</quality-weight>
+    <additional-query>
+        <cts:collection-query xmlns:cts="http://marklogic.com/cts">
+            <cts:uri>/opera/document/besluit</cts:uri>
+            <cts:uri>/opera/document/informatie-object</cts:uri>
+            <cts:uri>/opera/document/manifest-ow</cts:uri>
+            <cts:uri>/opera/document/manifest</cts:uri>
+            <cts:uri>/opera/document/ow-bestand</cts:uri>
+            <cts:uri>/opera/document/validatieOpdracht</cts:uri>
+            <cts:uri>/opera/document/publicatieOpdracht</cts:uri>
+            <!-- NOTE: limit on entity collections instead for DHF/DHS: -->
+            <!--
+            <cts:uri>Entity1</cts:uri>
+            <cts:uri>Entity2</cts:uri>
+            ...
+            -->
+        </cts:collection-query>
+    </additional-query>
+
+</options>

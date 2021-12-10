@@ -9,6 +9,9 @@ declare namespace gml = "http://www.opengis.net/gml/3.2";
 
 declare option xdmp:mapping "false";
 
+declare variable $TRACE-ID-XML := "hackaton-xml";
+declare variable $TRACE-ID-BINARY := "hackaton-binary";
+
 declare function local:adjust-collections(
   $content as map:map,
   $context as map:map
@@ -45,7 +48,10 @@ declare function local:process-binary(
         =>map:with("key2", ("value1","value2"))
       ),
       let $properties := local:get-geo-properties($uri, map:get($content, "value"))
-      return xdmp:document-set-properties($uri, $properties)
+      return (
+        xdmp:trace($TRACE-ID-BINARY, "Properties fragment for " || $uri || " hash=" || $properties//opera:hash),
+        xdmp:document-set-properties($uri, $properties)
+      )
     )
     else ()
   return (
@@ -69,7 +75,7 @@ declare function local:process-document(
     case "AanleveringKennisgeving" return "/opera/document/kennisgeving"
     default return "/opera/document/" || $root-element
   return (
-    xdmp:trace("hackaton", "Root element = " || $root-element),
+    xdmp:trace($TRACE-ID-XML, "Root element = " || $root-element),
     map:put($context, "collections", (map:get($context, "collections"), $collection)),
     $content
   )

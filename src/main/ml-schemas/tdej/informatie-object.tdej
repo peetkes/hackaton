@@ -5,129 +5,196 @@
     "collections": [
       "/opera/document/informatie-object"
     ],
-    "pathNamespace": [{
-      "prefix": "lvbba",
-      "namespaceUri": "https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
-    },{
-      "prefix": "data",
-      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/data/"
-    },{
-      "prefix": "tekst",
-      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
-    }],
-    "vars": [{
-      "name": "rdf",
-      "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
-    },{
-      "name": "lvbb",
-      "val": "'http://koop.overheid.nl/ontology/lvbb/'"
-    },{
-      "name": "ioId",
-      "val": "data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
-    },{
-      "name": "ioVersieId",
-      "val": "data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
-    }],
-    "triples":[{
-      "subject": {
-        "val": "sem:iri($ioId)",
-        "invalidValues": "ignore"
+    "pathNamespace": [
+      {
+        "prefix": "lvbba",
+        "namespaceUri": "https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
       },
-      "predicate": {
-        "val": "sem:iri($lvbb || 'workId')"
+      {
+        "prefix": "data",
+        "namespaceUri": "https://standaarden.overheid.nl/stop/imop/data/"
       },
-      "object": {
-        "val": "$ioId"
+      {
+        "prefix": "tekst",
+        "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
       }
-    },{
-      "subject": {
-        "val": "sem:iri($ioId)",
-        "invalidValues": "ignore"
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
       },
-      "predicate": {
-        "val": "sem:iri($rdf || 'type')"
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
-      "object": {
-        "val": "sem:iri($lvbb || 'InformatieObject')"
+      {
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+      },
+      {
+        "name": "ioId",
+        "val": "data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
+      },
+      {
+        "name": "ioVersieId",
+        "val": "data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
+      },
+      {
+        "name": "prefix-id",
+        "val": "''"
+      },
+      {
+        "name": "prefix-id-lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       }
-    },{
-      "subject": {
-        "val": "sem:iri($ioId)",
-        "invalidValues": "ignore"
-      },
-      "predicate": {
-        "val": "sem:iri($lvbb || 'heeftVersie')"
-      },
-      "object": {
-        "val": "sem:iri($ioVersieId)"
-      }
-    },{
-      "subject": {
-        "val": "sem:iri($ioVersieId)",
-        "invalidValues": "ignore"
-      },
-      "predicate": {
-        "val": "sem:iri($lvbb || 'expressionId')"
-      },
-      "object": {
-        "val": "$ioVersieId"
-      }
-    },{
-      "subject": {
-        "val": "sem:iri($ioVersieId)",
-        "invalidValues": "ignore"
-      },
-      "predicate": {
-        "val": "sem:iri($rdf || 'type')"
-      },
-      "object": {
-        "val": "sem:iri($lvbb || 'InformatieObjectVersie')"
-      }
-    }],
-    "templates": [{
-      "description": "Extraction Template IO VersieMetadata",
-      "context": "data:InformatieObjectVersieMetadata",
-      "triples": [{
+    ],
+    "triples": [
+      {
         "subject": {
-          "val": "sem:iri($ioVersieId)",
+          "val": "sem:iri($prefix-id || $ioId)",
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($lvbb || 'heeftGeboorteregeling')"
+          "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
-          "val": "sem:iri(data:heeftGeboorteregeling/fn:string())"
+          "val": "$ioId"
         }
-      }],
-      "templates": [{
+      },
+      {
+        "subject": {
+          "val": "sem:iri($prefix-id || $ioId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($lvbb || 'InformatieObject')"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($prefix-id || $ioId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($lvbb || 'InformatieObject')"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($prefix-id || $ioId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($lvbb || 'heeftVersie')"
+        },
+        "object": {
+          "val": "sem:iri($prefix-id || $ioVersieId)"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($prefix-id || $ioVersieId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdfs || 'label')"
+        },
+        "object": {
+          "val": "$ioVersieId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($prefix-id || $ioVersieId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($lvbb || 'InformatieObjectVersie')"
+        }
+      }
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template IO Metadata",
+        "context": "data:InformatieObjectMetadata",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $ioId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'heeftFormaat')"
+            },
+            "object": {
+              "val": "sem:iri(data:formaatInformatieobject/fn:string())",
+              "invalidValues": "ignore"
+            }
+          }
+        ]      },
+      {
         "description": "Extraction Template IO VersieMetadata",
-        "context": "data:heeftBestanden/data:heeftBestand",
-        "triples":[{
-          "subject": {
-            "val": "sem:iri($ioVersieId)",
-            "invalidValues": "ignore"
-          },
-          "predicate": {
-            "val": "sem:iri($lvbb || 'heeftBestand')"
-          },
-          "object": {
-            "val": "sem:iri(data:Bestand/data:hash/fn:string())",
-            "invalidValues": "ignore"
+        "context": "data:InformatieObjectVersieMetadata",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $ioVersieId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'heeftGeboorteregeling')"
+            },
+            "object": {
+              "val": "sem:iri($prefix-id || data:heeftGeboorteregeling/fn:string())",
+              "invalidValues": "ignore"
+            }
           }
-        },{
-          "subject": {
-            "val": "sem:iri(data:Bestand/data:hash/fn:string())",
-            "invalidValues": "ignore"
-          },
-          "predicate": {
-            "val": "sem:iri($lvbb || 'bestandsnaam')"
-          },
-          "object": {
-            "val": "data:Bestand/data:bestandsnaam/fn:string()",
-            "invalidValues": "ignore"
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template IO VersieMetadata",
+            "context": "data:heeftBestanden/data:heeftBestand",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($prefix-id || $ioVersieId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'heeftBestand')"
+                },
+                "object": {
+                  "val": "sem:iri(data:Bestand/data:hash/fn:string())",
+                  "invalidValues": "ignore"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri(data:Bestand/data:hash/fn:string())",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'bestandsnaam')"
+                },
+                "object": {
+                  "val": "data:Bestand/data:bestandsnaam/fn:string()",
+                  "invalidValues": "ignore"
+                }
+              }
+            ]
           }
-        }]
-      }]
-    }]
+        ]
+      }
+    ]
   }
 }

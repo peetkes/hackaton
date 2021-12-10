@@ -5,37 +5,32 @@
     "collections": [
       "/opera/document/ow-bestand"
     ],
-    "pathNamespace": [{
-      "prefix": "ga",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/gebiedsaanwijzing"
-    },{
-      "prefix": "g",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/geometrie"
-    },{
-      "prefix": "l",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/locatie"
-    },{
-      "prefix": "ow",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/owobject"
-    },{
-      "prefix": "ow-dc",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
-    },{
-      "prefix": "s",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/symbolisatie"
-    },{
-      "prefix": "r",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/regels1"
-    },{
-      "prefix": "rol",
-      "namespaceUri": "http://www.geostandaarden.nl/imow/regelsoplocatie"
-    },{
-      "prefix": "sl",
-      "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
-    },{
-      "prefix": "xlink",
-      "namespaceUri": "http://www.w3.org/1999/xlink"
-    }],
+    "pathNamespace": [
+      {
+        "prefix": "ow",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/owobject"
+      },
+      {
+        "prefix": "ow-dc",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+      },
+      {
+        "prefix": "s",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/symbolisatie"
+      },
+      {
+        "prefix": "rol",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/regelsoplocatie"
+      },
+      {
+        "prefix": "sl",
+        "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+      },
+      {
+        "prefix": "xlink",
+        "namespaceUri": "http://www.w3.org/1999/xlink"
+      }
+    ],
     "vars": [
       {
         "name": "rdf",
@@ -43,48 +38,75 @@
       },
       {
         "name": "rdfs",
-        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
-      "name": "lvbb",
-      "val": "'http://koop.overheid.nl/ontology/lvbb/'"
-    },{
-      "name": "imow",
-      "val": "'http://www.geostandaarden.nl/imow/'"
-    },{
-      "name": "owId",
-      "val": "sl:inhoud/sl:leveringsId/fn:string()"
-    },{
-      "name": "gebied",
-      "val": "sl:inhoud/sl:gebied/fn:string()"
-    },{
-      "name": "bestand",
-      "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
-    }],
-    "triples": [{
-      "subject": {
-        "val": "sem:iri($imow || 'id/' || $owId)",
-        "invalidValues": "ignore"
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
-      "predicate": {
-        "val": "sem:iri($imow || 'workId')"
+      {
+        "name": "imow",
+        "val": "'http://www.geostandaarden.nl/imow/'"
       },
-      "object": {
-        "val": "$owId"
+      {
+        "name": "owId",
+        "val": "sl:inhoud/sl:leveringsId/fn:string()"
+      },
+      {
+        "name": "gebied",
+        "val": "sl:inhoud/sl:gebied/fn:string()"
+      },
+      {
+        "name": "bestand",
+        "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
       }
-    },{
-      "subject": {
-        "val": "sem:iri($imow || 'id/' || $owId)",
-        "invalidValues": "ignore"
+    ],
+    "triples": [
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdfs || 'label')"
+        },
+        "object": {
+          "val": "$owId"
+        }
       },
-      "predicate": {
-        "val": "sem:iri($imow || 'bestand')"
-      },
-      "object": {
-        "val": "$bestand"
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'bestand')"
+        },
+        "object": {
+          "val": "$bestand"
+        }
       }
-    }],
-    "templates":[
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template for objecttypen ow-bestand",
+        "context": "sl:inhoud/sl:objectTypen/sl:objectType",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($imow || 'id/' || $owId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "fn:string(.)"
+            }
+          }
+
+        ]
+      },
       {
         "description": "Extraction Template for SymbolisatieItem ow-bestand",
         "context": "sl:stand/ow-dc:owObject/s:SymbolisatieItem",
@@ -106,7 +128,8 @@
             "object": {
               "val": "sem:iri($symbolisatieItemId)"
             }
-          },{
+          },
+          {
             "subject": {
               "val": "sem:iri($symbolisatieItemId)",
               "invalidValues": "ignore"

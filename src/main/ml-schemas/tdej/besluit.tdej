@@ -5,119 +5,267 @@
     "collections": [
       "/opera/document/besluit"
     ],
-    "pathNamespace": [{
-      "prefix": "lvbba",
-      "namespaceUri": "https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
-    },{
-      "prefix": "data",
-      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/data/"
-    },{
-      "prefix": "tekst",
-      "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
-    }],
-    "vars": [{
-      "name": "rdf",
-      "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
-    },{
-      "name": "lvbb",
-      "val": "'http://koop.overheid.nl/ontology/lvbb/'"
-    },{
-      "name": "besluitId",
-      "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
-    },{
-      "name": "besluitVersieId",
-      "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
-    }],
-    "templates":[{
-      "description": "Template voor BesluitVersie",
-      "context": "lvbba:BesluitVersie",
-      "triples": [{
-        "subject": {
-          "val": "sem:iri($besluitId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($lvbb || 'workId')"
-        },
-        "object": {
-          "val": "$besluitId"
-        }
-      },{
-        "subject": {
-          "val": "sem:iri($besluitId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($lvbb || 'Besluit')"
-        }
-      },{
-        "subject": {
-          "val": "sem:iri($besluitId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($lvbb || 'heeftVersie')"
-        },
-        "object": {
-          "val": "sem:iri($besluitVersieId)"
-        }
-      },{
-        "subject": {
-          "val": "sem:iri($besluitVersieId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($lvbb || 'expressionId')"
-        },
-        "object": {
-          "val": "$besluitVersieId"
-        }
-      },{
-        "subject": {
-          "val": "sem:iri($besluitVersieId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($lvbb || 'BesluitVersie')"
-        }
-      }],
-      "templates": [{
-        "description": "Template voor ConsolidatieInformatie BeoogdeRegeling",
-        "context": "data:ConsolidatieInformatie/data:BeoogdeRegelgeving/data:BeoogdeRegeling",
-        "triples": [{
-          "subject": {
-            "val": "sem:iri($besluitVersieId)",
-            "invalidValues": "ignore"
+    "pathNamespace": [
+      {
+        "prefix": "lvbba",
+        "namespaceUri": "https://standaarden.overheid.nl/lvbb/stop/aanlevering/"
+      },
+      {
+        "prefix": "data",
+        "namespaceUri": "https://standaarden.overheid.nl/stop/imop/data/"
+      },
+      {
+        "prefix": "tekst",
+        "namespaceUri": "https://standaarden.overheid.nl/stop/imop/tekst/"
+      }
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
+      },
+      {
+        "name": "lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
+      },
+      {
+        "name": "besluitId",
+        "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
+      },
+      {
+        "name": "besluitVersieId",
+        "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
+      },
+      {
+        "name": "prefix-id",
+        "val": "''"
+      },
+      {
+        "name": "prefix-id-lvbb",
+        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
+      }
+    ],
+    "templates": [
+      {
+        "description": "Template voor BesluitVersie",
+        "context": "lvbba:BesluitVersie",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $besluitId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri(rdfs || 'label')"
+            },
+            "object": {
+              "val": "$besluitId"
+            }
           },
-          "predicate": {
-            "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id ||$besluitId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($lvbb || 'Besluit')"
+            }
           },
-          "object": {
-            "val": "sem:iri(data:instrumentVersie/fn:string())"
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id ||$besluitId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'heeftVersie')"
+            },
+            "object": {
+              "val": "sem:iri($prefix-id ||$besluitVersieId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id ||$besluitVersieId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$besluitVersieId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id ||$besluitVersieId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($lvbb || fn:local-name(.))"
+            }
           }
-        }]
-      },{
-        "description": "Template voor ConsolidatieInformatie BeoogdInformatieobject",
-        "context": "data:ConsolidatieInformatie/data:BeoogdeRegelgeving/data:BeoogdInformatieobject",
-        "triples": [{
-          "subject": {
-            "val": "sem:iri($besluitVersieId)",
-            "invalidValues": "ignore"
+        ],
+        "templates": [
+          {
+            "description": "Template voor ConsolidatieInformatie BeoogdeRegeling",
+            "context": "data:ConsolidatieInformatie/data:BeoogdeRegelgeving/data:BeoogdeRegeling",
+            "vars": [
+              {
+                "name": "instrumentId",
+                "val": "data:instrumentVersie/fn:string()"
+              }
+            ],
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($prefix-id || $besluitVersieId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
+                },
+                "object": {
+                  "val": "sem:iri($prefix-id || $instrumentId)"
+                }
+              }
+            ],
+            "templates": [
+              {
+                "description": "Template voor ConsolidatieInformatie BeoogdeRegeling doel",
+                "context": "data:doelen/data:doel",
+                "vars": [
+                  {
+                    "name": "doelId",
+                    "val": "fn:string(.)"
+                  }
+                ],
+                "triples": [
+                  {
+                    "subject": {
+                      "val": "sem:iri($prefix-id || $instrumentId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($lvbb || 'vastgesteldDoorDoel')"
+                    },
+                    "object": {
+                      "val": "sem:iri($prefix-id || $doelId)"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($prefix-id || $doelId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($rdf || 'type')"
+                    },
+                    "object": {
+                      "val": "sem:iri($lvbb || fn:local-name(.))"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($prefix-id || $doelId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($rdfs || 'label')"
+                    },
+                    "object": {
+                      "val": "$doelId"
+                    }
+                  }
+                ]
+              }
+            ]
           },
-          "predicate": {
-            "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
-          },
-          "object": {
-            "val": "sem:iri(data:instrumentVersie/fn:string())"
+          {
+            "description": "Template voor ConsolidatieInformatie BeoogdInformatieobject",
+            "context": "data:ConsolidatieInformatie/data:BeoogdeRegelgeving/data:BeoogdInformatieobject",
+            "vars": [
+              {
+                "name": "instrumentId",
+                "val": "data:instrumentVersie/fn:string()"
+              }
+            ],
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($prefix-id || $besluitVersieId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
+                },
+                "object": {
+                  "val": "sem:iri($prefix-id || $instrumentId)"
+                }
+              }
+            ],
+            "templates": [
+              {
+                "description": "Template voor ConsolidatieInformatie BeoogdInformatieobject doel",
+                "context": "data:doelen/data:doel",
+                "vars": [
+                  {
+                    "name": "doelId",
+                    "val": "fn:string(.)"
+                  }
+                ],
+                "triples": [
+                  {
+                    "subject": {
+                      "val": "sem:iri($prefix-id || $instrumentId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($lvbb || 'vastgesteldDoorDoel')"
+                    },
+                    "object": {
+                      "val": "sem:iri($prefix-id || .)"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($prefix-id || $doelId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($rdf || 'type')"
+                    },
+                    "object": {
+                      "val": "sem:iri($lvbb || fn:local-name(.))"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($prefix-id || $doelId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($rdfs || 'label')"
+                    },
+                    "object": {
+                      "val": "$doelId"
+                    }
+                  }
+                ]
+              }
+            ]
           }
-        }]
-      }]
-    }]
+        ]
+      }
+    ]
   }
 }

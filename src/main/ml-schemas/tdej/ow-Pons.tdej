@@ -38,7 +38,7 @@
       },
       {
         "name": "rdfs",
-        "val": "'http://www.w3.org/1999/02/22-rdf-schema#'"
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
         "name": "lvbb",
@@ -68,7 +68,7 @@
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($imow || 'workId')"
+          "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
           "val": "$owId"
@@ -89,51 +89,79 @@
     ],
     "templates": [
       {
+        "description": "Extraction Template for objecttypen ow-bestand",
+        "context": "sl:inhoud/sl:objectTypen/sl:objectType",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($imow || 'id/' || $owId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "fn:string(.)"
+            }
+          }
+
+        ]
+      },
+      {
         "description": "Extraction Template for Pons ow-bestand",
         "context": "sl:stand/ow-dc:owObject/p:Pons",
-        "vars": [{
-          "name": "ponsId",
-          "val": "p:identificatie/fn:string()"
-        }],
-        "triples": [{
-          "subject": {
-            "val": "sem:iri($imow || 'id/' || $owId)",
-            "invalidValues": "ignore"
-          },
-          "predicate": {
-            "val": "sem:iri($imow || 'heeftPons')"
-          },
-          "object": {
-            "val": "sem:iri($ponsId)"
+        "vars": [
+          {
+            "name": "ponsId",
+            "val": "p:identificatie/fn:string()"
           }
-        },{
-          "subject": {
-            "val": "sem:iri($ponsId)",
-            "invalidValues": "ignore"
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($imow || 'id/' || $owId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeftPons')"
+            },
+            "object": {
+              "val": "sem:iri($ponsId)"
+            }
           },
-          "predicate": {
-            "val": "sem:iri($rdf || 'type')"
-          },
-          "object": {
-            "val": "sem:iri($imow || fn:local-name(.))"
-          }
-        }],
-        "templates": [{
-          "description": "Extraction Template for Pons locatieaanduiding",
-          "context": "p:locatieaanduiding/l:LocatieRef",
-          "triples": [{
+          {
             "subject": {
               "val": "sem:iri($ponsId)",
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'locatieaanduiding')"
+              "val": "sem:iri($rdf || 'type')"
             },
             "object": {
-              "val": "sem:iri(@xlink:href/fn:string())"
+              "val": "sem:iri($imow || fn:local-name(.))"
             }
-          }]
-        }]
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for Pons locatieaanduiding",
+            "context": "p:locatieaanduiding/l:LocatieRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($ponsId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'locatieaanduiding')"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }
