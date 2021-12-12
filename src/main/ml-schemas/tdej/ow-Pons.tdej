@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for Pons bestand",
-    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/p:Pons]",
+    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/p:Pons",
     "collections": [
       "/opera/document/ow-bestand"
     ],
@@ -49,117 +49,56 @@
         "val": "'http://www.geostandaarden.nl/imow/'"
       },
       {
-        "name": "owId",
-        "val": "sl:inhoud/sl:leveringsId/fn:string()"
+        "name": "bestandId",
+        "val": "xdmp:sha512(fn:base-uri(.))"
       },
       {
-        "name": "gebied",
-        "val": "sl:inhoud/sl:gebied/fn:string()"
-      },
-      {
-        "name": "bestand",
-        "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
+        "name": "ponsId",
+        "val": "p:identificatie/fn:string()"
       }
     ],
     "triples": [
       {
         "subject": {
-          "val": "sem:iri($imow || 'id/' || $owId)",
+          "val": "sem:iri($bestandId)",
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
+          "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
         },
         "object": {
-          "val": "$owId"
+          "val": "sem:iri($ponsId)"
         }
       },
       {
         "subject": {
-          "val": "sem:iri($imow || 'id/' || $owId)",
+          "val": "sem:iri($ponsId)",
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($imow || 'bestand')"
+          "val": "sem:iri($rdf || 'type')"
         },
         "object": {
-          "val": "$bestand"
+          "val": "sem:iri($imow || fn:local-name(.))"
         }
       }
     ],
     "templates": [
       {
-        "description": "Extraction Template for objecttypen ow-bestand",
-        "context": "sl:inhoud/sl:objectTypen/sl:objectType",
+        "description": "Extraction Template for Pons locatieaanduiding",
+        "context": "p:locatieaanduiding/l:LocatieRef",
         "triples": [
-          {
-            "subject": {
-              "val": "sem:iri($imow || 'id/' || $owId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-            },
-            "object": {
-              "val": "fn:string(.)"
-            }
-          }
-
-        ]
-      },
-      {
-        "description": "Extraction Template for Pons ow-bestand",
-        "context": "sl:stand/ow-dc:owObject/p:Pons",
-        "vars": [
-          {
-            "name": "ponsId",
-            "val": "p:identificatie/fn:string()"
-          }
-        ],
-        "triples": [
-          {
-            "subject": {
-              "val": "sem:iri($imow || 'id/' || $owId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($imow || 'heeftPons')"
-            },
-            "object": {
-              "val": "sem:iri($ponsId)"
-            }
-          },
           {
             "subject": {
               "val": "sem:iri($ponsId)",
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($rdf || 'type')"
+              "val": "sem:iri($imow || 'locatieaanduiding')"
             },
             "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
+              "val": "sem:iri(@xlink:href/fn:string())"
             }
-          }
-        ],
-        "templates": [
-          {
-            "description": "Extraction Template for Pons locatieaanduiding",
-            "context": "p:locatieaanduiding/l:LocatieRef",
-            "triples": [
-              {
-                "subject": {
-                  "val": "sem:iri($ponsId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($imow || 'locatieaanduiding')"
-                },
-                "object": {
-                  "val": "sem:iri(@xlink:href/fn:string())"
-                }
-              }
-            ]
           }
         ]
       }

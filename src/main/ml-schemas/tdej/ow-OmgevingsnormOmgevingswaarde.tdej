@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for gml-bestand",
-    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/(rol:Omgevingsnorm|rol:Omgevingswaarde)]",
+    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(rol:Omgevingsnorm|rol:Omgevingswaarde)]",
     "collections": [
       "/opera/document/ow-bestand"
     ],
@@ -49,67 +49,14 @@
         "val": "'http://www.geostandaarden.nl/imow/'"
       },
       {
-        "name": "owId",
-        "val": "sl:inhoud/sl:leveringsId/fn:string()"
-      },
-      {
-        "name": "gebied",
-        "val": "sl:inhoud/sl:gebied/fn:string()"
-      },
-      {
-        "name": "bestand",
-        "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
-      }
-    ],
-    "triples": [
-      {
-        "subject": {
-          "val": "sem:iri($imow || 'id/' || $owId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
-        },
-        "object": {
-          "val": "$owId"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($imow || 'id/' || $owId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($imow || 'bestand')"
-        },
-        "object": {
-          "val": "$bestand"
-        }
+        "name": "bestandId",
+        "val": "xdmp:sha512(fn:base-uri(.))"
       }
     ],
     "templates": [
       {
-        "description": "Extraction Template for objecttypen ow-bestand",
-        "context": "sl:inhoud/sl:objectTypen/sl:objectType",
-        "triples": [
-          {
-            "subject": {
-              "val": "sem:iri($imow || 'id/' || $owId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-            },
-            "object": {
-              "val": "fn:string(.)"
-            }
-          }
-
-        ]
-      },
-      {
         "description": "Extraction Template for Omgevingswaarde ow-bestand",
-        "context": "sl:stand/ow-dc:owObject/rol:Omgevingswaarde",
+        "context": "rol:Omgevingswaarde",
         "vars": [
           {
             "name": "omgevingswaardeId",
@@ -119,11 +66,11 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($imow || 'id/' || $owId)",
+              "val": "sem:iri($bestandId)",
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftOmgevingswaarde')"
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
             },
             "object": {
               "val": "sem:iri($omgevingswaardeId)"
@@ -215,7 +162,7 @@
       },
       {
         "description": "Extraction Template for Omgevingsnorm ow-bestand",
-        "context": "sl:stand/ow-dc:owObject/rol:Omgevingsnorm",
+        "context": "rol:Omgevingsnorm",
         "vars": [
           {
             "name": "omgevingsnormId",
@@ -225,7 +172,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($imow || 'id/' || $owId)",
+              "val": "sem:iri($bestandId)",
               "invalidValues": "ignore"
             },
             "predicate": {

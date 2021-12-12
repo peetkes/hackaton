@@ -57,9 +57,9 @@ WHERE {
   ?doel lvbb:linkToOwObject ?mow ;
           rdf:type lvbb:doel ;
           rdfs:label @doelId .
-  ?mow rdf:type imowType:Gebied;
+  ?mow imow:heeftObjectType imow:Gebied;
       imow:bestandsnaam ?bestand .
-  ?ow imow:bestand ?bestand ;
+  ?ow rdfs:label ?bestand ;
       imow:heeftGebied ?gebied .
   ?gebied rdf:type imow:Gebied ;
           imow:geometrie ?geoLocatie .
@@ -79,13 +79,13 @@ WHERE {
   ?doel lvbb:linkToOwObject ?mow ;
           rdf:type lvbb:doel ;
           rdfs:label @doelId .
-  ?mow rdf:type imowType:Regeltekst;
-      imow:bestandsnaam ?bestand .
-  ?ow2 imow:bestand ?bestand ;
-       imow:heeftRegeltekst ?regeltekst .
+  ?mow imow:heeftObjectType imow:Regeltekst;
+       imow:bestandsnaam ?bestand .
+  ?ow rdfs:label ?bestand ;
+      imow:heeftRegeltekst ?regeltekst .
   ?regeltekst rdf:type imow:Regeltekst ;
-          rdfs:label ?regeltekstId ;
-          lvbb:linkToWId ?wRef .
+              rdfs:label ?regeltekstId ;
+              lvbb:linkToWId ?wRef .
   ?wRef rdfs:label ?wId .
 }
 ORDER BY ?regelingId ?regeltekstId

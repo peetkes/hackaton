@@ -42,7 +42,7 @@
       },
       {
         "name": "bestandId",
-        "val": "xdmp:sha256(fn:base-uri(.))"
+        "val": "xdmp:sha512(fn:base-uri(.))"
       }
     ],
     "triples": [
@@ -67,7 +67,7 @@
           "val": "sem:iri($imow || 'bestand')"
         },
         "object": {
-          "val": "$bestandId"
+          "val": "sem:iri($bestandId)"
         }
       },
       {
@@ -76,11 +76,43 @@
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($rdf || 'label')"
+          "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
           "val": "$bestand"
         }
+      }
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template for objecttypen ow-bestand",
+        "context": "sl:objectTypen/sl:objectType",
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeftOjectType')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:string(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($imow || fn:string(.))",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "fn:string(.)"
+            }
+          }
+        ]
       }
     ]
   }

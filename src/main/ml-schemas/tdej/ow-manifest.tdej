@@ -107,7 +107,7 @@
                   "val": "sem:iri($imow || 'heeftObjectType')"
                 },
                 "object": {
-                  "val": "fn:string(.)"
+                  "val": "sem:iri($imow || fn:string(.))"
                 }
               }
             ]
