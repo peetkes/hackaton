@@ -60,3 +60,12 @@ Reload the modules:
 ```shell
 ./gradlew mlReloadModules
 ```
+
+Load the workspace in QConsole:
+
+- Goto localhost:8000/qconsole
+- Click upper right corner next to Workspace
+- Select `Import Workspace`
+- Navigate to workspaces and select the workspace you want to import
+- Workspace will be loaded and ready for use
+
