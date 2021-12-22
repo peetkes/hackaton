@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for gml-bestand",
+    "description": "Extraction Template for ow-bestand header",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:inhoud",
     "collections": [
       "/opera/document/ow-bestand"
@@ -17,6 +17,10 @@
     ],
     "vars": [
       {
+        "name": "owl",
+        "val": "'http://www.w3.org/2002/07/owl#'"
+      },
+      {
         "name": "rdf",
         "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
       },
@@ -30,15 +34,19 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
-        "name": "bestand",
+        "name": "bestandnaam",
         "val": "fn:tokenize(fn:base-uri(.),'/')[last()]"
       },
       {
         "name": "owId",
         "val": "sl:leveringsId/fn:string()"
+      },
+      {
+        "name": "linkId",
+        "val": "xdmp:sha256($bestandnaam)"
       },
       {
         "name": "bestandId",
@@ -79,7 +87,19 @@
           "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
-          "val": "$bestand"
+          "val": "$bestandnaam"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($linkId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($owl || 'sameAs')"
+        },
+        "object": {
+          "val": "sem:iri($bestandId)"
         }
       }
     ],
@@ -94,22 +114,10 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftOjectType')"
+              "val": "sem:iri($imow || 'heeftObjectType')"
             },
             "object": {
               "val": "sem:iri($imow || fn:string(.))"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($imow || fn:string(.))",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdfs || 'label')"
-            },
-            "object": {
-              "val": "fn:string(.)"
             }
           }
         ]

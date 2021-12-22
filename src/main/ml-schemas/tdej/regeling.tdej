@@ -33,14 +33,6 @@
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
       {
-        "name": "regelingId",
-        "val": "lvbba:RegelingVersieInformatie/data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
-      },
-      {
-        "name": "regelingVersieId",
-        "val": "lvbba:RegelingVersieInformatie/data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
-      },
-      {
         "name": "prefix-id",
         "val": "''"
       },
@@ -49,69 +41,102 @@
         "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       }
     ],
-    "triples": [
-      {
-        "subject": {
-          "val": "sem:iri($prefix-id || $regelingId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
-        },
-        "object": {
-          "val": "$regelingId"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($prefix-id || $regelingId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($lvbb || 'Regeling')"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($prefix-id || $regelingId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($lvbb || 'heeftVersie')"
-        },
-        "object": {
-          "val": "sem:iri($prefix-id || $regelingVersieId)"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($prefix-id || $regelingVersieId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
-        },
-        "object": {
-          "val": "$regelingVersieId"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($prefix-id || $regelingVersieId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($lvbb || 'RegelingVersie')"
-        }
-      }
-    ],
     "templates": [
+      {
+        "description": "Template voor RegelingVersieInformatie",
+        "context": "lvbba:RegelingVersieInformatie",
+        "vars": [
+          {
+            "name": "regelingId",
+            "val": "data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
+          },
+          {
+            "name": "versieId",
+            "val": "data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $regelingId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$regelingId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $regelingId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($lvbb || 'Regeling')"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $regelingId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($lvbb || 'heeftVersie')"
+            },
+            "object": {
+              "val": "sem:iri($prefix-id || $versieId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $versieId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$versieId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($prefix-id || $versieId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($lvbb || 'RegelingVersie')"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Template voor opvolgerVan",
+            "context": "data:RegelingMetadata/data:opvolging",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($prefix-id || $regelingId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'isOpvolgerVan')"
+                },
+                "object": {
+                  "val": "sem:iri($prefix-id || data:opvolgerVan/fn:string())"
+                }
+              }
+            ]
+          }
+        ]
+      },
       {
         "description": "Template voor RegelingVersieInformatie",
         "context": ".//(tekst:RegelingCompact|tekst:RegelingMutatie|tekst:RegelingKlassiek|tekst:RegelijkTijdelijkdeel|tekst:RegelingVrijetekst)[@wordt]",
@@ -119,10 +144,6 @@
           {
             "name": "versieId",
             "val": "@wordt/fn:string()"
-          },
-          {
-            "name": "regId",
-            "val": "fn:substring-before(@wordt/fn:string(), '@')"
           }
         ],
         "templates": [

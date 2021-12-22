@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for Locaties bestand",
+    "description": "Extraction Template for ow-Gebied/ow-Gebiedengroep/ow-Ambtsgebied",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(l:Gebied|l:Gebiedengroep|l:Ambtsgebied)]",
     "collections": [
       "/opera/document/ow-bestand"
@@ -42,7 +42,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "bestandId",
@@ -71,18 +71,6 @@
             "object": {
               "val": "sem:iri($gebiedId)"
             }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($gebiedId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
-            }
           }
         ],
         "templates": [
@@ -96,7 +84,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'geometrie')"
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -122,22 +110,10 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftGebiedengroep')"
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
             },
             "object": {
               "val": "sem:iri($gebiedId)"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($gebiedId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {
@@ -165,7 +141,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'groepselement')"
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -203,18 +179,6 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($gebiedId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
@@ -244,18 +208,6 @@
                 },
                 "object": {
                   "val": "sem:iri($bgId)"
-                }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($bgId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($rdf || 'type')"
-                },
-                "object": {
-                  "val": "sem:iri($imow || fn:local-name(.))"
                 }
               },
               {

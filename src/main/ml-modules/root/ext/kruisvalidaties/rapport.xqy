@@ -32,68 +32,73 @@ declare variable $ALLOWED_OBJECTTYPES := (
 
 declare variable $SPARQL-PREFIX as xs:string := '
 PREFIX lvbb: <http://koop.overheid.nl/ontology/lvbb/>
-PREFIX imow: <http://www.geostandaarden.nl/imow/>
+PREFIX imow: <http://koop.overheid.nl/ontology/imow/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX imowType: <http://www.geostandaarden.nl/imow/objecttype/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 ';
 declare variable $SPARQL-REFERENTIES-PER-DOEL as xs:string :=  $SPARQL-PREFIX || '
 SELECT distinct ?doelId ?regelingId
 WHERE {
-  ?regeling rdfs:label ?regelingId ;
-            rdf:type lvbb:Regeling ;
-            lvbb:heeftVersie ?versie ;
-            lvbb:linkToOwObject ?mow .
-  ?versie lvbb:vastgesteldDoorDoel ?doel .
+  ?owAanlevering  imow:linkToDoel ?doel ;
+                  imow:linkToRegelingObject ?regeling .
   ?doel rdf:type lvbb:doel ;
-        rdfs:label ?doelId ;
-        lvbb:linkToOwObject ?mow .
+        rdfs:label ?doelId .
+  ?versie lvbb:vastgesteldDoorDoel ?doel .
+  ?regeling lvbb:heeftVersie ?versie ;
+            rdf:type lvbb:Regeling ;
+            rdfs:label ?regelingId .
 }
 ';
 
 declare variable $SPARQL-GEOMETRIE-IDENTIFICATIES as xs:string :=  $SPARQL-PREFIX || '
 SELECT ?gmlId
 WHERE {
-  ?doel lvbb:linkToOwObject ?mow ;
-          rdf:type lvbb:doel ;
-          rdfs:label @doelId .
-  ?mow imow:heeftObjectType imow:Gebied;
-      imow:bestandsnaam ?bestand .
-  ?ow rdfs:label ?bestand ;
-      imow:heeftGebied ?gebied .
-  ?gebied rdf:type imow:Gebied ;
-          imow:geometrie ?geoLocatie .
-  ?geoLocatie rdf:type ?type ;
-              rdfs:label ?gmlId
-
+  ?owAanlevering imow:linkToDoel ?doel ;
+                 imow:heeftBestand ?bestand .
+  ?doel rdfs:label @doelId .
+  ?bestand imow:heeftObjectType imow:Gebied ;
+           rdfs:label ?naam .
+  ?ow imow:bestand ?bestand2 .
+  ?bestand2 imow:heeftObjectType imow:Gebied ;
+            rdfs:label ?naam ;
+            imow:heeftGebied ?gebied .
+  ?gebied imow:heeftGeometrieRef ?geometrie .
+  ?geometrie rdfs:label ?gmlId
 }
 ';
 declare variable $SPARQL-REFERENTIES-PER-REGELING as xs:string :=  $SPARQL-PREFIX || '
 SELECT ?regelingId ?wId ?regeltekstId
 WHERE {
-  ?regeling lvbb:linkToOwObject ?mow ;
-              rdfs:label ?regelingId ;
-              rdf:type lvbb:Regeling ;
-              lvbb:heeftVersie ?versie .
-  ?versie lvbb:vastgesteldDoorDoel ?doel .
-  ?doel lvbb:linkToOwObject ?mow ;
-          rdf:type lvbb:doel ;
-          rdfs:label @doelId .
-  ?mow imow:heeftObjectType imow:Regeltekst;
-       imow:bestandsnaam ?bestand .
-  ?ow rdfs:label ?bestand ;
-      imow:heeftRegeltekst ?regeltekst .
+  ?owAanlevering imow:linkToDoel ?doel ;
+                 imow:heeftBestand ?linkId ;
+                 imow:linkToRegelingObject ?regeling .
+  ?doel rdfs:label @doelId .
+  ?regeling rdfs:label ?regelingId ;
+            rdf:type lvbb:Regeling .
+  ?linkId owl:sameAs ?bestandId .
+  ?bestandId rdfs:label ?naam ;
+             imow:heeftRegeltekst ?regeltekst .
   ?regeltekst rdf:type imow:Regeltekst ;
               rdfs:label ?regeltekstId ;
-              lvbb:linkToWId ?wRef .
+              imow:linkToWId ?wRef .
   ?wRef rdfs:label ?wId .
 }
 ORDER BY ?regelingId ?regeltekstId
 ';
 
+declare variable  $SPARQL-DISTINCT-OBJECTTYPEN as xs:string := '
+PREFIX imow: <http://www.geostandaarden.nl/imow/>
+SELECT distinct ?objectType ?type
+WHERE {
+   ?s imow:heeftObjectType ?objectType .
+   ?objectType rdfs:label  ?type .
+}
+';
+
 declare function local:maak-rapport(
   $doelen as xs:string*,
-  $map as map:map
+  $store as sem:store*
 ) as item()*
 {
   object-node {
@@ -102,16 +107,26 @@ declare function local:maak-rapport(
     "referentie": sem:uuid(),
     "referentiesTeValideren": array-node {
       for $doel in $doelen
+      let $doelId := map:get($doel, "doelId")
+      let $regelingId := map:get($doel, "regelingId")
+      let $geometrieIdentificaties :=  sem:sparql($SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $store)
+      let $referentiesPerDoel := sem:sparql($SPARQL-REFERENTIES-PER-REGELING, $doel, (), $store)
       return object-node {
-        "doel": $doel,
+        "doel": $doelId,
         "referentiesPerDoel": array-node {
           object-node {
-            "geometrieIdentificaties": array-node {
-              map:get(map:get($map, $doel),"geometrieIdentificaties") ! map:get(., "gmlId")
-            }
+            "geometrieIdentificaties": array-node { $geometrieIdentificaties ! map:get(., "gmlId") },
+            "referentiesPerRegeling": array-node { $referentiesPerDoel ! object-node { "regeltekstId": map:get(., "regeltekstId"), "wId": map:get(., "wId") } },
+            "wIdRegeling": $regelingId
           }
         }
       }
     }
   }
+};
+
+declare function local:check-ow-object-types(
+) as item()*
+{
+  ()
 };

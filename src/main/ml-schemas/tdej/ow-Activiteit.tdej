@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for gml-bestand",
+    "description": "Extraction Template for ow-Activiteit",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/rol:Activiteit",
     "collections": [
       "/opera/document/ow-bestand"
@@ -29,10 +29,6 @@
     ],
     "vars": [
       {
-        "name": "rdf",
-        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
-      },
-      {
         "name": "rdfs",
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
@@ -42,7 +38,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "bestandId",
@@ -65,18 +61,6 @@
         },
         "object": {
           "val": "sem:iri($activiteitId)"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($activiteitId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($imow || fn:local-name(.))"
         }
       },
       {

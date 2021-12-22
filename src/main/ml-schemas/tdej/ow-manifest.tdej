@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for gml-bestand",
+    "description": "Extraction Template for ow-manifest-bestand",
     "context": "/mow:Aanleveringen/mow:Aanlevering",
     "collections": [
       "/opera/document/manifest-ow"
@@ -34,7 +34,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "prefix-id",
@@ -43,6 +43,45 @@
       {
         "name": "prefix-id-lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
+      },
+      {
+        "name": "aanleveringId",
+        "val": "xdmp:sha512(.)"
+      }
+    ],
+    "triples": [
+      {
+        "subject": {
+          "val": "sem:iri($aanleveringId)"
+        },
+        "predicate": {
+          "val": "sem:iri($rdfs || 'label')"
+        },
+        "object": {
+          "val": "$aanleveringId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($aanleveringId)"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'linkToRegelingObject')"
+        },
+        "object": {
+          "val": "sem:iri($prefix-id || $regelingId)"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($aanleveringId)"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'linkToDoel')"
+        },
+        "object": {
+          "val": "sem:iri($prefix-id || $doelId)"
+        }
       }
     ],
     "templates": [
@@ -56,41 +95,30 @@
           },
           {
             "name": "bestandId",
-            "val": "sem:uuid()"
+            "val": "xdmp:sha256($naam)"
           }
         ],
         "triples": [
           {
             "subject": {
-              "val": "$bestandId"
+              "val": "sem:iri($aanleveringId)"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'bestandsnaam')"
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($bestandId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
               "val": "$naam"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($prefix-id || $regelingId)"
-            },
-            "predicate": {
-              "val": "sem:iri($lvbb || 'linkToOwObject')"
-            },
-            "object": {
-              "val": "sem:iri($bestandId)"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($prefix-id || $doelId)"
-            },
-            "predicate": {
-              "val": "sem:iri($lvbb || 'linkToOwObject')"
-            },
-            "object": {
-              "val": "sem:iri($bestandId)"
             }
           }
         ],

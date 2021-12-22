@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for gml-bestand",
+    "description": "Extraction Template for ow-Regeltekst/ow-RegelVoorIedereen/ow-Omgevingswaarderegel",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(r:Regeltekst|r:RegelVoorIedereen|r:Omgevingswaarderegel)]",
     "collections": [
       "/opera/document/ow-bestand"
@@ -9,6 +9,10 @@
       {
         "prefix": "ga",
         "namespaceUri": "http://www.geostandaarden.nl/imow/gebiedsaanwijzing"
+      },
+      {
+        "prefix": "k",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/kaart"
       },
       {
         "prefix": "l",
@@ -54,7 +58,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "bestandId",
@@ -102,22 +106,10 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($lvbb || 'linkToWId')"
+              "val": "sem:iri($imow || 'linkToWId')"
             },
             "object": {
               "val": "sem:iri(fn:concat($wId))"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($regeltekstId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {
@@ -136,7 +128,7 @@
         "templates": [
           {
             "description": "Extraction Template for Regeltekst gerelateerdeRegeltekst",
-            "context": "r:gerelateerdeRegeltekst",
+            "context": "r:gerelateerdeRegeltekst/r:RegeltekstRef",
             "triples": [
               {
                 "subject": {
@@ -144,10 +136,10 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($lvbb || 'heeftGerelateerdeRegeltekst')"
+                  "val": "sem:iri($lvbb || 'heeft' || fn:local-name(.))"
                 },
                 "object": {
-                  "val": "sem:iri(r:RegeltekstRef/@xlink:href/fn:string())"
+                  "val": "sem:iri(@xlink:href/fn:string())"
                 }
               }
             ]
@@ -178,18 +170,6 @@
           },
           {
             "subject": {
-              "val": "sem:iri(regelId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri(imow || fn:local-name(.))"
-            }
-          },
-          {
-            "subject": {
               "val": "sem:iri($regelId)",
               "invalidValues": "ignore"
             },
@@ -212,7 +192,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'artikelOfLid')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegelArtikelOfLid' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -230,7 +210,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'locatieaanduiding')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -248,7 +228,25 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'gebiedsaanwijzing')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for RegelVoorIedereen kaartaanduiding",
+            "context": "r:kaartaanduiding/k:KaartRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -258,7 +256,7 @@
           },
           {
             "description": "Extraction Template for RegelVoorIedereen activiteitaanduiding",
-            "context": "r:activiteitaanduiding/rol:ActiviteitRef",
+            "context": "r:activiteitaanduiding",
             "triples": [
               {
                 "subject": {
@@ -266,79 +264,87 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'activiteitaanduiding')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(rol:ActiviteitRef))"
                 },
                 "object": {
-                  "val": "sem:iri(@xlink:href/fn:string())"
-                }
-              }
-            ]
-          },
-          {
-            "description": "Extraction Template for RegelVoorIedereen ActiviteitLocatieaanduiding",
-            "context": "r:activiteitaanduiding/r:ActiviteitLocatieaanduiding",
-            "vars": [
-              {
-                "name": "objectId",
-                "val": "r:identificatie/fn:string()"
-              }
-            ],
-            "triples": [
-              {
-                "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-                },
-                "object": {
-                  "val": "sem:iri($objectId)"
-                }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($objectId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($rdf || 'type')"
-                },
-                "object": {
-                  "val": "sem:iri($imow || fn:local-name())"
-                }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($objectId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($imow || 'type')"
-                },
-                "object": {
-                  "val": "sem:iri(r:activiteitregelkwalificatie/fn:string())"
+                  "val": "sem:iri(rol:ActiviteitRef/@xlink:href/fn:string())"
                 }
               }
             ],
             "templates": [
               {
-                "description": "Extraction Template for RegelVoorIedereen ActiviteitLocatieaanduiding locatieaanduiding",
-                "context": "r:locatieaanduiding/l:LocatieRef",
+                "description": "Extraction Template for RegelVoorIedereen ActiviteitLocatieaanduiding",
+                "context": "r:ActiviteitLocatieaanduiding",
+                "vars": [
+                  {
+                    "name": "objectId",
+                    "val": "r:identificatie/fn:string()"
+                  }
+                ],
                 "triples": [
+                  {
+                    "subject": {
+                      "val": "sem:iri($regelId)",
+                      "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($imow || 'heeftRegelVoorIedereen' || fn:local-name(.))"
+                    },
+                    "object": {
+                      "val": "sem:iri($objectId)"
+                    }
+                  },
                   {
                     "subject": {
                       "val": "sem:iri($objectId)",
                       "invalidValues": "ignore"
                     },
                     "predicate": {
-                      "val": "sem:iri($imow || 'locatieaanduiding')"
+                      "val": "sem:iri($imow || 'heeftActiviteitRegelKwalificatie')"
                     },
                     "object": {
-                      "val": "sem:iri(@xlink:href/fn:string())"
+                      "val": "sem:iri(r:activiteitregelkwalificatie/fn:string())"
                     }
                   }
+                ],
+                "templates": [
+                  {
+                    "description": "Extraction Template for RegelVoorIedereen ActiviteitLocatieaanduiding locatieaanduiding",
+                    "context": "r:locatieaanduiding/l:LocatieRef",
+                    "triples": [
+                      {
+                        "subject": {
+                          "val": "sem:iri($objectId)",
+                          "invalidValues": "ignore"
+                        },
+                        "predicate": {
+                          "val": "sem:iri($imow || 'heeftActiviteitLocatieaanduiding' || fn:local-name(.))"
+                        },
+                        "object": {
+                          "val": "sem:iri(@xlink:href/fn:string())"
+                        }
+                      }
+                    ]
+                  }
                 ]
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for RegelVoorIedereen omgevingsnormaanduiding",
+            "context": "r:omgevingsnormaanduiding/rol:OmgevingsnormRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
               }
             ]
           }
@@ -351,10 +357,6 @@
           {
             "name": "regelId",
             "val": "r:identificatie/fn:string()"
-          },
-          {
-            "name": "regeltekstId",
-            "val": "r:artikelOfLid/r:RegeltekstRef/@xlink:href/fn:string()"
           }
         ],
         "triples": [
@@ -368,18 +370,6 @@
             },
             "object": {
               "val": "sem:iri($regelId)"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($regelId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {
@@ -406,7 +396,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'artikelOfLid')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegelArtikelOfLid' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -424,7 +414,43 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'locatieaanduiding')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for Omgevingswaarderegel gebiedsaanwijzing",
+            "context": "r:gebiedsaanwijzing/ga:GebiedsaanwijzingRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for Omgevingswaarderegel kaartaanduiding",
+            "context": "r:kaartaanduiding/k:KaartRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($regelId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -442,7 +468,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'omgevingswaardeaanduiding')"
+                  "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"

@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for gml-bestand",
+    "description": "Extraction Template for ow-Omgevingsnorm/ow-Omgevingswaarde",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(rol:Omgevingsnorm|rol:Omgevingswaarde)]",
     "collections": [
       "/opera/document/ow-bestand"
@@ -46,7 +46,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "bestandId",
@@ -74,18 +74,6 @@
             },
             "object": {
               "val": "sem:iri($omgevingswaardeId)"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($omgevingswaardeId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {
@@ -123,18 +111,6 @@
                 "object": {
                   "val": "sem:iri($normwaardeId)"
                 }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($normwaardeId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($rdf || 'type')"
-                },
-                "object": {
-                  "val": "sem:iri($imow || fn:local-name(.))"
-                }
               }
             ],
             "templates": [
@@ -148,7 +124,7 @@
                       "invalidValues": "ignore"
                     },
                     "predicate": {
-                      "val": "sem:iri($imow || 'locatieaanduiding')"
+                      "val": "sem:iri($imow || 'heeftNorm' || fn:local-name(.))"
                     },
                     "object": {
                       "val": "sem:iri(@xlink:href/fn:string())"
@@ -188,18 +164,6 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($omgevingsnormId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
@@ -229,18 +193,6 @@
                 "object": {
                   "val": "sem:iri($normwaardeId)"
                 }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($normwaardeId)",
-                  "invalidValues": "ignore"
-                },
-                "predicate": {
-                  "val": "sem:iri($rdf || 'type')"
-                },
-                "object": {
-                  "val": "sem:iri($imow || fn:local-name(.))"
-                }
               }
             ],
             "templates": [
@@ -254,7 +206,7 @@
                       "invalidValues": "ignore"
                     },
                     "predicate": {
-                      "val": "sem:iri($imow || 'locatieaanduiding')"
+                      "val": "sem:iri($imow || 'heeftNorm' || fn:local-name(.))"
                     },
                     "object": {
                       "val": "sem:iri(@xlink:href/fn:string())"

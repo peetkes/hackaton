@@ -75,19 +75,19 @@ task undeployQcBrand(type: com.marklogic.gradle.task.ServerEvalTask) {
   client = getAppConfig().newDatabaseClient()
   xquery =
       "xquery version '1.0-ml';\n"+
-          "xdmp:eval('"+
-          "  xquery version \"1.0-ml\"; \n"+
-          "  declare namespace env-ui = \"http://marklogic.com/environment-ui\"; \n"+
-          "  let \$env-ui-node := \n"+
-          "    fn:doc(\"/cluster-ui-settings.xml\")/env-ui:environment-ui \n"+
-          "  return \n"+
-          "    if (exists(\$env-ui-node)) then \n"+
-          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-active, <env-ui:ui-active>{fn:false()}</env-ui:ui-active>)\n"+
-          "    else ()',\n"+
-          "  (),\n"+
-          "  <options xmlns='xdmp:eval'>\n"+
-          "    <database>{xdmp:database('App-Services')}</database>\n"+
-          "  </options>)"
+      "xdmp:eval('"+
+      "  xquery version \"1.0-ml\"; \n"+
+      "  declare namespace env-ui = \"http://marklogic.com/environment-ui\"; \n"+
+      "  let \$env-ui-node := \n"+
+      "    fn:doc(\"/cluster-ui-settings.xml\")/env-ui:environment-ui \n"+
+      "  return \n"+
+      "    if (exists(\$env-ui-node)) then \n"+
+      "      xdmp:node-replace(\$env-ui-node/env-ui:ui-active, <env-ui:ui-active>{fn:false()}</env-ui:ui-active>)\n"+
+      "    else ()',\n"+
+      "  (),\n"+
+      "  <options xmlns='xdmp:eval'>\n"+
+      "    <database>{xdmp:database('App-Services')}</database>\n"+
+      "  </options>)"
 }
 
 mlDeployApp.finalizedBy(deployQcBrand)
@@ -120,6 +120,7 @@ class MlcpTransformTask extends com.marklogic.gradle.task.MlcpTask {
     systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
   }
 }
+
 task importData(type: MlcpTransformTask) {
   group "import"
   input_file_path "data/aanlevering"
@@ -158,4 +159,46 @@ task importKruisvalidatie(type: com.marklogic.gradle.task.MlcpTask) {
   output_collections = "hackaton/utrecht,type/rapport"
   output_uri_replace = ".*standaard-stop,''"
   args = ["-max_threads", "8"]
+}
+
+class IngestOntologyTask extends com.marklogic.gradle.task.MlcpTask {
+  IngestOntologyTask() {
+    classpath = project.configurations.mlcp
+    username = project.property("mlUsername")
+    password = project.property("mlPassword")
+    command = "IMPORT"
+    mode="local"
+    thread_count=Integer.parseInt(project.property("mlcpThreadCount"))
+    batch_size=Integer.parseInt(project.property("mlcpBatchSize"))
+    input_file_path = project.getProperty("mlcpOntologyPath")
+    input_file_type = "RDF"
+  }
+}
+
+String[] ontologies = [
+    "imow-ontology"
+];
+
+ontologies.each{ ontology ->
+  def taskName = "loadOntology-" + ontology;
+  tasks.create (name: taskName, type: IngestOntologyTask) {
+    logger.info("creating task " + taskName)
+    group "LVBB Ontology"
+    port = Integer.parseInt(project.property("mlRestPort"))
+    input_file_pattern = ontology + "\\.(ttl|rdf)"
+    output_uri_prefix='/ontology/' + ontology + "/"
+    output_permissions = "rest-reader,read,rest-writer,update"
+    output_graph = "/graph/" + ontology
+    output_collections = "type/Ontology"
+  }
+};
+
+task loadOntologies(dependsOn: [
+    'loadOntology-imow-ontology'
+])
+
+task clearOntology(type: com.marklogic.gradle.task.ServerEvalTask) {
+//  client = mlAppConfig.newDatabaseClient()
+  xquery = "xquery version \"1.0-ml\";\n" +
+        "xdmp:collection-delete(\"type/Ontology\")"
 }

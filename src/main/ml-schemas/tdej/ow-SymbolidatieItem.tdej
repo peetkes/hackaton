@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for  SymbolisatieItem bestand",
+    "description": "Extraction Template for  ow-SymbolisatieItem",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/s:SymbolisatieItem",
     "collections": [
       "/opera/document/ow-bestand"
@@ -46,7 +46,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "bestandId",

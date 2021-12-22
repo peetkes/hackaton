@@ -1,4 +1,4 @@
-<export><workspace name="Valideren Kruisvalidaties"><query name="test OW tdes" focus="true" listorder="1" taborder="1" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+<export><workspace name="Valideren Kruisvalidaties"><query name="test OW tdes" focus="false" listorder="1" taborder="1" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
 import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
 
 let $tde := xdmp:invoke-function(function() {fn:doc("/tdej/informatieobject.tdej")},map:map()=&gt;map:with("database",xdmp:schema-database()))
@@ -7,6 +7,7 @@ let $doc := fn:doc("/kruisvalidaties/1.1.0/Utrecht/manifest-ow.xml")
 let $doc := fn:doc("/kruisvalidaties/1.1.0/Utrecht/manifest-bhkv.xml")
 let $doc := fn:doc("/manifest-ow.xml")
 let $doc := fn:doc("/owLocaties-Gemeentestad.xml")
+let $doc := fn:doc("/owActiviteiten-Gemeentestad.xml")
 let $ow-tdes := xdmp:invoke-function(
   function() {
     cts:uri-match("/tdej/ow-*") ! fn:doc(.),
@@ -15,12 +16,12 @@ let $ow-tdes := xdmp:invoke-function(
   map:map()
   =&gt;map:with("database",xdmp:schema-database())
 )
-return (
-(:)  $ow-tdes ! tde:validate(.),:)
+return ($doc,
+  $ow-tdes ! (xdmp:node-uri(.), tde:validate(.)),
   tde:node-data-extract($doc, $ow-tdes)
 )
-</query><query name="Describe" focus="false" listorder="2" taborder="2" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
-DESCRIBE &lt;urn:uuid:000cd7d2-58cf-4a80-b9c0-8463c7f35e38&gt;</query><query name="Query 1" focus="false" listorder="3" taborder="3" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+</query><query name="Describe" focus="false" listorder="2" taborder="2" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
+DESCRIBE &lt;urn:uuid:3116d9a1-9434-4228-b1ca-21477857fcb2&gt;</query><query name="Query 1" focus="false" listorder="3" taborder="3" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="sparql" optimize="">## query
 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
 PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
 
@@ -30,29 +31,33 @@ WHERE {
   ?ioVersie lvbb:heeftGeboorteregeling ?regeling.
   ?ioWerk lvbb:heeftVersie ?ioVersie ;
           lvbb:workId ?ioWerkId .
-}</query><query name="Query 2" focus="false" listorder="4" taborder="4" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+}</query><query name="Query 2" focus="false" listorder="4" taborder="4" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
 PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
 PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
 prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 PREFIX imowType: &lt;http://www.geostandaarden.nl/imow/objecttype/&gt;
 
-SELECT ?regelingId ?doelId ?ow ?bestand ?ow2 ?gebied ?gmlId
+SELECT ?regelingId ?wId ?regeltekstId
 WHERE {
-  VALUES (?akn) { ("/akn/nl/act/pv26/2021/3_2RGL-20210519-203227") }
-  ?regelingId lvbb:linkToOwObject ?mow ;
-              rdfs:label ?akn ;
+  ?regeling lvbb:linkToOwObject ?mow ;
+              rdfs:label ?regelingId ;
               rdf:type lvbb:Regeling ;
               lvbb:heeftVersie ?versie .
-  ?versie lvbb:doel ?doelId .
-  ?doelId lvbb:linkToOwObject ?mow ;
-          rdf:type lvbb:Doel .
-  ?mow rdf:type imowType:Gebied ;
+  ?versie lvbb:vastgesteldDoorDoel ?doel .
+  ?doel lvbb:linkToOwObject ?mow ;
+          rdf:type lvbb:doel ;
+          rdfs:label "/join/id/proces/gm0297/2019/Instelling" .
+  ?mow imow:heeftObjectType imow:Regeltekst;
       imow:bestandsnaam ?bestand .
-  ?ow imow:bestand ?bestand ;
-      imow:heeftRegelingsgebied ?regelingsGebied .
-  ?regelingsGebied imow:locatieaanduiding ?loc .
-}</query><query name="Maak KruisvalidatieRapport" focus="false" listorder="5" taborder="5" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+  ?ow rdfs:label ?bestand ;
+       imow:heeftRegeltekst ?regeltekst .
+  ?regeltekst rdf:type imow:Regeltekst ;
+          rdfs:label ?regeltekstId ;
+          lvbb:linkToWId ?wRef .
+  ?wRef rdfs:label ?wId .
+}
+ORDER BY ?regelingId ?regeltekstId</query><query name="Maak KruisvalidatieRapport" focus="false" listorder="5" taborder="5" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
 import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
 
 declare option xdmp:mapping "false";
@@ -116,7 +121,7 @@ return (
   },
   $referentiesPerRegeling
 (:  kv:maak-rapport($doelen !  map:get(., "doelId"), $result):)
-)</query><query name="Query 4" focus="false" listorder="6" taborder="6" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+)</query><query name="Query 4" focus="false" listorder="6" taborder="6" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
 
 declare function local:referentiesPerDoel(
   $items as item()*
@@ -136,7 +141,7 @@ return (
     "Aantal referentiesPerRegeling " || local:referentiesPerDoel(./referentiesPerRegeling)),
   $report
 )
-</query><query name="Query 5" focus="false" listorder="7" taborder="7" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+</query><query name="Query 5" focus="false" listorder="7" taborder="7" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
 PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
 PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
 prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
@@ -144,20 +149,18 @@ prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 PREFIX imowType: &lt;http://www.geostandaarden.nl/imow/objecttype/&gt;
 
 
-SELECT ?geoLocatie ?gmlId ?type
+SELECT distinct ?doelId ?regelingId
+#SELECT ?regeling ?versie ?mow
 WHERE {
-  ?doel lvbb:linkToOwObject ?ow ;
-          rdf:type lvbb:doel ;
-          rdfs:label "/join/id/proces/gm0297/2019/Instelling" .
-  ?ow rdf:type imowType:Gebied;
-      imow:bestandsnaam ?bestand .
-  ?ow2 imow:bestand ?bestand ;
-       imow:heeftGebied ?gebied .
-  ?gebied rdf:type imow:Gebied ;
-          imow:geometrie ?geoLocatie .
-  ?geoLocatie rdf:type ?type ;
-              rdfs:label ?gmlId
-}</query><query name="test STOP tdes" focus="false" listorder="8" taborder="8" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+  ?regeling rdfs:label ?regelingId ;
+            rdf:type lvbb:Regeling ;
+            lvbb:heeftVersie ?versie ;
+            lvbb:linkToOwObject ?mow .
+  ?versie lvbb:vastgesteldDoorDoel ?doel .
+  ?doel rdf:type lvbb:doel ;
+        rdfs:label ?doelId ;
+        lvbb:linkToOwObject ?mow .
+}</query><query name="test STOP tdes" focus="false" listorder="8" taborder="8" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
 import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
 
 let $doc := fn:doc("/akn_nl_bill_gm0297-3520-01.xml")
@@ -176,7 +179,7 @@ return (
   $stop-tdes ! tde:validate(.),
   tde:node-data-extract($doc, $stop-tdes)
 )
-</query><query name="Query 6" focus="false" listorder="9" taborder="9" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+</query><query name="Query 6" focus="false" listorder="9" taborder="9" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
 fn:fold-left(function($z, $a) {
   xdmp:trace("lvbb-test", "z=" || xdmp:quote($z)),
   if (map:contains($z, $a))
@@ -184,13 +187,13 @@ fn:fold-left(function($z, $a) {
   else (map:put($z, $a, $a)),
   xdmp:trace("lvbb-test", "z=" || xdmp:quote($z)),
   $z
-}, map:map(), ("a","b","c"))</query><query name="Query 7" focus="false" listorder="10" taborder="10" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+}, map:map(), ("a","b","c"))</query><query name="Query 7" focus="false" listorder="10" taborder="10" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
 
 
 object-node {
     "hallo": "wereld"
   }
-</query><query name="Query 8" focus="false" listorder="11" taborder="11" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+</query><query name="Query 8" focus="false" listorder="11" taborder="11" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
 
 declare function local:maak-kruisvalidatie-rapport(
   $doelen as xs:string*,
@@ -210,7 +213,7 @@ declare function local:maak-kruisvalidatie-rapport(
   }
 };
 
-local:maak-kruisvalidatie-rapport("/join/id/slah/di/blah", map:map())</query><query name="Query 9" focus="false" listorder="12" taborder="12" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="xquery">xquery version "1.0-ml";
+local:maak-kruisvalidatie-rapport("/join/id/slah/di/blah", map:map())</query><query name="Query 9" focus="true" listorder="12" taborder="12" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
 import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
 
 declare option xdmp:mapping "false";
@@ -314,8 +317,12 @@ let $utrecht := map:map()
 =&gt;map:with("collection", "hackaton/utrecht")
 =&gt;map:with("bindings", map:map()
   =&gt;map:with("akn", "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227"))
+let $roxit := map:map()
+=&gt;map:with("collection", "hackaton/roxit")
+=&gt;map:with("bindings", map:map()
+  =&gt;map:with("akn", "/akn/nl/act/ws0152/2021/Regeling97dce774a5c6414eaf44428ad9ddaf0a"))
   
-let $map := $utrecht
+let $map := $roxit
 let $result := map:map()
 
 let $query :=  cts:collection-query(map:get($map,"collection"))
@@ -343,7 +350,7 @@ return object-node {
       }
     }
   }
-}</query><query name="Query 10" focus="false" listorder="13" taborder="13" active="true" database="3444400608675009663" server="11241090501015656619" database-name="hackaton-content" server-name="hackaton" mode="sparql">## query
+}</query><query name="Query 10" focus="false" listorder="13" taborder="13" active="true" database="691304780388674312" server="12408499186558278297" database-name="hackaton-schemas" server-name="App-Services" mode="sparql" optimize="">## query
 PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
 PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
 prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;

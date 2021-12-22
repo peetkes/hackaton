@@ -1,6 +1,6 @@
 {
   "template": {
-    "description": "Extraction Template for Pons bestand",
+    "description": "Extraction Template for ow-Pons",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/p:Pons",
     "collections": [
       "/opera/document/ow-bestand"
@@ -46,7 +46,7 @@
       },
       {
         "name": "imow",
-        "val": "'http://www.geostandaarden.nl/imow/'"
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
       {
         "name": "bestandId",
@@ -69,18 +69,6 @@
         "object": {
           "val": "sem:iri($ponsId)"
         }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($ponsId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($imow || fn:local-name(.))"
-        }
       }
     ],
     "templates": [
@@ -94,7 +82,7 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'locatieaanduiding')"
+              "val": "sem:iri($imow || 'heeftPons' || fn:local-name(.))"
             },
             "object": {
               "val": "sem:iri(@xlink:href/fn:string())"

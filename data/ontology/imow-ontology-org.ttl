@@ -1,0 +1,199 @@
+#################################################################
+###  Generated with the experimental alpha version of the TTL exporter of WebVOWL (version 1.1.7)  http://visualdataweb.de/webvowl/   ###
+#################################################################
+
+@prefix : 		<http://koop.overheid.nl/ontology/imow/> .
+@prefix rdf: 		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: 		<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: 		<http://www.w3.org/2002/07/owl#> .
+@prefix xsd: 		<http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: 		<http://purl.org/dc/elements/1.1/> .
+@prefix xml: 		<http://www.w3.org/XML/1998/namespace> .
+@prefix lvbb: 		<http://koop.overheid.nl/ontology/lvbb/> .
+@base 			<http://koop.overheid.nl/ontology/imow/> .
+
+<http://koop.overheid.nl/ontology/imow/> rdf:type owl:Ontology ;
+                                        dc:title "IMOW ontology"@nl;
+                                        dc:description "IMOW ontology description"@nl .
+#################################################################
+
+###  Property Definitions (Number of Property) 4 ###
+:identificatie rdf:type owl:DatatypeProperty ;
+               rdfs:label "identificatie"@nl;
+               rdfs:domain :OwObject;
+               rdfs:range rdfs:Literal .
+:GeometrieRef rdf:type owl:DatatypeProperty ;
+              rdfs:label "GeometrieRef"@nl;
+              rdfs:domain :Gebied;
+              rdfs:range rdfs:Literal .
+:GebiedRef rdf:type owl:DatatypeProperty ;
+           rdfs:label "GebiedRef"@nl;
+           rdfs:domain :Gebiedengroep;
+           rdfs:range rdfs:Literal .
+:LocatieRef rdf:type owl:DatatypeProperty ;
+            rdfs:label "LocatieRef"@nl;
+            rdfs:domain :Pons;
+            rdfs:range rdfs:Literal .
+:isOpgenomenIn rdf:type owl:ObjectProperty ;
+               rdfs:label "isOpgenomenIn"@nl;
+               rdfs:domain :JuridischeRegel;
+               rdfs:range :Regeltekst .
+
+:definieert rdf:type owl:ObjectProperty ;
+            rdfs:label "definieert"@nl;
+            rdfs:domain :JuridischeRegel;
+            rdfs:range :Locatie .
+:heeftWerkingIn rdf:type owl:ObjectProperty ;
+                rdfs:label "heeftWerkingIn"@nl;
+                rdfs:domain :Regeltekst;
+                rdfs:range :Locatie .
+:beschrijftGebiedsaanwijzing rdf:type owl:ObjectProperty ;
+                             rdfs:label "beschrijftGebiedsaanwijzing"@nl;
+                             rdfs:domain :JuridischeRegel;
+                             rdfs:range :Gebiedsaanwijzing .
+:beschrijftOmgevingswaarde rdf:type owl:ObjectProperty ;
+                           rdfs:label "beschrijftOmgevingswaarde"@nl;
+                           rdfs:domain :Omgevingswaarderegel;
+                           rdfs:range :Omgevingswaarde .
+#:beschrijftOmgevingsnorm rdf:type owl:ObjectProperty ;
+#                         rdfs:label "beschrijftOmgevingsnorm"@nl;
+#                         rdfs:range :Omgevingsnorm .
+:omvatPunt rdf:type owl:ObjectProperty ;
+           rdfs:label "omvatPunt"@nl;
+           rdfs:domain :Puntengroep;
+           rdfs:range :Punt .
+:omvatLijn rdf:type owl:ObjectProperty ;
+           rdfs:label "omvatLijn"@nl;
+           rdfs:domain :Lijnengroep;
+           rdfs:range :Lijn .
+:omvatGebied rdf:type owl:ObjectProperty ;
+             rdfs:label "omvatGebied"@nl;
+             rdfs:domain :Gebiedengroep;
+             rdfs:range :Gebied .
+:isGereguleerdVoor rdf:type owl:ObjectProperty ;
+                   rdfs:label "isGereguleerdVoor"@nl;
+                   rdfs:domain :Activiteit;
+                   rdfs:range :Locatie .
+:geldtVoor rdf:type owl:ObjectProperty ;
+           rdfs:label "geldtVoor"@nl ;
+           rdfs:domain :Normaarde ;
+           rdfs:range :Locatie .
+:isGereguleerdVoor rdf:type owl:ObjectProperty ;
+                   rdfs:label "isGereguleerdVoor"@nl ;
+                   rdfs:domain :Activiteit ;
+                   rdfs:range :Locatie .
+
+:InstructieRegelIsBeschreven rdf:type owl:ObjectProperty ;
+                             rdfs:label "InstructieRegelIsBeschreven"@nl ;
+                             rdfs:domain :Instructieregel ;
+                             rdfs:range :Beschrijving .
+:BeschrevenDoorInstructieRegel rdf:type owl::ObjectProperty ;
+                               rdfs:label "BeschrevenDoorInstructieRegel"@nl ;
+                               rdfs:domain :Omgevingsnorm ;
+                               rdfs:range :Beschrijving  .
+
+lvbb:linkToOwObject rdf:type owl:ObjectProperty ;
+                    rdfs:label "linkToOwObject"@nl ;
+                    rdfs:domain lvbb:RegelingObject ;
+                    rdfs:range :OwAanlevering .
+###  Class Definitions (Number of Classes) 23 ###
+:OwAanlevering rdf:type owl:Class ;
+            rdfs:subClassOf :OwObject ;
+            rdfs:label "OwAanlevering"@nl .
+:Activiteit rdf:type owl:Class ;
+            rdfs:subClassOf :OwObject ;
+			rdfs:label "Activiteit"@nl .
+:Regeltekst rdf:type owl:Class ;
+            rdfs:subClassOf :OwObject ;
+			rdfs:label "Regeltekst"@nl .
+:JuridischeRegel rdf:type owl:Class ;
+                 rdfs:subClassOf :OwObject ;
+                 rdfs:label "JuridischeRegel"@nl .
+:RegelVoorIedereen rdf:type owl:Class ;
+                   rdfs:subClassOf :JuridischeRegel ;
+				   rdfs:label "RegelVoorIedereen"@nl .
+:Instructieregel rdf:type owl:Class ;
+                 rdfs:subClassOf :JuridischeRegel ;
+				 rdfs:label "Instructieregel"@nl .
+:Omgevingswaarderegel rdf:type owl:Class ;
+                      rdfs:subClassOf :JuridischeRegel ;
+					  rdfs:label "Omgevingswaarderegel"@nl .
+:Divisie rdf:type owl:Class ;
+         rdfs:subClassOf :OwObject ;
+		 rdfs:label "Divisie"@nl .
+:Divisietekst rdf:type owl:Class ;
+              rdfs:subClassOf :OwObject ;
+			  rdfs:label "Divisietekst"@nl .
+:Tekstdeel rdf:type owl:Class ;
+           rdfs:subClassOf :OwObject ;
+		   rdfs:label "Tekstdeel"@nl .
+:Hoofdlijn rdf:type owl:Class ;
+           rdfs:subClassOf :OwObject ;
+		   rdfs:label "Hoofdlijn"@nl .
+:Locatie rdf:type owl:Class ;
+         rdfs:subClassOf :OwObject ;
+         rdfs:label "Locatie"@nl .
+:Gebied rdf:type owl:Class ;
+        rdfs:subClassOf :Locatie ;
+		rdfs:label "Gebied"@nl .
+:Gebiedengroep rdf:type owl:Class ;
+               rdfs:subClassOf :Locatie ;
+			   rdfs:label "Gebiedengroep"@nl .
+:Lijn rdf:type owl:Class ;
+      rdfs:subClassOf :Locatie ;
+	  rdfs:label "Lijn"@nl .
+:Lijnengroep rdf:type owl:Class ;
+             rdfs:subClassOf :Locatie ;
+			 rdfs:label "Lijnengroep"@nl .
+:Punt rdf:type owl:Class ;
+      rdfs:subClassOf :Locatie ;
+	  rdfs:label "Punt"@nl .
+:Puntengroep rdf:type owl:Class ;
+             rdfs:subClassOf :Locatie ;
+			 rdfs:label "Puntengroep"@nl .
+:Ambtsgebied rdf:type owl:Class ;
+             rdfs:subClassOf :Locatie ;
+			 rdfs:label "Ambtsgebied"@nl .
+:Gebiedsaanwijzing rdf:type owl:Class ;
+                   rdfs:subClassOf :OwObject ;
+				   rdfs:label "Gebiedsaanwijzing"@nl .
+:Norm rdf:type owl:Class ;
+      rdfs:subClassOf :OwObject ;
+      rdfs:label "Norm"@nl .
+:Omgevingsnorm rdf:type owl:Class ;
+               rdfs:subClassOf :Norm ;
+			   rdfs:label "Omgevingsnorm"@nl .
+:Omgevingswaarde rdf:type owl:Class ;
+                 rdfs:subClassOf :Norm ;
+				 rdfs:label "Omgevingswaarde"@nl .
+:Normwaarde rdf:type owl:Class ;
+            rdfs:subClassOf :Norm ;
+            rdfs:label "Normwaarde"@nl .
+:Pons rdf:type owl:Class ;
+      rdfs:subClassOf :OwObject ;
+	  rdfs:label "Pons"@nl .
+:Kaart rdf:type owl:Class ;
+       rdfs:subClassOf :OwObject ;
+	   rdfs:label "Kaart"@nl .
+:Regelingsgebied rdf:type owl:Class ;
+                 rdfs:subClassOf :OwObject ;
+				 rdfs:label "Regelingsgebied"@nl .
+:Geometrie rdf:type owl:Class ;
+           rdfs:subClassOf :OwObject ;
+		   rdfs:label "Geometrie"@nl .
+:SymbolisatieItem rdf:type owl:Class ;
+                  rdfs:subClassOf :OwObject ;
+				  rdfs:label "SymbolisatieItem"@nl .
+
+lvbb:RegelingObject rdf:type owl:Class ;
+                    rdfs:subClassOf lvbb:Werk ;
+                    rdfs:label "RegelingObject"@nl .
+lvbb:Regeling  rdf:type owl:Class ;
+               rdfs:subClassOf lvbb:RegelingObject ;
+               rdfs:label "Regeling"@nl .
+lvbb:Artikel rdf:type owl:Class ;
+             rdfs:subClassOf lvbb:RegelingObject ;
+             rdfs:label "Artikel"@nl .
+lvbb:Lid rdf:type owl:Class ;
+         rdfs:subClassOf lvbb:RegelingObject ;
+         rdfs:label "Lid"@nl .
