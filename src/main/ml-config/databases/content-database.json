@@ -1,5 +1,19 @@
 {
   "database-name" : "%%DATABASE%%",
   "schema-database": "%%SCHEMAS_DATABASE%%",
-  "range-element-index" : [ ]
+  "range-element-index" : [ ],
+  "default-ruleset": [
+    {
+      "location": "subClassOf.rules"
+    },
+    {
+    "location": "domain.rules"
+    },
+    {
+    "location": "range.rules"
+    },
+    {
+    "location": "rdfs.rules"
+    }
+  ]
 }
