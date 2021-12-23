@@ -82,6 +82,18 @@
               "invalidValues": "ignore"
             },
             "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($omgevingswaardeId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
@@ -106,10 +118,34 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'heeftNormwaarde')"
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri($normwaardeId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || fn:local-name(.))"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdfs || 'label')"
+                },
+                "object": {
+                  "val": "$normwaardeId"
                 }
               }
             ],
@@ -152,7 +188,7 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftOmgevingsnorm')"
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
             },
             "object": {
               "val": "sem:iri($omgevingsnormId)"
@@ -164,10 +200,22 @@
               "invalidValues": "ignore"
             },
             "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($omgevingsnormId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
-              "val": "rol:naam/fn:string()"
+              "val": "$omgevingsnormId"
             }
           }
         ],
@@ -188,10 +236,34 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($imow || 'heeftNormwaarde')"
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri($normwaardeId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || fn:local-name(.))"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdfs || 'label')"
+                },
+                "object": {
+                  "val": "$normwaardeId"
                 }
               }
             ],

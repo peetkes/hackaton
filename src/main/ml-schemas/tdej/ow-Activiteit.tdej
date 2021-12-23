@@ -29,6 +29,10 @@
     ],
     "vars": [
       {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
         "name": "rdfs",
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
@@ -61,6 +65,18 @@
         },
         "object": {
           "val": "sem:iri($activiteitId)"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($activiteitId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($imow || fn:local-name(.))"
         }
       },
       {

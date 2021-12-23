@@ -17,10 +17,6 @@
     ],
     "vars": [
       {
-        "name": "owl",
-        "val": "'http://www.w3.org/2002/07/owl#'"
-      },
-      {
         "name": "rdf",
         "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
       },
@@ -45,8 +41,8 @@
         "val": "sl:leveringsId/fn:string()"
       },
       {
-        "name": "linkId",
-        "val": "xdmp:sha256($bestandnaam)"
+        "name": "manifestLinkBestandId",
+        "val": "xdmp:sha512($bestandnaam)"
       },
       {
         "name": "bestandId",
@@ -60,7 +56,7 @@
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri(rdfs || 'label')"
+          "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
           "val": "$owId"
@@ -92,14 +88,26 @@
       },
       {
         "subject": {
-          "val": "sem:iri($linkId)",
+          "val": "sem:iri($bestandId)",
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($owl || 'sameAs')"
+          "val": "sem:iri($rdf || 'type')"
         },
         "object": {
-          "val": "sem:iri($bestandId)"
+          "val": "sem:iri($imow || 'owBestand')"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($bestandId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($imow || 'linkToManifestBestand')"
+        },
+        "object": {
+          "val": "sem:iri($manifestLinkBestandId)"
         }
       }
     ],

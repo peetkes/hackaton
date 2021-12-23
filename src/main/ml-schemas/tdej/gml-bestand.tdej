@@ -61,7 +61,19 @@
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($lvbb || 'bestandsnaam')"
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($lvbb || 'GmlBestand')"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($bestandsId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
           "val": "opera:gml-filenaam/fn:string()"
@@ -100,7 +112,7 @@
               "val": "sem:iri($rdf || 'type')"
             },
             "object": {
-              "val": "sem:iri($lvbb || 'geo-locatie')"
+              "val": "sem:iri($lvbb || 'GeoLocatie')"
             }
           },
           {

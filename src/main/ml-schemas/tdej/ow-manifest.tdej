@@ -55,6 +55,17 @@
           "val": "sem:iri($aanleveringId)"
         },
         "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($imow || fn:local-name(.))"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($aanleveringId)"
+        },
+        "predicate": {
           "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
@@ -86,7 +97,7 @@
     ],
     "templates": [
       {
-        "description": "Extraction Template for ow Bestand",
+        "description": "Extraction Template for mow Bestand",
         "context": "mow:Bestand",
         "vars": [
           {
@@ -95,7 +106,7 @@
           },
           {
             "name": "bestandId",
-            "val": "xdmp:sha256($naam)"
+            "val": "xdmp:sha512($naam)"
           }
         ],
         "triples": [
@@ -115,6 +126,17 @@
               "val": "sem:iri($bestandId)"
             },
             "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
@@ -124,7 +146,7 @@
         ],
         "templates": [
           {
-            "description": "Extraction Template for ow Bestand",
+            "description": "Extraction Template for mow Bestand objecttypes",
             "context": "mow:objecttype",
             "triples": [
               {

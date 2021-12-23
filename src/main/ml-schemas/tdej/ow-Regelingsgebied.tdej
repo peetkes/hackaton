@@ -29,10 +29,6 @@
     ],
     "vars": [
       {
-        "name": "skos",
-        "val": "'http://www.w3.org/2004/02/skos/core#'"
-      },
-      {
         "name": "rdf",
         "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
       },
@@ -68,6 +64,30 @@
         },
         "object": {
           "val": "sem:iri($regelinggebiedId)"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($regelinggebiedId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($imow || fn:local-name(.))"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($regelinggebiedId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
+          "val": "sem:iri($rdfs || 'label')"
+        },
+        "object": {
+          "val": "$regelinggebiedId"
         }
       }
     ],

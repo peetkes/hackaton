@@ -17,6 +17,7 @@
          <sl:gebied>Gemeentestad</sl:gebied>
          <sl:leveringsId>abc-20190221-0801</sl:leveringsId>
          <sl:objectTypen>
+            <sl:objectType>Lijn</sl:objectType>
             <sl:objectType>Gebied</sl:objectType>
             <sl:objectType>Gebiedengroep</sl:objectType>
 			<sl:objectType>Ambtsgebied</sl:objectType>

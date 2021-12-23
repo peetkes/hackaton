@@ -234,6 +234,9 @@
 :Kaart rdf:type owl:Class ;
        rdfs:subClassOf :OwObject ;
        rdfs:label "Kaart"@nl .
+:Kaartlaag rdf:type owl:Class ;
+       rdfs:subClassOf :OwObject ;
+       rdfs:label "Kaartlaag"@nl .
 :Regelingsgebied rdf:type owl:Class ;
                  rdfs:subClassOf :OwObject ;
                  rdfs:label "Regelingsgebied"@nl .

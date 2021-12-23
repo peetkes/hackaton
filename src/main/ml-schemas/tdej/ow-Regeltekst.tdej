@@ -118,6 +118,18 @@
               "invalidValues": "ignore"
             },
             "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regeltekstId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
@@ -136,7 +148,7 @@
                   "invalidValues": "ignore"
                 },
                 "predicate": {
-                  "val": "sem:iri($lvbb || 'heeft' || fn:local-name(.))"
+                  "val": "sem:iri($lvbb || 'heeftRegeltekst' || fn:local-name(.))"
                 },
                 "object": {
                   "val": "sem:iri(@xlink:href/fn:string())"
@@ -166,6 +178,18 @@
             },
             "object": {
               "val": "sem:iri($regelId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regelId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {
@@ -370,6 +394,18 @@
             },
             "object": {
               "val": "sem:iri($regelId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regelId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {

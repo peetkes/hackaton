@@ -76,6 +76,18 @@
           "invalidValues": "ignore"
         },
         "predicate": {
+          "val": "sem:iri($rdf || 'type')"
+        },
+        "object": {
+          "val": "sem:iri($imow || fn:local-name(.))"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($gebiedsaanwijzingId)",
+          "invalidValues": "ignore"
+        },
+        "predicate": {
           "val": "sem:iri($rdfs || 'label')"
         },
         "object": {

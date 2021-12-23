@@ -193,12 +193,13 @@ ontologies.each{ ontology ->
   }
 };
 
-task loadOntologies(dependsOn: [
-    'loadOntology-imow-ontology'
-])
-
 task clearOntology(type: com.marklogic.gradle.task.ServerEvalTask) {
 //  client = mlAppConfig.newDatabaseClient()
   xquery = "xquery version \"1.0-ml\";\n" +
-        "xdmp:collection-delete(\"type/Ontology\")"
+      "xdmp:collection-delete(\"type/Ontology\")"
 }
+
+task loadOntologies(
+    dependsOn: ['clearOntology','loadOntology-imow-ontology']
+)
+

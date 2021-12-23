@@ -80,18 +80,6 @@
           "invalidValues": "ignore"
         },
         "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($lvbb || 'InformatieObject')"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($prefix-id || $ioId)",
-          "invalidValues": "ignore"
-        },
-        "predicate": {
           "val": "sem:iri($lvbb || 'heeftVersie')"
         },
         "object": {

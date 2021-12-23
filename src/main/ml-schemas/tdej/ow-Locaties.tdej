@@ -71,6 +71,30 @@
             "object": {
               "val": "sem:iri($gebiedId)"
             }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$gebiedId"
+            }
           }
         ],
         "templates": [
@@ -122,11 +146,22 @@
               "invalidValues": "ignore"
             },
             "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
-              "val": "l:noemer/fn:string()",
-              "invalidValues": "ignore"
+              "val": "$gebiedId"
             }
           }
         ],
@@ -167,10 +202,22 @@
               "invalidValues": "ignore"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftAmbtsgebied')"
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
             },
             "object": {
               "val": "sem:iri($gebiedId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)",
+              "invalidValues": "ignore"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
             }
           },
           {
@@ -208,6 +255,18 @@
                 },
                 "object": {
                   "val": "sem:iri($bgId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($bgId)",
+                  "invalidValues": "ignore"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || fn:local-name(.))"
                 }
               },
               {
