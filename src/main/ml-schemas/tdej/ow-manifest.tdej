@@ -3,7 +3,12 @@
     "description": "Extraction Template for ow-manifest-bestand",
     "context": "/mow:Aanleveringen/mow:Aanlevering",
     "collections": [
-      "/opera/document/manifest-ow"
+      {
+        "collectionsAnd": [
+          "/opera/document/manifest-ow",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -25,6 +30,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "regelingId",
         "val": "mow:WorkIDRegeling/fn:string()"
       },
@@ -35,14 +44,6 @@
       {
         "name": "imow",
         "val": "'http://koop.overheid.nl/ontology/imow/'"
-      },
-      {
-        "name": "prefix-id",
-        "val": "''"
-      },
-      {
-        "name": "prefix-id-lvbb",
-        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       },
       {
         "name": "aanleveringId",
@@ -66,6 +67,17 @@
           "val": "sem:iri($aanleveringId)"
         },
         "predicate": {
+          "val": "sem:iri($dc || 'identifier')"
+        },
+        "object": {
+          "val": "$aanleveringId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($aanleveringId)"
+        },
+        "predicate": {
           "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
@@ -80,7 +92,7 @@
           "val": "sem:iri($imow || 'linkToRegelingObject')"
         },
         "object": {
-          "val": "sem:iri($prefix-id || $regelingId)"
+          "val": "sem:iri($regelingId)"
         }
       },
       {
@@ -91,7 +103,7 @@
           "val": "sem:iri($imow || 'linkToDoel')"
         },
         "object": {
-          "val": "sem:iri($prefix-id || $doelId)"
+          "val": "sem:iri($doelId)"
         }
       }
     ],
@@ -130,6 +142,17 @@
             },
             "object": {
               "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$bestandId"
             }
           },
           {

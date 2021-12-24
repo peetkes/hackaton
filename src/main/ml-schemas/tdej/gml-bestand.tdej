@@ -3,7 +3,12 @@
     "description": "Extraction Template for gml-bestand",
     "context": "/prop:properties/opera:gml-properties",
     "collections": [
-      "/opera/document/gml"
+      {
+        "collectionsAnd": [
+          "/opera/document/gml",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -21,6 +26,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
@@ -32,8 +41,7 @@
     "triples": [
       {
         "subject": {
-          "val": "sem:iri(opera:join-id-werk/fn:string())",
-          "invalidValues": "ignore"
+          "val": "sem:iri(opera:join-id-werk/fn:string())"
         },
         "predicate": {
           "val": "sem:iri($lvbb || 'heeftIoBestand')"
@@ -44,21 +52,18 @@
       },
       {
         "subject": {
-          "val": "sem:iri(opera:join-id-expressie/fn:string())",
-          "invalidValues": "ignore"
+          "val": "sem:iri(opera:join-id-expressie/fn:string())"
         },
         "predicate": {
           "val": "sem:iri($lvbb || 'heeftIoBestand')"
         },
         "object": {
-          "val": "sem:iri($bestandsId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandsId)"
         }
       },
       {
         "subject": {
-          "val": "sem:iri($bestandsId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandsId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -69,8 +74,18 @@
       },
       {
         "subject": {
-          "val": "sem:iri($bestandsId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandsId)"
+        },
+        "predicate": {
+          "val": "sem:iri($dc || 'identifier')"
+        },
+        "object": {
+          "val": "$bestandsId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($bestandsId)"
         },
         "predicate": {
           "val": "sem:iri($rdfs || 'label')"
@@ -93,8 +108,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($bestandsId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($bestandsId)"
             },
             "predicate": {
               "val": "sem:iri($lvbb || 'geolocatie')"
@@ -105,8 +119,7 @@
           },
           {
             "subject": {
-              "val": "sem:iri($gmlId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($gmlId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -117,8 +130,18 @@
           },
           {
             "subject": {
-              "val": "sem:iri($gmlId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($gmlId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$gmlId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gmlId)"
             },
             "predicate": {
               "val": "sem:iri($rdfs || 'label')"

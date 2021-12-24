@@ -10,10 +10,9 @@ let $uri := "/kruisvalidaties/1.1.0/Utrecht/manifest-bhkv.xml"
 let $uri := "/owActiviteiten-Gemeentestad.xml"
 let $uri := "/akn_nl_bill_gm0297-3520-01.xml"
 let $uri := "/kruisvalidaties/1.1.0/roxit/AanleveringBesluit.xml"
-let $uri := "/manifest-ow.xml"
-let $uri := "/manifest-ow.xml"
-let $uri := "/manifest-ow.xml"
 let $uri := "/owLocaties-Gemeentestad.xml"
+let $uri := "/manifest-ow.xml"
+let $uri := "/GIO001-Bedrijf_categorie_2.xml"
 let $doc := fn:doc($uri)
 let $ow-tdes := xdmp:invoke-function(
   function() {
@@ -25,157 +24,98 @@ let $ow-tdes := xdmp:invoke-function(
 )
 let $stop-tdes := xdmp:invoke-function(
   function() {
-(:)    fn:doc("/tdej/besluit.tdej"),:)
+    fn:doc("/tdej/besluit.tdej"),
+    fn:doc("/tdej/informatie-object.tdej"),
     fn:doc("/tdej/regeling.tdej")
   },
   map:map()
   =&gt;map:with("database",xdmp:schema-database())
 )
 return (
-tde:validate($ow-tdes),
-  tde:node-data-extract($doc, $ow-tdes)
+tde:validate($stop-tdes),
+  tde:node-data-extract($doc, $stop-tdes)
 )
 </query><query name="Describe" focus="false" listorder="2" taborder="2" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
-DESCRIBE &lt;f22016dc4cfa8f1c2a1e0716806ccaf580454b3cf71a1a1abd610972fb4b56a45b4df89463c8d940912dfdf33621a92a08a40b76621ccbbb16750282a332d285&gt;</query><query name="Query 1" focus="false" listorder="3" taborder="3" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="sparql" optimize="">## query
-PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+DESCRIBE &lt;ws0650_4__chp_1__subchp_1.1__art_1.1.4__para_1.1.4.1&gt;</query><query name="Referenties Per Doel" focus="false" listorder="3" taborder="3" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
 PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
-
-SELECT ?ioVersie
-WHERE {
-  ?regeling lvbb:workId "/akn/nl/act/gm0297/2019/reg456" .
-  ?ioVersie lvbb:heeftGeboorteregeling ?regeling.
-  ?ioWerk lvbb:heeftVersie ?ioVersie ;
-          lvbb:workId ?ioWerkId .
-}</query><query name="Query 2" focus="false" listorder="4" taborder="4" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
-PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
-PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
-prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX imowType: &lt;http://www.geostandaarden.nl/imow/objecttype/&gt;
-
-SELECT ?regelingId ?wId ?regeltekstId
-WHERE {
-  ?regeling lvbb:linkToOwObject ?mow ;
-              rdfs:label ?regelingId ;
-              rdf:type lvbb:Regeling ;
-              lvbb:heeftVersie ?versie .
-  ?versie lvbb:vastgesteldDoorDoel ?doel .
-  ?doel lvbb:linkToOwObject ?mow ;
-          rdf:type lvbb:doel ;
-          rdfs:label "/join/id/proces/gm0297/2019/Instelling" .
-  ?mow imow:heeftObjectType imow:Regeltekst;
-      imow:bestandsnaam ?bestand .
-  ?ow rdfs:label ?bestand ;
-       imow:heeftRegeltekst ?regeltekst .
-  ?regeltekst rdf:type imow:Regeltekst ;
-          rdfs:label ?regeltekstId ;
-          lvbb:linkToWId ?wRef .
-  ?wRef rdfs:label ?wId .
-}
-ORDER BY ?regelingId ?regeltekstId</query><query name="Maak KruisvalidatieRapport" focus="false" listorder="5" taborder="5" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
-import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
-
-declare option xdmp:mapping "false";
-
-let $gemeentestad := map:map()
-=&gt;map:with("collection", "hackaton/aanlevering")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/gm0297/2019/reg456"))
-let $utrecht := map:map()
-=&gt;map:with("collection", "hackaton/utrecht")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227"))
-  
-let $map := $gemeentestad
-let $result := map:map()
-
-let $query :=  cts:collection-query(map:get($map,"collection"))
-let $store := (sem:store("document", $query),sem:store("properties", $query))
-let $doelen :=  sem:sparql($kv:SPARQL-REFERENTIES-PER-DOEL, (), ("map"), $store)
-let $_ :=
-  for $doel in $doelen
-  return map:put($result, map:get($doel, "doelId"), 
-    map:map()
-    =&gt;map:with("geometrieIdentificaties", sem:sparql($kv:SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $store))
-    =&gt;map:with("referentiesPerRegeling", sem:sparql($kv:SPARQL-REFERENTIES-PER-REGELING, $doel, (), $store))
-  )
-let $referentiesPerRegeling := fn:fold-left(
-  function($z, $a) {
-    let $regelingId := map:get($a, "regelingId")
-    let $wId := map:get($a, "wId")
-    let $regeltekstId := map:get($a, "regeltekstId")
-    let $object := object-node {
-      "regeltekstId": $regeltekstId, 
-      "wId": $wId
-    }
-    return (
-      if (map:contains($z, $regelingId))
-      then map:put($z, $regelingId, (map:get($z, $regelingId), $object))
-      else map:put($z, $regelingId, $object),
-      $z
-    )
-  }, 
-  map:map(), 
-  map:get(map:get($result, "/join/id/proces/gm0297/2019/Instelling"), "referentiesPerRegeling")
-)
-for $doel in ($doelen !  map:get(., "doelId"))
-return (
-  object-node {
-    "doel": $doel,
-    "referentiesPerDoel": array-node {
-      object-node {
-        "geometrieIdentificaties": array-node {
-          map:get(map:get($result, $doel),"geometrieIdentificaties") ! map:get(., "gmlId") 
-        },
-        "referentiesPerRegeling": array-node {
-          for $regeling in map:keys($referentiesPerRegeling)
-          return map:get($referentiesPerRegeling, $regeling)
-        }       
-      }    
-    }
-  },
-  $referentiesPerRegeling
-(:  kv:maak-rapport($doelen !  map:get(., "doelId"), $result):)
-)</query><query name="Query 4" focus="false" listorder="6" taborder="6" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
-
-declare function local:referentiesPerDoel(
-  $items as item()*
-) as item()* 
-{
-  fn:fold-left(function($z, $a) { $z + 1 }, 0, $items)
-};
-
-let $report := fn:collection("type/rapport")
-for $referentiesTeValideren in $report/referentiesTeValideren
-let $doel := $referentiesTeValideren/doel
-return (
-  "doel " || $doel,
-  $referentiesTeValideren/referentiesPerDoel ! ("Aantal geometrieIdentificaties " || local:referentiesPerDoel(./geometrieIdentificaties)),
-  $referentiesTeValideren/referentiesPerDoel ! (
-    "regelingId " || ./wIdRegeling,
-    "Aantal referentiesPerRegeling " || local:referentiesPerDoel(./referentiesPerRegeling)),
-  $report
-)
-</query><query name="Query 5" focus="false" listorder="7" taborder="7" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
-PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
-PREFIX imow: &lt;http://www.geostandaarden.nl/imow/&gt;
-prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX imowType: &lt;http://www.geostandaarden.nl/imow/objecttype/&gt;
-
+PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
 
 SELECT distinct ?doelId ?regelingId
-#SELECT ?regeling ?versie ?mow
 WHERE {
-  ?regeling rdfs:label ?regelingId ;
-            rdf:type lvbb:Regeling ;
-            lvbb:heeftVersie ?versie ;
-            lvbb:linkToOwObject ?mow .
-  ?versie lvbb:vastgesteldDoorDoel ?doel .
+  ?owAanlevering  imow:linkToDoel ?doel ;
+                  imow:linkToRegelingObject ?regeling .
   ?doel rdf:type lvbb:doel ;
-        rdfs:label ?doelId ;
-        lvbb:linkToOwObject ?mow .
-}</query><query name="test STOP tdes" focus="false" listorder="8" taborder="8" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
+        dc:identifier ?doelId .
+  ?versie lvbb:vastgesteldDoorDoel ?doel .
+  ?regeling lvbb:heeftVersie ?versie ;
+            rdf:type lvbb:Regeling ;
+            dc:identifier ?regelingId .
+}</query><query name="Geometrie Identificaties" focus="false" listorder="4" taborder="4" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+
+SELECT ?gmlId
+WHERE {
+  VALUES (?doelId) {("/join/id/proces/gm0297/2019/Instelling")}
+  ?owAanlevering imow:linkToDoel ?doel ;
+                 imow:heeftBestand ?owLink .
+  ?doel dc:identifier ?doelId .
+  ?owBestand imow:linkToManifestBestand ?owLink ;
+             rdf:type imow:owBestand ;
+             imow:heeftGebied ?gebied .
+  ?gebied imow:heeftGeometrieRef ?geometrie .
+  ?geometrie dc:identifier ?gmlId
+}</query><query name="Validate Objecttype OW Bestand" focus="false" listorder="5" taborder="7" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
+PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
+prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?objectType ?type
+WHERE {
+  ?bestand rdf:type imow:owBestand ;
+           imow:heeftObjectType ?objectType .
+  OPTIONAL { ?objectType rdfs:label ?type . }
+  MINUS {
+    SELECT ?objectType ?type
+    WHERE {
+      ?aanlevering rdf:type imow:Aanlevering ;
+                   imow:heeftBestand ?bestand .
+      ?bestand rdf:type imow:Bestand ;
+               imow:heeftObjectType ?objectType .
+      OPTIONAL { ?objectType rdfs:label ?type . }
+    }    
+  }
+}</query><query name="Referenties Per Regeling" focus="false" listorder="6" taborder="5" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+
+SELECT ?regelingId ?wRef ?regeltekstId
+WHERE {
+  VALUES (?doelId) {("/join/id/proces/ws0650/2021-07-14/aanvullingmultigeometrie")}
+  ?owAanlevering imow:linkToDoel ?doel ;
+                 imow:heeftBestand ?owLink ;
+                 imow:linkToRegelingObject ?regeling .
+  ?doel dc:identifier ?doelId .
+  ?regeling dc:identifier ?regelingId ;
+            rdf:type lvbb:Regeling .
+  ?owBestand imow:linkToManifestBestand ?owLink ;
+           rdf:type imow:owBestand ;
+           imow:heeftRegeltekst ?regeltekst .
+  ?regeltekst rdf:type imow:Regeltekst ;
+              dc:identifier ?regeltekstId ;
+              imow:linkToWId ?wRef .
+#  ?wRef dc:identifier ?wId .
+}
+ORDER BY ?regelingId ?regeltekstId</query><query name="test STOP tdes" focus="false" listorder="7" taborder="8" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
 import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
 
 let $doc := fn:doc("/akn_nl_bill_gm0297-3520-01.xml")
@@ -194,117 +134,105 @@ return (
   $stop-tdes ! tde:validate(.),
   tde:node-data-extract($doc, $stop-tdes)
 )
-</query><query name="Query 6" focus="false" listorder="9" taborder="9" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
-xdmp:collection-delete("hackaton/roxit"),
-xdmp:collection-delete("hackaton/utrecht")</query><query name="Query 7" focus="false" listorder="10" taborder="10" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
-
-
-object-node {
-    "hallo": "wereld"
-  }
-</query><query name="Query 8" focus="false" listorder="11" taborder="11" active="true" database="80880676294143955" server="9495204545860005312" database-name="" server-name="" mode="xquery" optimize="">xquery version "1.0-ml";
-
-declare function local:maak-kruisvalidatie-rapport(
-  $doelen as xs:string*,
-  $map as map:map
-) as item()*
-{
-  object-node {
-    "identificatie": sem:uuid(),
-    "meldingen": array-node {},
-    "referentie": sem:uuid(),
-    "referentiesTeValideren": array-node {
-      for $doel in $doelen
-      return object-node {
-        "doel": $doel
-      }
-    }
-  }
-};
-
-local:maak-kruisvalidatie-rapport("/join/id/slah/di/blah", map:map())</query><query name="Query 9" focus="false" listorder="12" taborder="12" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
+</query><query name="Validate ObjectTypes" focus="false" listorder="8" taborder="9" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
 import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
 
-declare option xdmp:mapping "false";
+let $intersect_manifest := kv:intersect($kv:SPARQL-OBJECTTYPEN-MANIFEST, $kv:SPARQL-OBJECTTYPEN-OWBESTAND, ())
+let $intersect_ow := kv:intersect($kv:SPARQL-OBJECTTYPEN-OWBESTAND, $kv:SPARQL-OBJECTTYPEN-MANIFEST, ())
 
-declare variable $SPARQL-PREFIX as xs:string := '
-PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
-PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
-PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-';
-declare variable $SPARQL-REFERENTIES-PER-DOEL as xs:string :=  $SPARQL-PREFIX || '
-SELECT distinct ?doelId ?regelingId
-WHERE {
-  ?mow  imow:linkToDoel ?doel ;
-        imow:linkToRegelingObject ?regeling .
-  ?doel rdf:type lvbb:doel ;
-        rdfs:label ?doelId .
-  ?versie lvbb:vastgesteldDoorDoel ?doel .
-  ?regeling lvbb:heeftVersie ?versie ;
-            rdf:type lvbb:Regeling ;
-            rdfs:label ?regelingId .
-}
-';
+return (
+  $intersect_manifest,
+  '---',
+  $intersect_ow,
+  "----",
+  if (fn:empty($intersect_manifest) and fn:empty($intersect_ow))
+  then "OK"
+  else if (fn:empty($intersect_manifest))
+  then "OW heeft waarde(n) die niet in manifest-ow staat: " || fn:string-join(($intersect_ow ! map:get(.,"type")), ',')
+  else "manifest-ow heeft waarden die niet voorkomen in ow bestanden:" || fn:string-join(($intersect_manifest ! map:get(.,"type")), ',')
+)</query><query name="Query 7" focus="true" listorder="9" taborder="10" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
+import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
 
-declare variable $SPARQL-GEOMETRIE-IDENTIFICATIES as xs:string :=  $SPARQL-PREFIX || '
-SELECT ?gmlId
-WHERE {
-  ?aanlevering imow:linkToDoel ?doel ;
-      imow:heeftBestand ?bestand .
-  ?doel rdfs:label @doelId .
-  ?bestand imow:heeftObjectType imow:Gebied ;
-           rdfs:label ?naam .
-  ?ow imow:bestand ?bestand2 .
-  ?bestand2 imow:heeftObjectType imow:Gebied ;
-            rdfs:label ?naam ;
-            imow:heeftGebied ?gebied .
-  ?gebied imow:heeftGeometrieRef ?geometrie .
-  ?geometrie rdfs:label ?gmlId
-}
-';
-declare variable $SPARQL-REFERENTIES-PER-REGELING as xs:string :=  $SPARQL-PREFIX || '
-SELECT ?regelingId ?wId ?regeltekstId
-WHERE {
-  ?owAanlevering imow:linkToDoel ?doel ;
-                 imow:heeftBestand ?linkId ;
-                 imow:linkToRegelingObject ?regeling .
-  ?doel rdfs:label @doelId .
-  ?regeling rdfs:label @regelingId ;
-            rdf:type lvbb:Regeling .
-  ?linkId owl:sameAs ?bestandId .
-  ?bestandId rdfs:label ?naam ;
-             imow:heeftRegeltekst ?regeltekst .
-  ?regeltekst rdf:type imow:Regeltekst ;
-              rdfs:label ?regeltekstId ;
-              imow:linkToWId ?wRef .
-  ?wRef rdfs:label ?wId .
-}
-ORDER BY ?regelingId ?regeltekstId
-';
-
-declare function local:maak-rapport(
-  $doelen as map:map*,
-  $store as sem:store*
+declare private function local:maak-fout-rapport(
+  $rapport as item()*
 ) as item()*
 {
+  json:object()
+  =&gt;map:with("identificatie", sem:uuid())
+  =&gt;map:with("referentie", sem:uuid())
+  =&gt;map:with("status", "NOK")
+  =&gt;map:with("typeRapport", "REFERENTIES")
+  =&gt;map:with("meldingen", ($rapport,
   object-node {
+    "code": "EINDE CONTROLES",
+    "omschrijving": "De controles zijn helemaal klaar, maar met FATALE fouten.",
+    "detail": "EINDE CONTROLE"
+  }))
+  =&gt;map:with("referentiesTeValideren", array-node {})
+};
+
+declare function local:maak-kruisvalidatie-rapport(
+  $oin as xs:string,
+  $idlevering as xs:string
+) as item()*
+{
+  let $query := cts:or-query((
+    cts:and-query((
+      cts:collection-query(fn:concat("/opera/oin/", $oin)),
+      cts:collection-query(fn:concat("/opera/idlevering/", $idlevering)),
+      cts:collection-query("/opera/options/opdrachtbestanden")
+    )),
+    cts:collection-query("/graph/imow-ontology")
+  ))
+  let $stores := (sem:store("document", $query), sem:store("properties", $query))
+  let $validatie := kv:check-object-types($stores)
+  return
+    if (fn:empty($validatie))
+    then local:maak-goed-rapport($stores)
+    else local:maak-fout-rapport($validatie)
+};
+
+declare function local:get-wId(
+  $item as item()
+) as xs:string?
+{
+  let $wRef := map:get($item, "wRef")
+  let $wId := map:get($item, "wId")
+  return ($wId, fn:tokenize(fn:string($wRef),"/")[last()])[1]
+};
+
+declare private function local:maak-goed-rapport(
+  $stores as sem:store*
+) as item()*
+{
+  let $doelen := sem:sparql($kv:SPARQL-REFERENTIES-PER-DOEL, (), ("map"), $stores)
+  return
+    object-node {
     "identificatie": sem:uuid(),
-    "meldingen": array-node {},
     "referentie": sem:uuid(),
+    "status": "OK",
+    "typeRapport": "REFERENTIES",
+    "meldingen": array-node {},
     "referentiesTeValideren": array-node {
       for $doel in $doelen
       let $doelId := map:get($doel, "doelId")
       let $regelingId := map:get($doel, "regelingId")
-      let $geometrieIdentificaties :=  sem:sparql($kv:SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $store)
-      let $referentiesPerDoel := sem:sparql($kv:SPARQL-REFERENTIES-PER-REGELING, $doel, (), $store)
+      let $geometrieIdentificaties :=  sem:sparql($kv:SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $stores)
+      let $referentiesPerDoel := sem:sparql($kv:SPARQL-REFERENTIES-PER-REGELING, $doel, (), $stores)
       return object-node {
-        "doel": $doel,
+        "doel": $doelId,
         "referentiesPerDoel": array-node {
           object-node {
-            "geometrieIdentificaties": array-node {
-              map:get(map:get($geometrieIdentificaties, $doel),"geometrieIdentificaties") ! map:get(., "gmlId")
+            "geometrieIdentificaties": array-node { $geometrieIdentificaties ! map:get(., "gmlId") },
+            "referentiesPerRegeling": array-node { 
+              for $referentie in $referentiesPerDoel
+              let $wId := local:get-wId($referentie)
+              let $found := map:contains($referentie, "wId") and map:get($referentie, "wId") ne ()
+              return object-node { 
+                "regeltekstId": map:get($referentie, "regeltekstId"), 
+                "wId": $wId,
+                "found": $found
+              } 
             },
             "wIdRegeling": $regelingId
           }
@@ -315,87 +243,166 @@ declare function local:maak-rapport(
 };
 
 let $gemeentestad := map:map()
-=&gt;map:with("collection", "hackaton/aanlevering")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/gm0297/2019/reg456"))
-let $utrecht := map:map()
-=&gt;map:with("collection", "hackaton/utrecht")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227"))
-let $roxit := map:map()
-=&gt;map:with("collection", "hackaton/roxit")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/ws0152/2021/Regeling97dce774a5c6414eaf44428ad9ddaf0a"))
-  
-let $map := $gemeentestad
-let $result := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-Omgevingsplan-Zaltbommel_004")
 
-let $query :=  cts:collection-query(map:get($map,"collection"))
-let $store := (sem:store("document", $query),sem:store("properties", $query))
-let $doelen :=  sem:sparql($SPARQL-REFERENTIES-PER-DOEL, (), ("map"), $store)
-(:return local:maak-rapport($doelen, $store):)
+let $opdracht-utrecht := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "VBPU0001-001")
+
+let $utrecht := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "utrecht-001")
+
+let $roxit := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "roxit")
+
+let $zuiderzee := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6")
+
+let $zuiderzeeland := map:map()
+=&gt;map:with("oin", "00000003011411800000")
+=&gt;map:with("idlevering", "Zuiderzeeland")
+    
+let $map := $zuiderzee
+
+let $query := cts:or-query((
+  cts:and-query((
+    cts:collection-query(fn:concat("/opera/oin/", map:get($map, "oin"))),
+    cts:collection-query(fn:concat("/opera/idlevering/", map:get($map, "idlevering"))),
+    cts:collection-query("/opera/options/opdrachtbestanden")
+  )),
+  cts:collection-query("/graph/imow-ontology")
+))
+let $stores := (sem:store("document", $query), sem:store("properties", $query))
+
 return (
-    $doelen,"--",
-    for $doel in $doelen
-    let $doelId := map:get($doel, "doelId")
-    let $regelingId := map:get($doel, "regelingId")
-    let $geometrieIdentificaties :=  sem:sparql($SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $store)
-    let $referentiesPerDoel := sem:sparql($SPARQL-REFERENTIES-PER-REGELING, $doel, (), $store)
-    return (
-      $doel,
-      $geometrieIdentificaties,
-      $referentiesPerDoel,
-      $regelingId
-    )
+  kv:maak-kruisvalidatie-rapport(map:get($map,"oin"), map:get($map, "idlevering"))
 )
-(:
-return (
-object-node {
-  "identificatie": sem:uuid(),
-  "meldingen": array-node {},
-  "referentie": sem:uuid(),
-  "referentiesTeValideren": array-node {
-    for $doel in $doelen
-    let $doelId := map:get($doel, "doelId")
-    let $regelingId := map:get($doel, "regelingId")
-    let $geometrieIdentificaties :=  sem:sparql($SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $store)
-    let $referentiesPerDoel := sem:sparql($SPARQL-REFERENTIES-PER-REGELING, $doel, (), $store)
-    return object-node {
-      "doel": $doelId,
-      "referentiesPerDoel": array-node {
-        object-node {
-          "geometrieIdentificaties": array-node { $geometrieIdentificaties ! map:get(., "gmlId") },
-          "referentiesPerRegeling": array-node { $referentiesPerDoel ! object-node { "regeltekstId": map:get(., "regeltekstId"), "wId": map:get(., "wId") } },
-          "wIdRegeling": $regelingId
-        }
-      }
+</query><query name="Query 8" focus="false" listorder="10" taborder="11" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
+import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
+
+declare option xdmp:mapping "false";
+
+declare function local:check-object-types(
+  $store as sem:store*
+) as item()*
+{
+  let $object-types := sem:sparql($kv:SPARQL-DISTINCT_OBJECTTYPES,(),(),())
+  let $all-allowed := every $type in  $object-types ! kv:get-object-type(.) satisfies $type = $kv:ALLOWED_OBJECTTYPES
+  let $intersect := kv:intersect($store)
+  return ($object-types, "--",$intersect)
+(:)    if ($all-allowed)
+    then ()
+    else (
+      local:check-allowed-object-types($object-types)
+    )
+:)
+};
+
+declare function local:intersect(
+  $store as sem:store*
+) as item()*
+{
+  let $sparql := $kv:SPARQL-PREFIX || '
+SELECT ?objectType ?type
+WHERE {
+  ?aanlevering rdf:type imow:Aanlevering ;
+               imow:heeftBestand ?bestand .
+  ?bestand rdf:type imow:Bestand ;
+           imow:heeftObjectType ?objectType .
+  ?objectType rdfs:label ?type .
+  MINUS {
+    SELECT ?objectType ?type
+    WHERE {
+      ?bestand rdf:type imow:owBestand ;
+               imow:heeftObjectType ?objectType .
+      OPTIONAL { ?objectType rdfs:label ?type .}
     }
   }
 }
-):)</query><query name="Query 10" focus="true" listorder="13" taborder="13" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
-PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+  '
+  return sem:sparql($sparql,(),(),$store)
+};
+
+
+
+let $gemeentestad := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "/opera/idlevering/Geonovum-Omgevingsplan-Zaltbommel_004")
+
+let $opdracht-utrecht := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "VBPU0001-001")
+
+let $utrecht := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "utrecht-001")
+
+let $roxit := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "roxit")
+
+let $zuiderzee := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6")
+  
+let $map := $gemeentestad
+  
+return (
+  kv:maak-kruisvalidatie-rapport(map:get($map,"oin"), map:get($map, "idlevering"))
+)
+</query><query name="Maak validatie rapport" focus="false" listorder="11" taborder="12" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="">xquery version "1.0-ml";
+import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
+
+declare option xdmp:mapping "false";
+
+let $gemeentestad := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "/opera/idlevering/Geonovum-Omgevingsplan-Zaltbommel_004")
+
+let $opdracht-utrecht := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "VBPU0001-001")
+
+let $utrecht := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "utrecht-001")
+
+let $roxit := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "roxit")
+
+let $zuiderzee := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6")
+  
+let $map := $zuiderzee
+
+return kv:maak-kruisvalidatie-rapport(map:get($map,"oin"), map:get($map, "idlevering"))
+</query><query name="Validate Object Typen Manifest OW" focus="false" listorder="12" taborder="6" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="">## query
 PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
 prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt;
 
-SELECT ?regelingId ?regeltekstId ?wId
+SELECT distinct ?type
 WHERE {
-  ?aanlevering imow:linkToDoel ?doel ;
-               imow:heeftBestand ?linkId ;
-               imow:linkToRegelingObject ?regeling .
-  ?doel rdfs:label "/join/id/proces/gm0297/2019/Instelling" .
-  ?regeling rdfs:label ?regelingId ;
-            rdf:type lvbb:Regeling .
-  ?linkId owl:sameAs ?bestandId .
-  ?bestandId rdfs:label ?naam ;
-             imow:heeftRegeltekst ?regeltekst .
-  ?regeltekst rdf:type imow:Regeltekst ;
-              rdfs:label ?regeltekstId ;
-              imow:linkToWId ?wRef .
-  ?wRef rdfs:label ?wId .
-}
-#ORDER BY ?regelingId ?regeltekstId</query><query name="Query 11" focus="false" listorder="14" taborder="14" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="1">xquery version "1.0-ml";
+  ?aanlevering rdf:type imow:Aanlevering ;
+               imow:heeftBestand ?bestand .
+  ?bestand rdf:type imow:Bestand ;
+           imow:heeftObjectType ?objectType .
+  ?objectType rdfs:label ?type
+  MINUS {
+    SELECT ?type
+    WHERE {
+      ?bestand rdf:type imow:owBestand ;
+               imow:heeftObjectType ?objectType .
+      ?objectType rdfs:label ?type .
+    }    
+  }
+}</query><query name="Query 11" focus="false" listorder="13" taborder="13" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="1">xquery version "1.0-ml";
 import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
 
 declare option xdmp:mapping "false";
@@ -407,35 +414,140 @@ PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 PREFIX imowType: &lt;http://www.geostandaarden.nl/imow/objecttype/&gt;
 ';
 declare variable $SPARQL-REFERENTIES-PER-DOEL as xs:string :=  $SPARQL-PREFIX || '
-SELECT ?regeling ?regelingId ?type
+SELECT ?object ?label ?type
 WHERE {
-  ?regeling rdfs:label ?regelingId ;
+  ?object rdfs:label ?label ;
             rdf:type ?type
 }
 ';
 
 let $gemeentestad := map:map()
-=&gt;map:with("collection", "hackaton/aanlevering")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/gm0297/2019/reg456"))
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "/opera/idlevering/Geonovum-Omgevingsplan-Zaltbommel_004")
+
+let $opdracht-utrecht := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "VBPU0001-001")
+
 let $utrecht := map:map()
-=&gt;map:with("collection", "hackaton/utrecht")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/pv26/2021/3_2RGL-20210519-203227"))
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "utrecht-001")
+
 let $roxit := map:map()
-=&gt;map:with("collection", "hackaton/roxit")
-=&gt;map:with("bindings", map:map()
-  =&gt;map:with("akn", "/akn/nl/act/ws0152/2021/Regeling97dce774a5c6414eaf44428ad9ddaf0a"))
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "roxit")
+
+let $zuiderzee := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6")
   
 let $map := $roxit
-let $result := map:map()
 
-let $query :=  cts:collection-query(map:get($map,"collection"))
-let $store := (sem:store("document", $query),sem:store("properties", $query))
+let $query := cts:collection-query((
+  fn:concat("/opera/oin/", map:get($map, "oin")),
+  fn:concat("/opera/idlevering/", map:get($map, "idlevering")),
+  "/opera/options/opdrachtbestanden",
+  "/graph/imow-ontology"
+))
+let $store := (sem:store("document", $query), sem:store("properties", $query))
+
 let $doelen :=  sem:sparql($SPARQL-REFERENTIES-PER-DOEL, (), ("map"), $store)
-return $doelen</query><query name="Query 12" focus="false" listorder="15" taborder="15" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="1">xquery version "1.0-ml";
+return $doelen</query><query name="Query 12" focus="false" listorder="14" taborder="14" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="1">xquery version "1.0-ml";
 import module namespace tde = "http://marklogic.com/xdmp/tde" at "/MarkLogic/tde.xqy";
 
-let $tde := xdmp:unquote(xdmp:filesystem-file('/data/src/main/ml-schemas/tdej/ow-Regeltekst.tdej'))
+let $tde := xdmp:unquote(xdmp:filesystem-file('/data/src/main/ml-schemas/tdej/besluit.tdej'))
 
-return tde:validate($tde)</query></workspace></export>
+return tde:validate($tde)</query><query name="Query 13" focus="false" listorder="15" taborder="15" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="1">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT distinct ?objectType ?type
+WHERE {
+  ?bestand rdf:type imow:Bestand ;
+           imow:heeftObjectType ?objectType .
+  ?objectType rdfs:label ?type .
+}</query><query name="Query 14" focus="false" listorder="16" taborder="16" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="sparql" optimize="1">## query
+PREFIX lvbb: &lt;http://koop.overheid.nl/ontology/lvbb/&gt;
+PREFIX imow: &lt;http://koop.overheid.nl/ontology/imow/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT distinct ?objectType ?type
+WHERE {
+  ?aanlevering rdf:type imow:Aanlevering ;
+               imow:heeftBestand ?bestand .
+  ?bestand rdf:type imow:Bestand ;
+           imow:heeftObjectType ?objectType .
+  ?objectType rdfs:label ?type
+}
+  </query><query name="Query 15" focus="false" listorder="17" taborder="17" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="1">xquery version "1.0-ml";
+import module namespace kv = "http://hackaton.com/kruisvalidaties/rapport" at "/ext/kruisvalidaties/rapport.xqy";
+
+declare variable $SPARQL-REFERENTIES-PER-REGELING as xs:string :=
+$kv:SPARQL-PREFIX || '
+SELECT ?regelingId ?wId ?regeltekstId
+WHERE {
+  ?owAanlevering imow:linkToDoel ?doel ;
+                 imow:heeftBestand ?owLink ;
+                 imow:linkToRegelingObject ?regeling .
+  ?doel dc:identifier @doelId .
+  ?regeling dc:identifier ?regelingId ;
+            rdf:type lvbb:Regeling .
+  ?owBestand imow:linkToManifestBestand ?owLink ;
+           rdf:type imow:owBestand ;
+           imow:heeftRegeltekst ?regeltekst .
+  ?regeltekst rdf:type imow:Regeltekst ;
+              dc:identifier ?regeltekstId ;
+              imow:linkToWId ?wRef .
+  OPTIONAL { ?wRef dc:identifier ?wId . }
+}
+ORDER BY ?regelingId ?regeltekstId
+';
+
+let $gemeentestad := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-Omgevingsplan-Zaltbommel_004")
+
+let $opdracht-utrecht := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "VBPU0001-001")
+
+let $utrecht := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "utrecht-001")
+
+let $roxit := map:map()
+=&gt;map:with("oin", "00000001003214345000")
+=&gt;map:with("idlevering", "roxit")
+
+let $zuiderzee := map:map()
+=&gt;map:with("oin", "00000003560458830000")
+=&gt;map:with("idlevering", "Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6")
+
+let $zuiderzeeland := map:map()
+=&gt;map:with("oin", "00000003011411800000")
+=&gt;map:with("idlevering", "Zuiderzeeland")
+    
+let $map := $zuiderzee
+
+let $query := cts:or-query((
+  cts:and-query((
+    cts:collection-query(fn:concat("/opera/oin/", map:get($map, "oin"))),
+    cts:collection-query(fn:concat("/opera/idlevering/", map:get($map, "idlevering"))),
+    cts:collection-query("/opera/options/opdrachtbestanden")
+  )),
+  cts:collection-query("/graph/imow-ontology")
+))
+let $stores := (sem:store("document", $query), sem:store("properties", $query))
+return ($query,
+  let $doelen := sem:sparql($kv:SPARQL-REFERENTIES-PER-DOEL, (), ("map"), $stores)
+  for $doel in $doelen
+  return (
+    sem:sparql($kv:SPARQL-GEOMETRIE-IDENTIFICATIES, $doel, (), $stores),
+    sem:sparql($SPARQL-REFERENTIES-PER-REGELING, $doel, (), $stores)
+  )
+)
+</query><query name="Query 16" focus="false" listorder="18" taborder="18" active="true" database="80880676294143955" server="9495204545860005312" database-name="hackaton-content" server-name="hackaton" mode="xquery" optimize="1">xquery version "1.0-ml";
+xdmp:collection-delete('/opera/options/opdrachtbestanden')</query></workspace></export>

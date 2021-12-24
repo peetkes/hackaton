@@ -3,7 +3,12 @@
     "description": "Extraction Template for ow-Kaart",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/k:Kaart",
     "collections": [
-      "/opera/document/ow-bestand"
+      {
+        "collectionsAnd": [
+          "/opera/document/ow-bestand",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -37,6 +42,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
@@ -56,8 +65,7 @@
     "triples": [
       {
         "subject": {
-          "val": "sem:iri($bestandId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandId)"
         },
         "predicate": {
           "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
@@ -68,8 +76,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($kaartId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($kaartId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -80,14 +87,25 @@
       },
       {
         "subject": {
-          "val": "sem:iri($kaartId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($kaartId)"
+        },
+        "predicate": {
+          "val": "sem:iri($dc || 'identifier')"
+        },
+        "object": {
+          "val": "$kaartId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($kaartId)"
         },
         "predicate": {
           "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
-          "val": "k:naam/fn:string()"
+          "val": "k:naam/fn:string()",
+          "invalidValues": "ignore"
         }
       }
     ],
@@ -104,8 +122,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($kaartId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($kaartId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
@@ -116,8 +133,7 @@
           },
           {
             "subject": {
-              "val": "sem:iri($kaartLaagId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($kaartLaagId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -128,14 +144,25 @@
           },
           {
             "subject": {
-              "val": "sem:iri($kaartLaagId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($kaartLaagId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$kaartLaagId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($kaartLaagId)"
             },
             "predicate": {
               "val": "sem:iri($rdfs || 'label')"
             },
             "object": {
-              "val": "k:naam/fn:string()"
+              "val": "k:naam/fn:string()",
+              "invalidValues": "ignore"
             }
           }
         ]

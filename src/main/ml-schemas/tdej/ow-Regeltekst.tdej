@@ -3,7 +3,12 @@
     "description": "Extraction Template for ow-Regeltekst/ow-RegelVoorIedereen/ow-Omgevingswaarderegel",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(r:Regeltekst|r:RegelVoorIedereen|r:Omgevingswaarderegel)]",
     "collections": [
-      "/opera/document/ow-bestand"
+      {
+        "collectionsAnd": [
+          "/opera/document/ow-bestand",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -53,6 +58,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
@@ -63,14 +72,6 @@
       {
         "name": "bestandId",
         "val": "xdmp:sha512(fn:base-uri(.))"
-      },
-      {
-        "name": "prefix-id",
-        "val": "''"
-      },
-      {
-        "name": "prefix-id-lvbb",
-        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       }
     ],
     "templates": [
@@ -90,8 +91,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($bestandId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($bestandId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
@@ -102,20 +102,18 @@
           },
           {
             "subject": {
-              "val": "sem:iri($regeltekstId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regeltekstId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'linkToWId')"
             },
             "object": {
-              "val": "sem:iri(fn:concat($wId))"
+              "val": "sem:iri($wId)"
             }
           },
           {
             "subject": {
-              "val": "sem:iri($regeltekstId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regeltekstId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -126,8 +124,18 @@
           },
           {
             "subject": {
-              "val": "sem:iri($regeltekstId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regeltekstId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$regeltekstId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regeltekstId)"
             },
             "predicate": {
               "val": "sem:iri($rdfs || 'label')"
@@ -144,8 +152,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regeltekstId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regeltekstId)"
                 },
                 "predicate": {
                   "val": "sem:iri($lvbb || 'heeftRegeltekst' || fn:local-name(.))"
@@ -170,8 +177,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($bestandId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($bestandId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
@@ -182,8 +188,7 @@
           },
           {
             "subject": {
-              "val": "sem:iri($regelId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regelId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -194,8 +199,18 @@
           },
           {
             "subject": {
-              "val": "sem:iri($regelId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regelId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$regelId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regelId)"
             },
             "predicate": {
               "val": "sem:iri($rdfs || 'label')"
@@ -212,8 +227,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegelArtikelOfLid' || fn:local-name(.))"
@@ -230,8 +244,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -248,8 +261,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -266,8 +278,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -284,8 +295,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(rol:ActiviteitRef))"
@@ -308,8 +318,7 @@
                 "triples": [
                   {
                     "subject": {
-                      "val": "sem:iri($regelId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($regelId)"
                     },
                     "predicate": {
                       "val": "sem:iri($imow || 'heeftRegelVoorIedereen' || fn:local-name(.))"
@@ -320,8 +329,7 @@
                   },
                   {
                     "subject": {
-                      "val": "sem:iri($objectId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($objectId)"
                     },
                     "predicate": {
                       "val": "sem:iri($imow || 'heeftActiviteitRegelKwalificatie')"
@@ -338,8 +346,7 @@
                     "triples": [
                       {
                         "subject": {
-                          "val": "sem:iri($objectId)",
-                          "invalidValues": "ignore"
+                          "val": "sem:iri($objectId)"
                         },
                         "predicate": {
                           "val": "sem:iri($imow || 'heeftActiviteitLocatieaanduiding' || fn:local-name(.))"
@@ -360,8 +367,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -386,8 +392,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($bestandId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($bestandId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
@@ -398,8 +403,7 @@
           },
           {
             "subject": {
-              "val": "sem:iri($regelId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regelId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -410,8 +414,18 @@
           },
           {
             "subject": {
-              "val": "sem:iri($regelId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($regelId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$regelId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($regelId)"
             },
             "predicate": {
               "val": "sem:iri($rdfs || 'label')"
@@ -428,8 +442,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegelArtikelOfLid' || fn:local-name(.))"
@@ -446,8 +459,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -464,8 +476,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -482,8 +493,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"
@@ -500,8 +510,7 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($regelId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($regelId)"
                 },
                 "predicate": {
                   "val": "sem:iri($imow || 'heeftJuridischeRegel' || fn:local-name(.))"

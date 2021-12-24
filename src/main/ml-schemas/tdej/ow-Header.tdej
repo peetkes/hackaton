@@ -3,7 +3,12 @@
     "description": "Extraction Template for ow-bestand header",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:inhoud",
     "collections": [
-      "/opera/document/ow-bestand"
+      {
+        "collectionsAnd": [
+          "/opera/document/ow-bestand",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -23,6 +28,10 @@
       {
         "name": "rdfs",
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
+      },
+      {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
       },
       {
         "name": "lvbb",
@@ -52,8 +61,18 @@
     "triples": [
       {
         "subject": {
-          "val": "sem:iri($imow || 'id/' || $owId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($imow || 'id/' || $owId)"
+        },
+        "predicate": {
+          "val": "sem:iri($dc || 'identifier')"
+        },
+        "object": {
+          "val": "$imow || 'id/' || $owId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($imow || 'id/' || $owId)"
         },
         "predicate": {
           "val": "sem:iri($rdfs || 'label')"
@@ -64,8 +83,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($imow || 'id/' || $owId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($imow || 'id/' || $owId)"
         },
         "predicate": {
           "val": "sem:iri($imow || 'bestand')"
@@ -76,8 +94,18 @@
       },
       {
         "subject": {
-          "val": "sem:iri($bestandId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandId)"
+        },
+        "predicate": {
+          "val": "sem:iri($dc || 'identifier')"
+        },
+        "object": {
+          "val": "$bestandId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($bestandId)"
         },
         "predicate": {
           "val": "sem:iri($rdfs || 'label')"
@@ -88,8 +116,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($bestandId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -100,8 +127,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($bestandId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandId)"
         },
         "predicate": {
           "val": "sem:iri($imow || 'linkToManifestBestand')"
@@ -118,8 +144,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($bestandId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($bestandId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeftObjectType')"

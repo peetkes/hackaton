@@ -124,34 +124,57 @@ class MlcpTransformTask extends com.marklogic.gradle.task.MlcpTask {
 task importData(type: MlcpTransformTask) {
   group "import"
   input_file_path "data/aanlevering"
-  output_collections = "hackaton/aanlevering"
+  output_collections = "/opera/oin/00000003560458830000,/opera/idlevering/Geonovum-Omgevingsplan-Zaltbommel_004"
   output_uri_replace = ".*data/aanlevering,''"
+  transform_param = "oin=00000003560458830000,idlevering=Geonovum-Omgevingsplan-Zaltbommel_004"
   args = ["-max_threads", "8"]
 }
 
 task importUtrecht(type: MlcpTransformTask) {
   group "import"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Utrecht"
-  output_collections = "hackaton/utrecht"
   output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000001003214345000,idlevering=utrecht-001"
+  args = ["-max_threads", "8"]
+}
+
+task importOpdrachtUtrecht(type: MlcpTransformTask) {
+  group "import"
+  input_file_path "../standaard-stop/Utrecht/1.1.0/xml_voorbereidingsbesluit_provincie/opdracht_Utrecht"
+  output_collections = "/opera/oin/00000003560458830000,/opera/idlevering/VBPU0001-001"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003560458830000,idlevering=VBPU0001-001"
   args = ["-max_threads", "8"]
 }
 
 task importRoxit(type: MlcpTransformTask) {
   group "import"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/roxit"
-  output_collections = "hackaton/roxit"
   output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000001003214345000,idlevering=roxit"
   args = ["-max_threads", "8"]
 }
 
 task importZuiderzee(type: MlcpTransformTask) {
   group "import"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
-  output_collections = "hackaton/zuiderzee"
   output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003560458830000,idlevering=Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6"
   args = ["-max_threads", "8"]
 }
+
+task importZuiderzeeland(type: MlcpTransformTask) {
+  group "import"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+task loadData(
+    dependsOn: ['importData','importUtrecht','importOpdrachtUtrecht','importRoxit', 'importZuiderzee']
+)
+
 
 task importKruisvalidatie(type: com.marklogic.gradle.task.MlcpTask) {
   group "import"

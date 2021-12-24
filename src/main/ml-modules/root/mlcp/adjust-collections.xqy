@@ -17,14 +17,47 @@ declare function local:adjust-collections(
   $context as map:map
 ) as map:map*
 {
+  let $extra-collections := local:parse-transform-param(map:get($context, "transform_param"))=>local:create-collections()
   let $doc := map:get($content, "value")
   let $doc-kind := xdmp:node-kind($doc)
   return (
     xdmp:trace("hackaton", map:get($content, "uri") || " is of type " || $doc-kind),
+    map:put($context, "collections", (
+      map:get($context, "collections"),
+      $extra-collections
+    )),
     if ($doc-kind eq "binary")
     then local:process-binary($content, $context)
     else local:process-document($content, $context)
   )
+};
+
+declare function local:create-collections(
+  $params as map:map?
+) as xs:string*
+{
+  (
+    "/opera/options/opdrachtbestanden",
+    for $key in map:keys($params)
+    where fn:string-length(map:get($params, $key)) gt 0
+    return fn:concat("/opera/", $key, "/", map:get($params, $key))
+  )
+};
+
+declare function local:parse-transform-param(
+  $param as xs:string?
+) as map:map?
+{
+  if (fn:empty($param) or fn:not(fn:contains($param,"=")))
+  then ()
+  else
+    let $result := map:map()
+    let $items := fn:tokenize(fn:normalize-space($param),",")
+    return (
+      for $item in $items
+      return map:put($result,fn:substring-before($item,"="), fn:substring-after($item,"=")),
+      $result
+    )
 };
 
 declare function local:process-binary(

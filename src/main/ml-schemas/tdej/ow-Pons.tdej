@@ -3,7 +3,12 @@
     "description": "Extraction Template for ow-Pons",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/p:Pons",
     "collections": [
-      "/opera/document/ow-bestand"
+      {
+        "collectionsAnd": [
+          "/opera/document/ow-bestand",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -41,6 +46,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
@@ -60,8 +69,7 @@
     "triples": [
       {
         "subject": {
-          "val": "sem:iri($bestandId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($bestandId)"
         },
         "predicate": {
           "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
@@ -72,8 +80,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($ponsId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ponsId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -84,8 +91,18 @@
       },
       {
         "subject": {
-          "val": "sem:iri($ponsId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ponsId)"
+        },
+        "predicate": {
+          "val": "sem:iri($dc || 'identifier')"
+        },
+        "object": {
+          "val": "$ponsId"
+        }
+      },
+      {
+        "subject": {
+          "val": "sem:iri($ponsId)"
         },
         "predicate": {
           "val": "sem:iri($rdfs || 'label')"
@@ -102,8 +119,7 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($ponsId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($ponsId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeftPons' || fn:local-name(.))"

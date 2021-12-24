@@ -3,7 +3,12 @@
     "description": "Extraction Template for besluit",
     "context": "/lvbba:AanleveringBesluit[@schemaversie eq '1.1.0']",
     "collections": [
-      "/opera/document/besluit"
+      {
+        "collectionsAnd": [
+          "/opera/document/besluit",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -29,6 +34,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
@@ -37,16 +46,12 @@
         "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRWork/fn:string()"
       },
       {
+        "name": "besluitLabel",
+        "val": "lvbba:BesluitVersie/data:BesluitMetadata/data:officieleTitel/fn:string()"
+      },
+      {
         "name": "besluitVersieId",
         "val": "lvbba:BesluitVersie/data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
-      },
-      {
-        "name": "prefix-id",
-        "val": "''"
-      },
-      {
-        "name": "prefix-id-lvbb",
-        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       }
     ],
     "templates": [
@@ -56,11 +61,21 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($prefix-id || $besluitId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($besluitId)"
             },
             "predicate": {
-              "val": "sem:iri(rdfs || 'label')"
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$besluitLabel"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($besluitId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
             },
             "object": {
               "val": "$besluitId"
@@ -68,8 +83,7 @@
           },
           {
             "subject": {
-              "val": "sem:iri($prefix-id ||$besluitId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($besluitId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -80,23 +94,21 @@
           },
           {
             "subject": {
-              "val": "sem:iri($prefix-id ||$besluitId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($besluitId)"
             },
             "predicate": {
               "val": "sem:iri($lvbb || 'heeftVersie')"
             },
             "object": {
-              "val": "sem:iri($prefix-id ||$besluitVersieId)"
+              "val": "sem:iri($besluitVersieId)"
             }
           },
           {
             "subject": {
-              "val": "sem:iri($prefix-id ||$besluitVersieId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($besluitVersieId)"
             },
             "predicate": {
-              "val": "sem:iri($rdfs || 'label')"
+              "val": "sem:iri($dc || 'identifier')"
             },
             "object": {
               "val": "$besluitVersieId"
@@ -104,8 +116,7 @@
           },
           {
             "subject": {
-              "val": "sem:iri($prefix-id ||$besluitVersieId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($besluitVersieId)"
             },
             "predicate": {
               "val": "sem:iri($rdf || 'type')"
@@ -128,14 +139,13 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($prefix-id || $besluitVersieId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($besluitVersieId)"
                 },
                 "predicate": {
                   "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
                 },
                 "object": {
-                  "val": "sem:iri($prefix-id || $instrumentId)"
+                  "val": "sem:iri($instrumentId)"
                 }
               }
             ],
@@ -152,20 +162,18 @@
                 "triples": [
                   {
                     "subject": {
-                      "val": "sem:iri($prefix-id || $instrumentId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($instrumentId)"
                     },
                     "predicate": {
                       "val": "sem:iri($lvbb || 'vastgesteldDoorDoel')"
                     },
                     "object": {
-                      "val": "sem:iri($prefix-id || $doelId)"
+                      "val": "sem:iri($doelId)"
                     }
                   },
                   {
                     "subject": {
-                      "val": "sem:iri($prefix-id || $doelId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($doelId)"
                     },
                     "predicate": {
                       "val": "sem:iri($rdf || 'type')"
@@ -176,8 +184,18 @@
                   },
                   {
                     "subject": {
-                      "val": "sem:iri($prefix-id || $doelId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($doelId)"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($dc || 'identifier')"
+                    },
+                    "object": {
+                      "val": "$doelId"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($doelId)"
                     },
                     "predicate": {
                       "val": "sem:iri($rdfs || 'label')"
@@ -202,14 +220,13 @@
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($prefix-id || $besluitVersieId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($besluitVersieId)"
                 },
                 "predicate": {
                   "val": "sem:iri($lvbb || 'consolideertInstrumentVersie')"
                 },
                 "object": {
-                  "val": "sem:iri($prefix-id || $instrumentId)"
+                  "val": "sem:iri($instrumentId)"
                 }
               }
             ],
@@ -226,20 +243,18 @@
                 "triples": [
                   {
                     "subject": {
-                      "val": "sem:iri($prefix-id || $instrumentId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($instrumentId)"
                     },
                     "predicate": {
                       "val": "sem:iri($lvbb || 'vastgesteldDoorDoel')"
                     },
                     "object": {
-                      "val": "sem:iri($prefix-id || .)"
+                      "val": "sem:iri(.)"
                     }
                   },
                   {
                     "subject": {
-                      "val": "sem:iri($prefix-id || $doelId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($doelId)"
                     },
                     "predicate": {
                       "val": "sem:iri($rdf || 'type')"
@@ -250,8 +265,99 @@
                   },
                   {
                     "subject": {
-                      "val": "sem:iri($prefix-id || $doelId)",
-                      "invalidValues": "ignore"
+                      "val": "sem:iri($doelId)"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($dc || 'identifier')"
+                    },
+                    "object": {
+                      "val": "$doelId"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($doelId)"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($rdfs || 'label')"
+                    },
+                    "object": {
+                      "val": "$doelId"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Template voor ConsolidatieInformatie Intrekking",
+            "context": "data:ConsolidatieInformatie/data:intrekkingen/data:intrekking",
+            "vars": [
+              {
+                "name": "instrumentId",
+                "val": "data:instrument/fn:string()"
+              }
+            ],
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($besluitVersieId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'trektIn')"
+                },
+                "object": {
+                  "val": "sem:iri($instrumentId)"
+                }
+              }
+            ],
+            "templates": [
+              {
+                "description": "Template voor ConsolidatieInformatie Intrekking doel",
+                "context": "data:doelen/data:doel",
+                "vars": [
+                  {
+                    "name": "doelId",
+                    "val": "fn:string(.)"
+                  }
+                ],
+                "triples": [
+                  {
+                    "subject": {
+                      "val": "sem:iri($instrumentId)"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($lvbb || 'ingetrokkenDoorDoel')"
+                    },
+                    "object": {
+                      "val": "sem:iri(.)"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($doelId)"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($rdf || 'type')"
+                    },
+                    "object": {
+                      "val": "sem:iri($lvbb || fn:local-name(.))"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($doelId)"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($dc || 'identifier')"
+                    },
+                    "object": {
+                      "val": "$doelId"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "val": "sem:iri($doelId)"
                     },
                     "predicate": {
                       "val": "sem:iri($rdfs || 'label')"

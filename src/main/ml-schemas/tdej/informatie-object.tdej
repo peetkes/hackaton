@@ -3,7 +3,12 @@
     "description": "Extraction Template for InformatieObject",
     "context": "/lvbba:AanleveringInformatieObject[@schemaversie eq '1.1.0']/lvbba:InformatieObjectVersie",
     "collections": [
-      "/opera/document/informatie-object"
+      {
+        "collectionsAnd": [
+          "/opera/document/informatie-object",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
     ],
     "pathNamespace": [
       {
@@ -29,6 +34,10 @@
         "val": "'http://www.w3.org/2000/01/rdf-schema#'"
       },
       {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
         "name": "lvbb",
         "val": "'http://koop.overheid.nl/ontology/lvbb/'"
       },
@@ -39,24 +48,15 @@
       {
         "name": "ioVersieId",
         "val": "data:ExpressionIdentificatie/data:FRBRExpression/fn:string()"
-      },
-      {
-        "name": "prefix-id",
-        "val": "''"
-      },
-      {
-        "name": "prefix-id-lvbb",
-        "val": "'http://koop.overheid.nl/ontology/lvbb/id'"
       }
     ],
     "triples": [
       {
         "subject": {
-          "val": "sem:iri($prefix-id || $ioId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ioId)"
         },
         "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
+          "val": "sem:iri($dc || 'identifier')"
         },
         "object": {
           "val": "$ioId"
@@ -64,8 +64,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($prefix-id || $ioId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ioId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -76,23 +75,21 @@
       },
       {
         "subject": {
-          "val": "sem:iri($prefix-id || $ioId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ioId)"
         },
         "predicate": {
           "val": "sem:iri($lvbb || 'heeftVersie')"
         },
         "object": {
-          "val": "sem:iri($prefix-id || $ioVersieId)"
+          "val": "sem:iri($ioVersieId)"
         }
       },
       {
         "subject": {
-          "val": "sem:iri($prefix-id || $ioVersieId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ioVersieId)"
         },
         "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
+          "val": "sem:iri($dc || 'identifier')"
         },
         "object": {
           "val": "$ioVersieId"
@@ -100,8 +97,7 @@
       },
       {
         "subject": {
-          "val": "sem:iri($prefix-id || $ioVersieId)",
-          "invalidValues": "ignore"
+          "val": "sem:iri($ioVersieId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -118,65 +114,73 @@
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($prefix-id || $ioId)",
-              "invalidValues": "ignore"
+              "val": "sem:iri($ioId)"
             },
             "predicate": {
               "val": "sem:iri($lvbb || 'heeftFormaat')"
             },
             "object": {
-              "val": "sem:iri(data:formaatInformatieobject/fn:string())",
-              "invalidValues": "ignore"
+              "val": "sem:iri(data:formaatInformatieobject)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($ioId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "fn:string(data:officieleTitel)"
             }
           }
-        ]      },
+        ]
+      },
       {
         "description": "Extraction Template IO VersieMetadata",
         "context": "data:InformatieObjectVersieMetadata",
-        "triples": [
-          {
-            "subject": {
-              "val": "sem:iri($prefix-id || $ioVersieId)",
-              "invalidValues": "ignore"
-            },
-            "predicate": {
-              "val": "sem:iri($lvbb || 'heeftGeboorteregeling')"
-            },
-            "object": {
-              "val": "sem:iri($prefix-id || data:heeftGeboorteregeling/fn:string())",
-              "invalidValues": "ignore"
-            }
-          }
-        ],
         "templates": [
           {
-            "description": "Extraction Template IO VersieMetadata",
+            "description": "Extraction Template IO VersieMetadata geboorteregeling",
+            "context": "data:heeftGeboorteregeling",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($ioVersieId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($lvbb || 'heeftGeboorteregeling')"
+                },
+                "object": {
+                  "val": "sem:iri(.)"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template IO VersieMetadata bestand",
             "context": "data:heeftBestanden/data:heeftBestand",
             "triples": [
               {
                 "subject": {
-                  "val": "sem:iri($prefix-id || $ioVersieId)",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri($ioVersieId)"
                 },
                 "predicate": {
                   "val": "sem:iri($lvbb || 'heeftBestand')"
                 },
                 "object": {
-                  "val": "sem:iri(data:Bestand/data:hash/fn:string())",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri(data:Bestand/data:hash)"
                 }
               },
               {
                 "subject": {
-                  "val": "sem:iri(data:Bestand/data:hash/fn:string())",
-                  "invalidValues": "ignore"
+                  "val": "sem:iri(data:Bestand/data:hash)"
                 },
                 "predicate": {
                   "val": "sem:iri($lvbb || 'bestandsnaam')"
                 },
                 "object": {
-                  "val": "data:Bestand/data:bestandsnaam/fn:string()",
-                  "invalidValues": "ignore"
+                  "val": "data:Bestand/data:bestandsnaam/fn:string()"
                 }
               }
             ]
