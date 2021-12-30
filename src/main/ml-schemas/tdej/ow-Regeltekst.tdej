@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-Regeltekst/ow-RegelVoorIedereen/ow-Omgevingswaarderegel",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(r:Regeltekst|r:RegelVoorIedereen|r:Omgevingswaarderegel)]",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

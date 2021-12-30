@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for gml-bestand",
     "context": "/prop:properties/opera:gml-properties",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

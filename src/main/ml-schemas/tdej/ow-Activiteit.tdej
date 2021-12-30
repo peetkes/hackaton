@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-Activiteit",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/rol:Activiteit",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

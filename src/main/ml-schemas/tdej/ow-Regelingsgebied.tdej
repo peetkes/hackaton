@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-Regelingsgebied",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/rg:Regelingsgebied",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

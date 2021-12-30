@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for  ow-SymbolisatieItem",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/s:SymbolisatieItem",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

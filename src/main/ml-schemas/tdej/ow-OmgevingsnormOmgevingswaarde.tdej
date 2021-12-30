@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-Omgevingsnorm/ow-Omgevingswaarde",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(rol:Omgevingsnorm|rol:Omgevingswaarde)]",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

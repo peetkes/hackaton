@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-manifest-bestand",
     "context": "/mow:Aanleveringen/mow:Aanlevering",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

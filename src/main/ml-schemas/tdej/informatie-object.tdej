@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for InformatieObject",
     "context": "/lvbba:AanleveringInformatieObject[@schemaversie eq '1.1.0']/lvbba:InformatieObjectVersie",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

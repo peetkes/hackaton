@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for besluit",
     "context": "/lvbba:AanleveringBesluit[@schemaversie eq '1.1.0']",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

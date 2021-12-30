@@ -13,6 +13,7 @@ plugins {
   id "java"
   id "net.saliman.properties" version "1.5.1"
   id "com.marklogic.ml-gradle" version "${mlGradleVersion}"
+  id "nu.studer.credentials" version "3.0"
 }
 
 repositories {
@@ -99,9 +100,8 @@ tasks.withType(com.marklogic.gradle.task.MlcpTask) {
   command = 'IMPORT'
   host = mlHost
   port = Integer.parseInt(mlRestPort)
-  username = mlUsername
-  password = mlPassword
-  output_permissions = "hackaton-reader,read,hackaton-writer,update"
+  username = mlcpUsername
+  password = mlcpPassword
   systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
 }
 
@@ -111,60 +111,198 @@ class MlcpTransformTask extends com.marklogic.gradle.task.MlcpTask {
     command = 'IMPORT'
     host = project.property("mlHost")
     port = Integer.parseInt(project.property("mlRestPort"))
-    username = project.property("mlUsername")
-    password = project.property("mlPassword")
-    output_permissions = "hackaton-reader,read,hackaton-writer,update"
-    transform_function= "adjust-collections"
-    transform_module = "/mlcp/adjust-collections.xqy"
-    transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/adjust-collections"
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
+    output_uri_prefix = "/opera/import-validatie"
     systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
   }
 }
 
-task importData(type: MlcpTransformTask) {
-  group "import"
+class HackatonTransformTask extends com.marklogic.gradle.task.MlcpTask {
+  HackatonTransformTask() {
+    classpath = project.configurations.mlcp
+    command = 'IMPORT'
+    host = project.property("mlHost")
+    port = Integer.parseInt(project.property("mlRestPort"))
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
+    output_permissions = "hackaton-reader,read,hackaton-writer,update"
+    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+    transform_function= "adjust-collections"
+    transform_module = "/mlcp/adjust-collections.xqy"
+    transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/adjust-collections"
+  }
+}
+
+class SplitTransformTask extends com.marklogic.gradle.task.MlcpTask {
+  SplitTransformTask() {
+    classpath = project.configurations.mlcp
+    command = 'IMPORT'
+    host = project.property("mlHost")
+    port = Integer.parseInt(project.property("mlRestPort"))
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
+    output_permissions = "hackaton-reader,read,hackaton-writer,update"
+    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+    transform_function= "split-document"
+    transform_module = "/mlcp/split-document.xqy"
+    transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/split-document"
+  }
+}
+
+class LvbbTransformTask extends com.marklogic.gradle.task.MlcpTask {
+  LvbbTransformTask() {
+    classpath = project.configurations.mlcp
+    command = 'IMPORT'
+    host = project.property("mlHost")
+    port = Integer.parseInt(project.property("mlRestPort"))
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
+    output_permissions = "opera-content-read,read,opera-opera-content-write,update,opera-opera-content-write,insert,opera-opera-content-read,read"
+    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+    transform_function = "adjust-collections"
+    transform_module = "/projects/opera/repos/opera/contexts/cds/lib/mlcp-adjust-collections.xqy"
+    transform_namespace = "http://koop.overheid.nl/opera/opera/lib/mlcp-adjust-collections"
+  }
+}
+
+task importData(type: HackatonTransformTask) {
+  group "hackaton"
   input_file_path "data/aanlevering"
-  output_collections = "/opera/oin/00000003560458830000,/opera/idlevering/Geonovum-Omgevingsplan-Zaltbommel_004"
   output_uri_replace = ".*data/aanlevering,''"
   transform_param = "oin=00000003560458830000,idlevering=Geonovum-Omgevingsplan-Zaltbommel_004"
   args = ["-max_threads", "8"]
 }
 
-task importUtrecht(type: MlcpTransformTask) {
-  group "import"
+task importDataLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "data/aanlevering"
+  output_uri_replace = ".*data/aanlevering,''"
+  transform_param = "oin=00000003560458830000,idlevering=Geonovum-Omgevingsplan-Zaltbommel_004"
+  args = ["-max_threads", "8"]
+}
+
+task importUtrecht(type: HackatonTransformTask) {
+  group "hackaton"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Utrecht"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000001003214345000,idlevering=utrecht-001"
   args = ["-max_threads", "8"]
 }
 
-task importOpdrachtUtrecht(type: MlcpTransformTask) {
-  group "import"
+task importUtrechtLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Utrecht"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000001003214345000,idlevering=utrecht-001"
+  args = ["-max_threads", "8"]
+}
+
+task importOpdrachtUtrecht(type: HackatonTransformTask) {
+  group "hackaton"
   input_file_path "../standaard-stop/Utrecht/1.1.0/xml_voorbereidingsbesluit_provincie/opdracht_Utrecht"
-  output_collections = "/opera/oin/00000003560458830000,/opera/idlevering/VBPU0001-001"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000003560458830000,idlevering=VBPU0001-001"
   args = ["-max_threads", "8"]
 }
 
-task importRoxit(type: MlcpTransformTask) {
-  group "import"
+task importOpdrachtUtrechtLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/Utrecht/1.1.0/xml_voorbereidingsbesluit_provincie/opdracht_Utrecht"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003560458830000,idlevering=VBPU0001-001"
+  args = ["-max_threads", "8"]
+}
+
+task importRoxit(type: HackatonTransformTask) {
+  group "hackaton"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/roxit"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000001003214345000,idlevering=roxit"
   args = ["-max_threads", "8"]
 }
 
-task importZuiderzee(type: MlcpTransformTask) {
-  group "import"
+task importRoxitLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/roxit"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000001003214345000,idlevering=roxit"
+  args = ["-max_threads", "8"]
+}
+
+task importZuiderzee(type: HackatonTransformTask) {
+  group "hackaton"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000003560458830000,idlevering=Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6"
   args = ["-max_threads", "8"]
 }
 
-task importZuiderzeeland(type: MlcpTransformTask) {
-  group "import"
+task importZuiderzeeLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003560458830000,idlevering=Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6"
+  args = ["-max_threads", "8"]
+}
+
+task importZuiderzeeland(type: HackatonTransformTask) {
+  group "hackaton"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+task importTestFileLarge(type: HackatonTransformTask) {
+  group "hackaton"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/owLocaties.xml"
+//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/owRegetekst.xml"
+//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/manifest-ow.xml"
+//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/grondwateronttrekkingsgebiedkeringen-v4.gml"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+task importTestFileHalf(type: HackatonTransformTask) {
+  group "hackaton"
+  input_file_path "data/owLocatiesHalf.xml"
+  output_uri_replace = ".*data,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+task importTestFileGebied(type: HackatonTransformTask) {
+  group "hackaton"
+  input_file_path "data/owLocatiesGebied.xml"
+  output_uri_replace = ".*data,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+
+task importTestFileGebiedengroep(type: HackatonTransformTask) {
+  group "hackaton"
+  input_file_path "data/owLocatiesGebiedengroep.xml"
+  output_uri_replace = ".*data,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+task importTestFileSplit(type: SplitTransformTask) {
+  group "hackaton"
+  input_file_path "data/aanlevering/owLocaties-Gemeentestad.xml"
+//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/owRegetekst.xml"
+//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/manifest-ow.xml"
+//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/grondwateronttrekkingsgebiedkeringen-v4.gml"
+  output_uri_replace = ".*data/aanlevering,''"
+  transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
+  args = ["-max_threads", "8"]
+}
+
+task importZuiderzeelandLvbb(type: LvbbTransformTask) {
+  group "lvbb"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
@@ -175,6 +313,9 @@ task loadData(
     dependsOn: ['importData','importUtrecht','importOpdrachtUtrecht','importRoxit', 'importZuiderzee']
 )
 
+task loadDataLvbb(
+    dependsOn: ['importDataLvbb','importUtrechtLvbb','importOpdrachtUtrechtLvbb','importRoxitLvbb', 'importZuiderzeeLvbb', 'importZuiderzeelandLvbb']
+)
 
 task importKruisvalidatie(type: com.marklogic.gradle.task.MlcpTask) {
   group "import"
@@ -187,8 +328,8 @@ task importKruisvalidatie(type: com.marklogic.gradle.task.MlcpTask) {
 class IngestOntologyTask extends com.marklogic.gradle.task.MlcpTask {
   IngestOntologyTask() {
     classpath = project.configurations.mlcp
-    username = project.property("mlUsername")
-    password = project.property("mlPassword")
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
     command = "IMPORT"
     mode="local"
     thread_count=Integer.parseInt(project.property("mlcpThreadCount"))

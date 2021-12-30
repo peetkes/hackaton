@@ -2,6 +2,7 @@
   "template": {
     "description": "Template voor Regeling/RegelingVersie",
     "context": "/lvbba:AanleveringBesluit[@schemaversie eq '1.1.0']",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

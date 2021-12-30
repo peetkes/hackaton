@@ -1,7 +1,7 @@
 {
   "template": {
-    "description": "Extraction Template for ow-Kaart",
-    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/k:Kaart",
+    "description": "Extraction Template for ow-Gebied",
+    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/l:Gebied",
     "enabled": true,
     "collections": [
       {
@@ -13,16 +13,16 @@
     ],
     "pathNamespace": [
       {
+        "prefix": "l",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/locatie"
+      },
+      {
         "prefix": "ow",
         "namespaceUri": "http://www.geostandaarden.nl/imow/owobject"
       },
       {
         "prefix": "ow-dc",
         "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
-      },
-      {
-        "prefix": "k",
-        "namespaceUri": "http://www.geostandaarden.nl/imow/kaart"
       },
       {
         "prefix": "sl",
@@ -47,10 +47,6 @@
         "val": "'http://purl.org/dc/elements/1.1/'"
       },
       {
-        "name": "lvbb",
-        "val": "'http://koop.overheid.nl/ontology/lvbb/'"
-      },
-      {
         "name": "imow",
         "val": "'http://koop.overheid.nl/ontology/imow/'"
       },
@@ -59,8 +55,8 @@
         "val": "xdmp:sha512(fn:base-uri(.))"
       },
       {
-        "name": "kaartId",
-        "val": "k:identificatie/fn:string()"
+        "name": "gebiedId",
+        "val": "l:identificatie/fn:string()"
       }
     ],
     "triples": [
@@ -69,15 +65,15 @@
           "val": "sem:iri($bestandId)"
         },
         "predicate": {
-          "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+          "val": "sem:iri($imow || 'heeftGebied')"
         },
         "object": {
-          "val": "sem:iri($kaartId)"
+          "val": "sem:iri($gebiedId)"
         }
       },
       {
         "subject": {
-          "val": "sem:iri($kaartId)"
+          "val": "sem:iri($gebiedId)"
         },
         "predicate": {
           "val": "sem:iri($rdf || 'type')"
@@ -88,82 +84,41 @@
       },
       {
         "subject": {
-          "val": "sem:iri($kaartId)"
+          "val": "sem:iri($gebiedId)"
         },
         "predicate": {
           "val": "sem:iri($dc || 'identifier')"
         },
         "object": {
-          "val": "$kaartId"
+          "val": "$gebiedId"
         }
       },
       {
         "subject": {
-          "val": "sem:iri($kaartId)"
+          "val": "sem:iri($gebiedId)"
         },
         "predicate": {
           "val": "sem:iri($rdfs || 'label')"
         },
         "object": {
-          "val": "k:naam/fn:string()",
-          "invalidValues": "ignore"
+          "val": "$gebiedId"
         }
       }
     ],
     "templates": [
       {
-        "description": "Extraction Template for Kaart KaartLaag",
-        "context": "k:kaartlagen/k:Kaartlaag",
-        "vars": [
-          {
-            "name": "kaartLaagId",
-            "val": "k:identificatie/fn:string()"
-          }
-        ],
+        "description": "Extraction Template for geometrie",
+        "context": "l:geometrie/l:GeometrieRef",
         "triples": [
           {
             "subject": {
-              "val": "sem:iri($kaartId)"
+              "val": "sem:iri($gebiedId)"
             },
             "predicate": {
               "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
             },
             "object": {
-              "val": "sem:iri($kaartLaagId)"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($kaartLaagId)"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($kaartLaagId)"
-            },
-            "predicate": {
-              "val": "sem:iri($dc || 'identifier')"
-            },
-            "object": {
-              "val": "$kaartLaagId"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($kaartLaagId)"
-            },
-            "predicate": {
-              "val": "sem:iri($rdfs || 'label')"
-            },
-            "object": {
-              "val": "k:naam/fn:string()",
-              "invalidValues": "ignore"
+              "val": "sem:iri(@xlink:href/fn:string())"
             }
           }
         ]

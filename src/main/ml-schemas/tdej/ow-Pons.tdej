@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-Pons",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/p:Pons",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

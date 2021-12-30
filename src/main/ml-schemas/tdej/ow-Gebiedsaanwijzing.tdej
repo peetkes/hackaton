@@ -2,6 +2,7 @@
   "template": {
     "description": "Extraction Template for ow-Gebiedsaanwijzing",
     "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/ga:Gebiedsaanwijzing",
+    "enabled": true,
     "collections": [
       {
         "collectionsAnd": [

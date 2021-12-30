@@ -67,12 +67,7 @@ declare function local:process-binary(
 {
   let $uri := map:get($content, "uri")
   let $extension := fn:tokenize(fn:tokenize(fn:lower-case($uri),"/")[last()], "\.")[last()]
-  let $collection :=
-    switch($extension)
-    case "gml" return "/opera/document/gml"
-    case "png" return "/opera/document/subitem"
-    case "pdf" return "/opera/document/externe-bijlage"
-    default return ()
+  let $collection := local:add-binary-collection($extension)
   let $_ :=
     if ($extension eq "gml")
     then (
@@ -99,19 +94,37 @@ declare function local:process-document(
 ) as map:map*
 {
   let $root-element := fn:local-name(map:get($content, "value")/*)
-  let $collection :=
-    switch($root-element)
-    case "owBestand" return "/opera/document/ow-bestand"
-    case "AanleveringInformatieObject" return ("/opera/document/informatie-object", "/opera/document/werk-informatie-object")
-    case "Aanleveringen" return "/opera/document/manifest-ow"
-    case "AanleveringBesluit" return "/opera/document/besluit"
-    case "AanleveringKennisgeving" return "/opera/document/kennisgeving"
-    default return "/opera/document/" || $root-element
+  let $collection := local:add-doc-collections($root-element)
   return (
     xdmp:trace($TRACE-ID-XML, "Root element = " || $root-element),
     map:put($context, "collections", (map:get($context, "collections"), $collection)),
     $content
   )
+};
+
+declare function local:add-doc-collections(
+  $root-element as xs:string
+) as xs:string*
+{
+  switch($root-element)
+  case "owBestand" return "/opera/document/ow-bestand"
+  case "AanleveringInformatieObject" return ("/opera/document/informatie-object", "/opera/document/werk-informatie-object")
+  case "Aanleveringen" return "/opera/document/manifest-ow"
+  case "AanleveringBesluit" return "/opera/document/besluit"
+  case "AanleveringKennisgeving" return "/opera/document/kennisgeving"
+  default return "/opera/document/" || $root-element
+
+};
+
+declare function local:add-binary-collection(
+  $extension as xs:string
+) as xs:string?
+{
+  switch($extension)
+  case "gml" return "/opera/document/gml"
+  case "png" return "/opera/document/subitem"
+  case "pdf" return "/opera/document/externe-bijlage"
+  default return ()
 };
 
 declare function local:get-geo-properties(
