@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for  ow-SymbolisatieItem",
-    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/s:SymbolisatieItem",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/s:SymbolisatieItem]",
     "enabled": true,
     "collections": [
       {
@@ -61,107 +61,115 @@
       {
         "name": "bestandId",
         "val": "xdmp:sha512(fn:base-uri(.))"
-      },
-      {
-        "name": "symbolisatieItemId",
-        "val": "s:symboolcode/fn:string()"
-      }
-    ],
-    "triples": [
-      {
-        "subject": {
-          "val": "sem:iri($bestandId)"
-        },
-        "predicate": {
-          "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-        },
-        "object": {
-          "val": "sem:iri($symbolisatieItemId)"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($symbolisatieItemId)"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($imow || fn:local-name(.))"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($symbolisatieItemId)"
-        },
-        "predicate": {
-          "val": "sem:iri($dc || 'identifier')"
-        },
-        "object": {
-          "val": "$symbolisatieItemId"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($symbolisatieItemId)"
-        },
-        "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
-        },
-        "object": {
-          "val": "$symbolisatieItemId"
-        }
       }
     ],
     "templates": [
       {
-        "description": "Extraction Template for normwaardeSymbolisatie NormwaardeRef",
-        "context": "s:normwaardeSymbolisatie/rol:NormwaardeRef",
+        "description": "Extraction Template for  ow-SymbolisatieItem",
+        "context": "sl:stand/ow-dc:owObject/s:SymbolisatieItem",
+        "vars": [
+          {
+            "name": "symbolisatieItemId",
+            "val": "s:symboolcode/fn:string()"
+          }
+        ],
         "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($symbolisatieItemId)"
+            }
+          },
           {
             "subject": {
               "val": "sem:iri($symbolisatieItemId)"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftSymbolisatieItem' || fn:local-name(.))"
+              "val": "sem:iri($rdf || 'type')"
             },
             "object": {
-              "val": "sem:iri(@xlink:href/fn:string())"
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($symbolisatieItemId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$symbolisatieItemId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($symbolisatieItemId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$symbolisatieItemId"
             }
           }
-        ]
-      },
-      {
-        "description": "Extraction Template for activiteitLocatieaanduidingSymbolisatie ActiviteitLocatieaanduidingRef",
-        "context": "s:activiteitLocatieaanduidingSymbolisatie/rol:ActiviteitLocatieaanduidingRef",
-        "triples": [
+        ],
+        "templates": [
           {
-            "subject": {
-              "val": "sem:iri($symbolisatieItemId)"
-            },
-            "predicate": {
-              "val": "sem:iri($imow || 'heeftSymbolisatieItem' || fn:local-name(.))"
-            },
-            "object": {
-              "val": "sem:iri(@xlink:href/fn:string())"
-            }
-          }
-        ]
-      },
-      {
-        "description": "Extraction Template for gebiedsaanwijzingSymbolisatie GebiedsaanwijzingRef",
-        "context": "s:gebiedsaanwijzingSymbolisatie/rol:GebiedsaanwijzingRef",
-        "triples": [
+            "description": "Extraction Template for normwaardeSymbolisatie NormwaardeRef",
+            "context": "s:normwaardeSymbolisatie/rol:NormwaardeRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($symbolisatieItemId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftSymbolisatieItem' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
           {
-            "subject": {
-              "val": "sem:iri($symbolisatieItemId)"
-            },
-            "predicate": {
-              "val": "sem:iri($imow || 'heeftSymbolisatieItem' || fn:local-name(.))"
-            },
-            "object": {
-              "val": "sem:iri(@xlink:href/fn:string())"
-            }
+            "description": "Extraction Template for activiteitLocatieaanduidingSymbolisatie ActiviteitLocatieaanduidingRef",
+            "context": "s:activiteitLocatieaanduidingSymbolisatie/rol:ActiviteitLocatieaanduidingRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($symbolisatieItemId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftSymbolisatieItem' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          },
+          {
+            "description": "Extraction Template for gebiedsaanwijzingSymbolisatie GebiedsaanwijzingRef",
+            "context": "s:gebiedsaanwijzingSymbolisatie/rol:GebiedsaanwijzingRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($symbolisatieItemId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftSymbolisatieItem' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
           }
         ]
       }

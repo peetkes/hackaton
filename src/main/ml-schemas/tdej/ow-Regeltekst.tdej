@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for ow-Regeltekst/ow-RegelVoorIedereen/ow-Omgevingswaarderegel",
-    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(r:Regeltekst|r:RegelVoorIedereen|r:Omgevingswaarderegel)]",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject[(r:Regeltekst|r:RegelVoorIedereen|r:Omgevingswaarderegel)]]",
     "enabled": true,
     "collections": [
       {
@@ -78,7 +78,7 @@
     "templates": [
       {
         "description": "Extraction Template for Regeltekst ow-bestand",
-        "context": "r:Regeltekst",
+        "context": "sl:stand/ow-dc:owObject/r:Regeltekst",
         "vars": [
           {
             "name": "regeltekstId",
@@ -168,7 +168,7 @@
       },
       {
         "description": "Extraction Template for RegelVoorIedereen ow-bestand",
-        "context": "r:RegelVoorIedereen",
+        "context": "sl:stand/ow-dc:owObject/r:RegelVoorIedereen",
         "vars": [
           {
             "name": "regelId",
@@ -383,7 +383,7 @@
       },
       {
         "description": "Extraction Template for Omgevinsgswaarderegel ow-bestand",
-        "context": "r:Omgevingswaarderegel",
+        "context": "sl:stand/ow-dc:owObject/r:Omgevingswaarderegel",
         "vars": [
           {
             "name": "regelId",

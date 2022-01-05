@@ -9,6 +9,7 @@ buildscript {
     classpath "gradle.plugin.com.marklogic:ml-gradle:${mlGradleVersion}"
   }
 }
+
 plugins {
   id "java"
   id "net.saliman.properties" version "1.5.1"
@@ -35,11 +36,10 @@ dependencies {
 configurations.all {
   // avoid SLF4J: classpath contains multiple SLF4J bindings
   exclude group: 'ch.qos.logback'
-  exclude group: 'org.slf4j'
+  exclude group: 'org.apache.logging.log4j'
+//  exclude group: 'org.slf4j'
 }
-// Branding the Query Console
 import com.marklogic.client.ext.helper.ClientHelper
-
 task deployQcBrand(type: com.marklogic.gradle.task.ServerEvalTask) {
   group 'Deployment Branding'
   logger.info("QueryConsole branding.")
@@ -76,19 +76,19 @@ task undeployQcBrand(type: com.marklogic.gradle.task.ServerEvalTask) {
   client = getAppConfig().newDatabaseClient()
   xquery =
       "xquery version '1.0-ml';\n"+
-      "xdmp:eval('"+
-      "  xquery version \"1.0-ml\"; \n"+
-      "  declare namespace env-ui = \"http://marklogic.com/environment-ui\"; \n"+
-      "  let \$env-ui-node := \n"+
-      "    fn:doc(\"/cluster-ui-settings.xml\")/env-ui:environment-ui \n"+
-      "  return \n"+
-      "    if (exists(\$env-ui-node)) then \n"+
-      "      xdmp:node-replace(\$env-ui-node/env-ui:ui-active, <env-ui:ui-active>{fn:false()}</env-ui:ui-active>)\n"+
-      "    else ()',\n"+
-      "  (),\n"+
-      "  <options xmlns='xdmp:eval'>\n"+
-      "    <database>{xdmp:database('App-Services')}</database>\n"+
-      "  </options>)"
+          "xdmp:eval('"+
+          "  xquery version \"1.0-ml\"; \n"+
+          "  declare namespace env-ui = \"http://marklogic.com/environment-ui\"; \n"+
+          "  let \$env-ui-node := \n"+
+          "    fn:doc(\"/cluster-ui-settings.xml\")/env-ui:environment-ui \n"+
+          "  return \n"+
+          "    if (exists(\$env-ui-node)) then \n"+
+          "      xdmp:node-replace(\$env-ui-node/env-ui:ui-active, <env-ui:ui-active>{fn:false()}</env-ui:ui-active>)\n"+
+          "    else ()',\n"+
+          "  (),\n"+
+          "  <options xmlns='xdmp:eval'>\n"+
+          "    <database>{xdmp:database('App-Services')}</database>\n"+
+          "  </options>)"
 }
 
 mlDeployApp.finalizedBy(deployQcBrand)
@@ -118,6 +118,7 @@ class MlcpTransformTask extends com.marklogic.gradle.task.MlcpTask {
   }
 }
 
+//=====================================================================================================================
 class HackatonTransformTask extends com.marklogic.gradle.task.MlcpTask {
   HackatonTransformTask() {
     classpath = project.configurations.mlcp
@@ -134,48 +135,8 @@ class HackatonTransformTask extends com.marklogic.gradle.task.MlcpTask {
   }
 }
 
-class SplitTransformTask extends com.marklogic.gradle.task.MlcpTask {
-  SplitTransformTask() {
-    classpath = project.configurations.mlcp
-    command = 'IMPORT'
-    host = project.property("mlHost")
-    port = Integer.parseInt(project.property("mlRestPort"))
-    username = project.property("mlcpUsername")
-    password = project.property("mlcpPassword")
-    output_permissions = "hackaton-reader,read,hackaton-writer,update"
-    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
-    transform_function= "split-document"
-    transform_module = "/mlcp/split-document.xqy"
-    transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/split-document"
-  }
-}
-
-class LvbbTransformTask extends com.marklogic.gradle.task.MlcpTask {
-  LvbbTransformTask() {
-    classpath = project.configurations.mlcp
-    command = 'IMPORT'
-    host = project.property("mlHost")
-    port = Integer.parseInt(project.property("mlRestPort"))
-    username = project.property("mlcpUsername")
-    password = project.property("mlcpPassword")
-    output_permissions = "opera-content-read,read,opera-opera-content-write,update,opera-opera-content-write,insert,opera-opera-content-read,read"
-    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
-    transform_function = "adjust-collections"
-    transform_module = "/projects/opera/repos/opera/contexts/cds/lib/mlcp-adjust-collections.xqy"
-    transform_namespace = "http://koop.overheid.nl/opera/opera/lib/mlcp-adjust-collections"
-  }
-}
-
 task importData(type: HackatonTransformTask) {
   group "hackaton"
-  input_file_path "data/aanlevering"
-  output_uri_replace = ".*data/aanlevering,''"
-  transform_param = "oin=00000003560458830000,idlevering=Geonovum-Omgevingsplan-Zaltbommel_004"
-  args = ["-max_threads", "8"]
-}
-
-task importDataLvbb(type: LvbbTransformTask) {
-  group "lvbb"
   input_file_path "data/aanlevering"
   output_uri_replace = ".*data/aanlevering,''"
   transform_param = "oin=00000003560458830000,idlevering=Geonovum-Omgevingsplan-Zaltbommel_004"
@@ -190,24 +151,8 @@ task importUtrecht(type: HackatonTransformTask) {
   args = ["-max_threads", "8"]
 }
 
-task importUtrechtLvbb(type: LvbbTransformTask) {
-  group "lvbb"
-  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Utrecht"
-  output_uri_replace = ".*standaard-stop,''"
-  transform_param = "oin=00000001003214345000,idlevering=utrecht-001"
-  args = ["-max_threads", "8"]
-}
-
 task importOpdrachtUtrecht(type: HackatonTransformTask) {
   group "hackaton"
-  input_file_path "../standaard-stop/Utrecht/1.1.0/xml_voorbereidingsbesluit_provincie/opdracht_Utrecht"
-  output_uri_replace = ".*standaard-stop,''"
-  transform_param = "oin=00000003560458830000,idlevering=VBPU0001-001"
-  args = ["-max_threads", "8"]
-}
-
-task importOpdrachtUtrechtLvbb(type: LvbbTransformTask) {
-  group "lvbb"
   input_file_path "../standaard-stop/Utrecht/1.1.0/xml_voorbereidingsbesluit_provincie/opdracht_Utrecht"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000003560458830000,idlevering=VBPU0001-001"
@@ -222,24 +167,8 @@ task importRoxit(type: HackatonTransformTask) {
   args = ["-max_threads", "8"]
 }
 
-task importRoxitLvbb(type: LvbbTransformTask) {
-  group "lvbb"
-  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/roxit"
-  output_uri_replace = ".*standaard-stop,''"
-  transform_param = "oin=00000001003214345000,idlevering=roxit"
-  args = ["-max_threads", "8"]
-}
-
 task importZuiderzee(type: HackatonTransformTask) {
   group "hackaton"
-  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
-  output_uri_replace = ".*standaard-stop,''"
-  transform_param = "oin=00000003560458830000,idlevering=Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6"
-  args = ["-max_threads", "8"]
-}
-
-task importZuiderzeeLvbb(type: LvbbTransformTask) {
-  group "lvbb"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
   output_uri_replace = ".*standaard-stop,''"
   transform_param = "oin=00000003560458830000,idlevering=Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6"
@@ -254,13 +183,15 @@ task importZuiderzeeland(type: HackatonTransformTask) {
   args = ["-max_threads", "8"]
 }
 
-task importTestFileLarge(type: HackatonTransformTask) {
+task loadData(
+    dependsOn: ['importData','importUtrecht','importOpdrachtUtrecht','importRoxit', 'importZuiderzee', 'importZuiderzeeland']
+)
+
+//=====================================================================================================================
+task importTestFileOriginal(type: HackatonTransformTask) {
   group "hackaton"
-  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/owLocaties.xml"
-//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/owRegetekst.xml"
-//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/manifest-ow.xml"
-//  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424/grondwateronttrekkingsgebiedkeringen-v4.gml"
-  output_uri_replace = ".*standaard-stop,''"
+  input_file_path "data/owLocatiesOriginal.xml"
+  output_uri_replace = ".*data,''"
   transform_param = "oin=00000003011411800000,idlevering=Zuiderzeeland"
   args = ["-max_threads", "8"]
 }
@@ -290,6 +221,23 @@ task importTestFileGebiedengroep(type: HackatonTransformTask) {
   args = ["-max_threads", "8"]
 }
 
+//=====================================================================================================================
+class SplitTransformTask extends com.marklogic.gradle.task.MlcpTask {
+  SplitTransformTask() {
+    classpath = project.configurations.mlcp
+    command = 'IMPORT'
+    host = project.property("mlHost")
+    port = Integer.parseInt(project.property("mlRestPort"))
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
+    output_permissions = "hackaton-reader,read,hackaton-writer,update"
+    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+    transform_function= "split-document"
+    transform_module = "/mlcp/split-document.xqy"
+    transform_namespace = "http://koop.overheid.nl/hackaton/mlcp/split-document"
+  }
+}
+
 task importTestFileSplit(type: SplitTransformTask) {
   group "hackaton"
   input_file_path "data/aanlevering/owLocaties-Gemeentestad.xml"
@@ -301,6 +249,63 @@ task importTestFileSplit(type: SplitTransformTask) {
   args = ["-max_threads", "8"]
 }
 
+//=====================================================================================================================
+class LvbbTransformTask extends com.marklogic.gradle.task.MlcpTask {
+  LvbbTransformTask() {
+    classpath = project.configurations.mlcp
+    command = 'IMPORT'
+    host = project.property("mlHost")
+    port = Integer.parseInt(project.property("mlRestPort"))
+    username = project.property("mlcpUsername")
+    password = project.property("mlcpPassword")
+    output_permissions = "opera-content-read,read,opera-opera-content-write,update,opera-opera-content-write,insert,opera-opera-content-read,read"
+    systemProperty 'hadoop.home.dir', "$project.rootDir/lib"
+    transform_function = "adjust-collections"
+    transform_module = "/projects/opera/repos/opera/contexts/cds/lib/mlcp-adjust-collections.xqy"
+    transform_namespace = "http://koop.overheid.nl/opera/opera/lib/mlcp-adjust-collections"
+  }
+}
+
+task importDataLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "data/aanlevering"
+  output_uri_replace = ".*data/aanlevering,''"
+  transform_param = "oin=00000003560458830000,idlevering=Geonovum-Omgevingsplan-Zaltbommel_004"
+  args = ["-max_threads", "8"]
+}
+
+task importUtrechtLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Utrecht"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000001003214345000,idlevering=utrecht-001"
+  args = ["-max_threads", "8"]
+}
+
+task importOpdrachtUtrechtLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/Utrecht/1.1.0/xml_voorbereidingsbesluit_provincie/opdracht_Utrecht"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003560458830000,idlevering=VBPU0001-001"
+  args = ["-max_threads", "8"]
+}
+
+task importRoxitLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/roxit"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000001003214345000,idlevering=roxit"
+  args = ["-max_threads", "8"]
+}
+
+task importZuiderzeeLvbb(type: LvbbTransformTask) {
+  group "lvbb"
+  input_file_path "../standaard-stop/kruisvalidaties/1.1.0/zuiderzee"
+  output_uri_replace = ".*standaard-stop,''"
+  transform_param = "oin=00000003560458830000,idlevering=Geonovum-wsv-Zuiderzeeland-MultigeometrieAanvulling-6"
+  args = ["-max_threads", "8"]
+}
+
 task importZuiderzeelandLvbb(type: LvbbTransformTask) {
   group "lvbb"
   input_file_path "../standaard-stop/kruisvalidaties/1.1.0/Zuiderzeeland/opdracht-20210722-123424"
@@ -309,14 +314,11 @@ task importZuiderzeelandLvbb(type: LvbbTransformTask) {
   args = ["-max_threads", "8"]
 }
 
-task loadData(
-    dependsOn: ['importData','importUtrecht','importOpdrachtUtrecht','importRoxit', 'importZuiderzee']
-)
-
 task loadDataLvbb(
     dependsOn: ['importDataLvbb','importUtrechtLvbb','importOpdrachtUtrechtLvbb','importRoxitLvbb', 'importZuiderzeeLvbb', 'importZuiderzeelandLvbb']
 )
 
+//=====================================================================================================================
 task importKruisvalidatie(type: com.marklogic.gradle.task.MlcpTask) {
   group "import"
   input_file_path "../standaard-stop/kruisvalidaties/kruisvalidaties-utrecht-2.json"

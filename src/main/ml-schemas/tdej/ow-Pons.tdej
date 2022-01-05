@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for ow-Pons",
-    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/p:Pons",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/p:Pons]",
     "enabled": true,
     "collections": [
       {
@@ -61,73 +61,81 @@
       {
         "name": "bestandId",
         "val": "xdmp:sha512(fn:base-uri(.))"
-      },
-      {
-        "name": "ponsId",
-        "val": "p:identificatie/fn:string()"
-      }
-    ],
-    "triples": [
-      {
-        "subject": {
-          "val": "sem:iri($bestandId)"
-        },
-        "predicate": {
-          "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-        },
-        "object": {
-          "val": "sem:iri($ponsId)"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($ponsId)"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($imow || fn:local-name(.))"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($ponsId)"
-        },
-        "predicate": {
-          "val": "sem:iri($dc || 'identifier')"
-        },
-        "object": {
-          "val": "$ponsId"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($ponsId)"
-        },
-        "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
-        },
-        "object": {
-          "val": "$ponsId"
-        }
       }
     ],
     "templates": [
       {
-        "description": "Extraction Template for Pons locatieaanduiding",
-        "context": "p:locatieaanduiding/l:LocatieRef",
+        "description": "Extraction Template for ow-Pons",
+        "context": "sl:stand/ow-dc:owObject/p:Pons",
+        "vars": [
+          {
+            "name": "ponsId",
+            "val": "p:identificatie/fn:string()"
+          }
+        ],
         "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($ponsId)"
+            }
+          },
           {
             "subject": {
               "val": "sem:iri($ponsId)"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'heeftPons' || fn:local-name(.))"
+              "val": "sem:iri($rdf || 'type')"
             },
             "object": {
-              "val": "sem:iri(@xlink:href/fn:string())"
+              "val": "sem:iri($imow || fn:local-name(.))"
             }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($ponsId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$ponsId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($ponsId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$ponsId"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for Pons locatieaanduiding",
+            "context": "p:locatieaanduiding/l:LocatieRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($ponsId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeftPons' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
           }
         ]
       }

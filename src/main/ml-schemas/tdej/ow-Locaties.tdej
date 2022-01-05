@@ -1,0 +1,327 @@
+{
+  "template": {
+    "description": "Extraction Template for ow-Ambtsgebied",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject[(l:Gebied|l:Gebiedengroep|l:Ambtsgebied)]]",
+    "enabled": true,
+    "collections": [
+      {
+        "collectionsAnd": [
+          "/opera/document/ow-bestand",
+          "/opera/options/opdrachtbestanden"
+        ]
+      }
+    ],
+    "pathNamespace": [
+      {
+        "prefix": "l",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/locatie"
+      },
+      {
+        "prefix": "ow",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/owobject"
+      },
+      {
+        "prefix": "ow-dc",
+        "namespaceUri": "http://www.geostandaarden.nl/imow/bestanden/deelbestand"
+      },
+      {
+        "prefix": "sl",
+        "namespaceUri": "http://www.geostandaarden.nl/bestanden-ow/standlevering-generiek"
+      },
+      {
+        "prefix": "xlink",
+        "namespaceUri": "http://www.w3.org/1999/xlink"
+      }
+    ],
+    "vars": [
+      {
+        "name": "rdf",
+        "val": "'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"
+      },
+      {
+        "name": "rdfs",
+        "val": "'http://www.w3.org/2000/01/rdf-schema#'"
+      },
+      {
+        "name": "dc",
+        "val": "'http://purl.org/dc/elements/1.1/'"
+      },
+      {
+        "name": "imow",
+        "val": "'http://koop.overheid.nl/ontology/imow/'"
+      },
+      {
+        "name": "bestandId",
+        "val": "xdmp:sha512(fn:base-uri(.))"
+      }
+    ],
+    "templates": [
+      {
+        "description": "Extraction Template for ow-Gebied",
+        "context": "sl:stand/ow-dc:owObject/l:Gebied",
+        "vars": [
+          {
+            "name": "gebiedId",
+            "val": "l:identificatie/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeftGebied')"
+            },
+            "object": {
+              "val": "sem:iri($gebiedId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$gebiedId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "$gebiedId"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for geometrie",
+            "context": "l:geometrie/l:GeometrieRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($gebiedId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Extraction Template for ow-Gebiedengroep",
+        "context": "sl:stand/ow-dc:owObject/l:Gebiedengroep",
+        "vars": [
+          {
+            "name": "gebiedId",
+            "val": "l:identificatie/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($gebiedId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$gebiedId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "l:noemer/fn:string()",
+              "invalidValues": "ignore"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for groepselement",
+            "context": "l:groepselement/l:GebiedRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($gebiedId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Extraction Template for ow-Ambtsgebied",
+        "context": "sl:stand/ow-dc:owObject/l:Ambtsgebied",
+        "vars": [
+          {
+            "name": "gebiedId",
+            "val": "l:identificatie/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($gebiedId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$gebiedId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($gebiedId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "l:noemer/fn:string()",
+              "invalidValues": "ignore"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for bestuurlijkeGrenzenVerwijzing",
+            "context": "l:bestuurlijkeGrenzenVerwijzing/l:BestuurlijkeGrenzenVerwijzing",
+            "vars": [
+              {
+                "name": "bgId",
+                "val": "l:bestuurlijkeGrenzenID/fn:string()"
+              }
+            ],
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($gebiedId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri($bgId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($bgId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || fn:local-name(.))"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($bgId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($dc || 'identifier')"
+                },
+                "object": {
+                  "val": "$bgId"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($bgId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdfs || 'label')"
+                },
+                "object": {
+                  "val": "$bgId"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

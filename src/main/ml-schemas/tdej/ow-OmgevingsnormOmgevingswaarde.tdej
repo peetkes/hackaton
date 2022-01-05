@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for ow-Omgevingsnorm/ow-Omgevingswaarde",
-    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject[(rol:Omgevingsnorm|rol:Omgevingswaarde)]",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject[(rol:Omgevingsnorm|rol:Omgevingswaarde)]]",
     "enabled": true,
     "collections": [
       {
@@ -65,142 +65,8 @@
     ],
     "templates": [
       {
-        "description": "Extraction Template for Omgevingswaarde ow-bestand",
-        "context": "rol:Omgevingswaarde",
-        "vars": [
-          {
-            "name": "omgevingswaardeId",
-            "val": "rol:identificatie/fn:string()"
-          }
-        ],
-        "triples": [
-          {
-            "subject": {
-              "val": "sem:iri($bestandId)"
-            },
-            "predicate": {
-              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-            },
-            "object": {
-              "val": "sem:iri($omgevingswaardeId)"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($omgevingswaardeId)"
-            },
-            "predicate": {
-              "val": "sem:iri($rdf || 'type')"
-            },
-            "object": {
-              "val": "sem:iri($imow || fn:local-name(.))"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($omgevingswaardeId)"
-            },
-            "predicate": {
-              "val": "sem:iri($dc || 'identifier')"
-            },
-            "object": {
-              "val": "$omgevingswaardeId"
-            }
-          },
-          {
-            "subject": {
-              "val": "sem:iri($omgevingswaardeId)"
-            },
-            "predicate": {
-              "val": "sem:iri($rdfs || 'label')"
-            },
-            "object": {
-              "val": "rol:naam/fn:string()",
-              "invalidValues": "ignore"
-            }
-          }
-        ],
-        "templates": [
-          {
-            "description": "Extraction Template for Normwaarde",
-            "context": "rol:normwaarde/rol:Normwaarde",
-            "vars": [
-              {
-                "name": "normwaardeId",
-                "val": "rol:identificatie/fn:string()"
-              }
-            ],
-            "triples": [
-              {
-                "subject": {
-                  "val": "sem:iri($omgevingswaardeId)"
-                },
-                "predicate": {
-                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-                },
-                "object": {
-                  "val": "sem:iri($normwaardeId)"
-                }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($normwaardeId)"
-                },
-                "predicate": {
-                  "val": "sem:iri($rdf || 'type')"
-                },
-                "object": {
-                  "val": "sem:iri($imow || fn:local-name(.))"
-                }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($normwaardeId)"
-                },
-                "predicate": {
-                  "val": "sem:iri($dc || 'identifier')"
-                },
-                "object": {
-                  "val": "$normwaardeId"
-                }
-              },
-              {
-                "subject": {
-                  "val": "sem:iri($normwaardeId)"
-                },
-                "predicate": {
-                  "val": "sem:iri($rdfs || 'label')"
-                },
-                "object": {
-                  "val": "$normwaardeId"
-                }
-              }
-            ],
-            "templates": [
-              {
-                "description": "Extraction Template for Normwaarde locatieaanduiding",
-                "context": "rol:locatieaanduiding/l:LocatieRef",
-                "triples": [
-                  {
-                    "subject": {
-                      "val": "sem:iri($normwaardeId)"
-                    },
-                    "predicate": {
-                      "val": "sem:iri($imow || 'heeftNorm' || fn:local-name(.))"
-                    },
-                    "object": {
-                      "val": "sem:iri(@xlink:href/fn:string())"
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "description": "Extraction Template for Omgevingsnorm ow-bestand",
-        "context": "rol:Omgevingsnorm",
+        "description": "Extraction Template for ow-Omgevingsnorm",
+        "context": "sl:stand/ow-dc:owObject/rol:Omgevingsnorm",
         "vars": [
           {
             "name": "omgevingsnormId",
@@ -319,6 +185,140 @@
                     "subject": {
                       "val": "sem:iri($normwaardeId)",
                       "invalidValues": "ignore"
+                    },
+                    "predicate": {
+                      "val": "sem:iri($imow || 'heeftNorm' || fn:local-name(.))"
+                    },
+                    "object": {
+                      "val": "sem:iri(@xlink:href/fn:string())"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Extraction Template for ow-Omgevingswaarde",
+        "context": "sl:stand/ow-dc:owObject/rol:Omgevingswaarde",
+        "vars": [
+          {
+            "name": "omgevingswaardeId",
+            "val": "rol:identificatie/fn:string()"
+          }
+        ],
+        "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($omgevingswaardeId)"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($omgevingswaardeId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdf || 'type')"
+            },
+            "object": {
+              "val": "sem:iri($imow || fn:local-name(.))"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($omgevingswaardeId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$omgevingswaardeId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($omgevingswaardeId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "rol:naam/fn:string()",
+              "invalidValues": "ignore"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for Normwaarde",
+            "context": "rol:normwaarde/rol:Normwaarde",
+            "vars": [
+              {
+                "name": "normwaardeId",
+                "val": "rol:identificatie/fn:string()"
+              }
+            ],
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($omgevingswaardeId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+                },
+                "object": {
+                  "val": "sem:iri($normwaardeId)"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdf || 'type')"
+                },
+                "object": {
+                  "val": "sem:iri($imow || fn:local-name(.))"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($dc || 'identifier')"
+                },
+                "object": {
+                  "val": "$normwaardeId"
+                }
+              },
+              {
+                "subject": {
+                  "val": "sem:iri($normwaardeId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($rdfs || 'label')"
+                },
+                "object": {
+                  "val": "$normwaardeId"
+                }
+              }
+            ],
+            "templates": [
+              {
+                "description": "Extraction Template for Normwaarde locatieaanduiding",
+                "context": "rol:locatieaanduiding/l:LocatieRef",
+                "triples": [
+                  {
+                    "subject": {
+                      "val": "sem:iri($normwaardeId)"
                     },
                     "predicate": {
                       "val": "sem:iri($imow || 'heeftNorm' || fn:local-name(.))"

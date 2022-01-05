@@ -1,0 +1,6 @@
+{
+  "threads": 16,
+  "debug-threads": 16,
+  "max-time-limit": 3600,
+  "default-time-limit": 3600
+}

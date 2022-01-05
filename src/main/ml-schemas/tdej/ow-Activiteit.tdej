@@ -1,7 +1,7 @@
 {
   "template": {
     "description": "Extraction Template for ow-Activiteit",
-    "context": "/ow-dc:owBestand/sl:standBestand/sl:stand/ow-dc:owObject/rol:Activiteit",
+    "context": "/ow-dc:owBestand/sl:standBestand[sl:stand/ow-dc:owObject/rol:Activiteit]",
     "enabled": true,
     "collections": [
       {
@@ -57,74 +57,81 @@
       {
         "name": "bestandId",
         "val": "xdmp:sha512(fn:base-uri(.))"
-      },
-      {
-        "name": "activiteitId",
-        "val": "rol:identificatie/fn:string(.)"
-      }
-
-    ],
-    "triples": [
-      {
-        "subject": {
-          "val": "sem:iri($bestandId)"
-        },
-        "predicate": {
-          "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
-        },
-        "object": {
-          "val": "sem:iri($activiteitId)"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($activiteitId)"
-        },
-        "predicate": {
-          "val": "sem:iri($rdf || 'type')"
-        },
-        "object": {
-          "val": "sem:iri($imow || fn:local-name(.))"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($activiteitId)"
-        },
-        "predicate": {
-          "val": "sem:iri($dc || 'identifier')"
-        },
-        "object": {
-          "val": "$activiteitId"
-        }
-      },
-      {
-        "subject": {
-          "val": "sem:iri($activiteitId)"
-        },
-        "predicate": {
-          "val": "sem:iri($rdfs || 'label')"
-        },
-        "object": {
-          "val": "rol:naam/fn:string()"
-        }
       }
     ],
     "templates": [
       {
-        "description": "Extraction Template for Activiteit bovenliggendeActiviteit",
-        "context": "rol:bovenliggendeActiviteit/rol:ActiviteitRef",
+        "description": "Extraction Template for ow-Activiteit",
+        "context": "sl:stand/ow-dc:owObject/rol:Activiteit",
+        "vars": [
+          {
+            "name": "activiteitId",
+            "val": "rol:identificatie/fn:string(.)"
+          }
+        ],
         "triples": [
+          {
+            "subject": {
+              "val": "sem:iri($bestandId)"
+            },
+            "predicate": {
+              "val": "sem:iri($imow || 'heeft' || fn:local-name(.))"
+            },
+            "object": {
+              "val": "sem:iri($activiteitId)"
+            }
+          },
           {
             "subject": {
               "val": "sem:iri($activiteitId)"
             },
             "predicate": {
-              "val": "sem:iri($imow || 'bovenliggendeActiviteit')"
+              "val": "sem:iri($rdf || 'type')"
             },
             "object": {
-              "val": "sem:iri(@xlink:href/fn:string())"
+              "val": "sem:iri($imow || fn:local-name(.))"
             }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($activiteitId)"
+            },
+            "predicate": {
+              "val": "sem:iri($dc || 'identifier')"
+            },
+            "object": {
+              "val": "$activiteitId"
+            }
+          },
+          {
+            "subject": {
+              "val": "sem:iri($activiteitId)"
+            },
+            "predicate": {
+              "val": "sem:iri($rdfs || 'label')"
+            },
+            "object": {
+              "val": "rol:naam/fn:string()"
+            }
+          }
+        ],
+        "templates": [
+          {
+            "description": "Extraction Template for Activiteit bovenliggendeActiviteit",
+            "context": "rol:bovenliggendeActiviteit/rol:ActiviteitRef",
+            "triples": [
+              {
+                "subject": {
+                  "val": "sem:iri($activiteitId)"
+                },
+                "predicate": {
+                  "val": "sem:iri($imow || 'bovenliggendeActiviteit')"
+                },
+                "object": {
+                  "val": "sem:iri(@xlink:href/fn:string())"
+                }
+              }
+            ]
           }
         ]
       }

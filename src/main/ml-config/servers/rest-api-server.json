@@ -1,0 +1,9 @@
+{
+    "server-name": "%%NAME%%",
+    "authentication": "%%mlRestAuth%%",
+    "modules-database" : "%%MODULES_DATABASE%%",
+    "content-database" : "%%DATABASE%%",
+    "session-timeout": %%mlSessionTimeout%%,
+    "max-time-limit": %%mlMaxTimeLimit%%,
+    "default-time-limit": %%mlDefaultTimeLimit%%
+}

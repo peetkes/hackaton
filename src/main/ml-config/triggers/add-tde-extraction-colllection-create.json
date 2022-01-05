@@ -1,0 +1,21 @@
+{
+  "name": "add-tde-extraction-collection-create",
+  "description": "Adds collection that triggers ow-tde extraction",
+  "event": {
+    "data-event": {
+      "collection-scope": {
+        "uri": "/opera/document/ow-bestand"
+      },
+      "document-content": {
+        "update-kind": "create"
+      },
+      "when": "post-commit"
+    }
+  },
+  "module": "triggers/add-tde-extraction-collection.xqy",
+  "module-db": "%%MODULES_DATABASE%%",
+  "module-root": "/",
+  "enabled": true,
+  "recursive": true,
+  "task-priority": "normal"
+}
